@@ -59,65 +59,20 @@
              <div class="row align-items-center">
                 <div class="col-xl-3">
                    <div class="header__logo">
-                      <a href="index.html"><img src="assets/img/logo/logo.png" alt="logo"></a>
+                      <a href="/"><img src="assets/img/logo/logo.png" alt="logo"></a>
                    </div>
                 </div>
                 <div class="col-xl-6">
                    <div class="header__menu main-menu text-center">
                       <nav id="mobile-menu">
                          <ul>
-                            <li class="has-dropdown has-homemenu">
-                              <a href="index.html">Home</a>
+                            <li class="">
+                              <a href="/">Home</a>
                             </li>
-                            <li class="has-dropdown has-megamenu">
+                            <li class="">
                                <a href="course-grid.html">Shop</a>
-                               <ul class="sub-menu mega-menu" data-background="assets/img/banner/mega-menu-shop-1.jpg">
-                                  <li>
-                                     <a class="mega-menu-title">Shop layout</a>
-                                     <ul>
-                                        <li><a href="shop-left-sidebar.html">Shop With Banner </a></li>
-                                        <li><a href="shop-3.html">Shop Without Banner</a></li>
-                                        <li><a href="shop-2.html">Shop Version</a></li>
-                                        <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                        <li><a href="shop-right-sidebar.html">Shop Right sidebar</a></li>
-                                        <li><a href="shop-list-view.html">Shop List view</a></li>
-                                     </ul>
-                                  </li>
-                                  <li>
-                                     <a class="mega-menu-title">Product layout</a>
-                                     <ul>
-                                        <li><a href="shop-details-3.html">Image scroll</a></li>
-                                        <li><a href="shop-details-grid.html">Product grid</a></li>
-                                        <li><a href="shop-details-top.html">Top Thumb Product</a></li>
-                                        <li><a href="shop-details.html">Bottom Thumb Product</a></li>
-                                        <li><a href="shop-details-4.html">Simple Product</a></li>
-                                     </ul>
-                                  </li>
-                                  <li>
-                                     <a class="mega-menu-title">Product type</a>
-                                     <ul>
-                                        <li><a href="shop-details.html">Products Simple</a></li>
-                                        <li><a href="shop-details-grid.html">Products Group</a></li>
-                                        <li><a href="shop-details-3.html">Products Variable</a></li>
-                                        <li><a href="shop-details-3.html">Special</a></li>
-                                        <li><a href="shop-details-4.html">Decoration</a></li>
-                                        <li><a href="shop-details-top.html">Contruction</a></li>
-                                     </ul>
-                                  </li>
-                                  <li>
-                                     <a class="mega-menu-title">Product category</a>
-                                     <ul>
-                                        <li><a href="shop-details.html">Fresh bakery</a></li>
-                                        <li><a href="shop-details-3.html">Fresh fruits</a></li>
-                                        <li><a href="shop-details-4.html">Fresh meat</a></li>
-                                        <li><a href="shop-details.html">Fruit drink</a></li>
-                                        <li><a href="shop-details.html">Fresh bakery</a></li>
-                                        <li><a href="shop-details-grid.html">Biscuits snack</a></li>
-                                     </ul>
-                                  </li>
-                               </ul>
                             </li>
-                            <li class="has-dropdown">
+                            <li class="">
                                <a href="blog.html">Blog</a>
                                <ul class="sub-menu">
                                   <li><a href="blog.html">Big image</a></li>
@@ -126,19 +81,8 @@
                                   <li><a href="blog-details.html">Single Post</a></li>
                                </ul>
                             </li>
-                            <li class="has-dropdown">
+                            <li class="">
                                <a href="about.html">Pages</a>
-                               <ul class="sub-menu">
-                                  <li><a href="shop-location.html">Shop Location One</a></li>
-                                  <li><a href="shop-location-2.html">Shop Location Two</a></li>
-                                  <li><a href="faq.html">FAQs</a></li>
-                                  <li><a href="checkout.html">Checkout</a></li>
-                                  <li><a href="cart.html">Cart Page</a></li>
-                                  <li><a href="wishlist.html">Wishlist</a></li>
-                                  <li><a href="log-in.html">Sign In</a></li>
-                                  <li><a href="comming-soon.html">Coming soon</a></li>
-                                  <li><a href="404.html">Page 404</a></li>
-                               </ul>
                             </li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>

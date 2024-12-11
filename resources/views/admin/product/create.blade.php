@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('heading', 'Create Product')
 @section('content')
 <div class="container-xxl">
 
@@ -102,12 +103,12 @@
                     </div>
                     <div class="card-body">
                         <!-- File Upload -->
-                        <input type="file" name="images"   multiple accept="image/*"/>
+                       <input type="file" name="images[]" id="actual-btn" class="form-control" multiple/>
                         
 
                         {{-- <div class="upload-box" id="uploadBox">
                             <div class="fallback">
-                                <input id="fileInput" name="images" hidden type="file" multiple />
+                                <input id="fileInput" name="images[]" hidden type="file" multiple />
                             </div>
                             <div class="dz-message needsclick">
                                 <i class="bx bx-cloud-upload fs-48 text-primary"></i>
@@ -128,11 +129,19 @@
     </form>
 </div>
 <script>
-    const actualBtn = document.getElementById('actual-btn');
-    const fileChosen = document.getElementById('file-chosen');
+    // Select the elements
+    const uploadBox = document.getElementById('uploadBox');
+    const fileInput = document.getElementById('fileInput');
 
-    actualBtn.addEventListener('change', function(){
-      fileChosen.textContent = this.files[0].name
-    })
+    // Add click event listener to the upload box
+    uploadBox.addEventListener('click', () => {
+        fileInput.click(); // Trigger the hidden input file dialog
+    });
+
+    // Add event listener for file selection
+    fileInput.addEventListener('change', (event) => {
+        const files = event.target.files;
+        console.log('Selected files:', files); // You can handle the selected files here
+    });
 </script>
 @endsection

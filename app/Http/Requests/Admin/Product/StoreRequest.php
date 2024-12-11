@@ -28,7 +28,8 @@ class StoreRequest extends FormRequest
             'badge'=>['nullable', 'string'],
             'price'=>['required','numeric'],
             'discount'=>['required','numeric'],
-            'images'=>['nullable', 'image', 'mimes:png,jpg,jpeg'],
+            'images' => ['array', 'nullable'],
+            'images.*' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg'],
             'status'=>['nullable', 'boolean'],
         ];
     }

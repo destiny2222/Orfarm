@@ -23,7 +23,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function getRouteKeyName()
@@ -35,7 +35,16 @@ class Product extends Model
     {
         return Str::slug($this->title);
     }
+    public function getDiscountPriceAttribute(): float
+    {
+        return $this->price - ($this->price * $this->discount / 100);
+    }
 
+    public  function photos(){
+        return $this->hasMany(ProductImage::class);
+    }
+
+   
 
     public function getImagesArrayAttribute(): array
     {

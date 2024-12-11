@@ -13,9 +13,7 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Http\Requests\Admin\Product\StoreRequest;
 use App\Http\Requests\Admin\Product\UpdateRequest;
-
-
-
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -36,80 +34,116 @@ class ProductController extends Controller
 
     public function store(StoreRequest $request){
 
-        dd($request->all());
+        // dd($request->all());
 
-        $new_product = Product::firstOrCreate([
-            'title' => $request->title,
-            'price' => $request->price,
-            'slug'=>Str::slug($request->title),
-            'availability'=>$request->availability,
-            'featured'=>$request->featured,
-            'badge'=>$request->badge,
-            'price'=>$request->price,
-            'discount'=>$request->discount,
-            'status'=>$request->status,
-            'category_id'=>$request->category_id,
-            'description'=>$request->description,
-        ]);
-        
-        if($request->has('images')){
-            foreach($request->file('images')as $image){
-                $path = time() . '.' . $image->getClientOriginalExtension();
-                $manager = new ImageManager( new Driver());
-                $image = $manager->read($path);
-                $image->resize(600, 600);
-                $image->save(public_path('upload/product/').$path);
-                ProductImage::create([
-                    'product_id'=>$new_product->id,
-                    'image_path'=>$path
-                ]);
+        try{
+            $new_product = Product::firstOrCreate([
+                'title' => $request->title,
+                'price' => $request->price,
+                'slug'=>Str::slug($request->title),
+                'availability'=>$request->availability,
+                'featured'=>$request->featured,
+                'badge'=>$request->badge,
+                'price'=>$request->price,
+                'discount'=>$request->discount,
+                'status'=>$request->status,
+                'category_id'=>$request->category_id,
+                'description'=>$request->description,
+            ]);
+            
+            if($request->hasFile('images')){
+                foreach($request->file('images') as $image){
+                    // Generate a unique filename
+                    $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    
+                    // Store the original image
+                    $path = $image->storeAs('upload/product', $filename, 'public');
+                    
+                    // Process the image
+                    $manager = new ImageManager(new Driver());
+                    $img = $manager->read(storage_path('app/public/' . $path));
+                    $img->resize(600, 600);
+                    $img->save(storage_path('app/public/' . $path));
+                    
+                    // Create image record - save ONLY the filename
+                    ProductImage::create([
+                        'product_id' => $new_product->id,
+                        'image_path' => $filename  // Changed from $path to $filename
+                    ]);
+                }
             }
+            return redirect()->route('admin.product.index')->with('success', 'Product created successfully');
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+            return back()->with('error', 'Something went wrong while creating product.');
         }
-        return redirect()->route('admin.product.index')->with('success', 'Product created successfully');
         
     }
 
     public function edit($id){
         $product = Product::find($id);
-        return view('admin.product.edit', compact('product'));
+        $categories = Category::orderBy('id','desc')->get();
+        return view('admin.product.edit',[
+            'badges' => ProductHelper::$badges,
+            'featured' => ProductHelper::$featured,
+            'categories' => $categories,
+            'product' => $product, 
+        ]);
     }
 
     public function update(UpdateRequest $request, $id){
-       
+       try {
+            $product  = Product::findOrFail($id);
+            $product->update([
+                'title' => $request->title,
+                'price' => $request->price,
+                'availability'=>$request->availability,
+                'featured'=>$request->featured,
+                'badge'=>$request->badge,
+                'slug'=>Str::slug($request->title),
+                'price'=>$request->price,
+                'discount'=>$request->discount,
+                'description'=>$request->description,
+                'category_id'=>$request->category_id,
+                'image'=>$image_file ?? $product->image,
+            ]);
 
-        $product  = Product::findOrFail($id);
-        $product->update([
-            'title' => $request->title,
-            'price' => $request->price,
-            'availability'=>$request->availability,
-            'featured'=>$request->featured,
-            'badge'=>$request->badge,
-            'slug'=>Str::slug($request->title),
-            'price'=>$request->price,
-            'discount'=>$request->discount,
-            'description'=>$request->description,
-            'category_id'=>$request->category_id,
-            'image'=>$image_file ?? $product->image,
-        ]);
-
-        if($request->has('images')){
-            foreach($request->file('images')as $image){
-                $path = time() . '.' . $image->getClientOriginalExtension();
-                $manager = new ImageManager( new Driver());
-                $image = $manager->read($path);
-                $image->resize(600, 600);
-                $image->save(public_path('upload/product/images/').$path);
-                ProductImage::create([
-                    'product_id'=>$product->id,
-                    'image_path'=>$path
-                ]);
+            if($request->has('images')){
+                foreach($request->file('images') as $image){
+                    // Generate a unique filename
+                    $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    
+                    // Store the original image
+                    $path = $image->storeAs('upload/product', $filename, 'public');
+                    
+                    // Process the image
+                    $manager = new ImageManager(new Driver());
+                    $img = $manager->read(storage_path('app/public/' . $path));
+                    $img->resize(600, 600);
+                    $img->save(storage_path('app/public/' . $path));
+                    
+                    // Create image record - save ONLY the filename
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $filename  // Changed from $path to $filename
+                    ]);
+                }
             }
-        }
+            return redirect()->route('admin.product.index')->with('success', 'Product updated successfully');
+       } catch (\Exception $exception) {
+         Log::error($exception->getMessage());
+         return back()->with('error', 'Something went wrong, please try again later');
+       }
     }
 
     public function destroy($id){
-        $product = Product::find($id);
-        $product->delete();
-        return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully');
+        try{
+            $product = Product::find($id);
+            $product->delete();
+            return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully');
+        }catch( \Exception $exception){
+            Log::error($exception->getMessage());
+            return back()->with('error', 'Something went wrong, please try again later');
+        }
     }
 }

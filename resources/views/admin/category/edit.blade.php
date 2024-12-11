@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('heading', 'Edit Category')
 @section('content')
 <div class="container-xxl">
 

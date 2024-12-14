@@ -15,32 +15,33 @@ class CartController extends Controller
 {
     public function cart()
     {
-        return view('frontend.cart');
+        $cart = Cart::where('user_id', Auth::user()->id)->get(); 
+        return view('frontend.cart', [
+            'carts'=>$cart,
+        ]);
     }
   
    
     public function addToCart(CartRequest $request)
     {
-        // dd($request->all());
          // Check if user is not authenticated
          if (!Auth::check()) {
-            // Store the current full URL with all parameters as the intended destination
-            Session::put('url.intended', url()->full());
-            
-            // Redirect to registration page
-            return redirect()->route('register');
+            Session::put('url.intended', route('product.details', ['product' => $request->slug]));
+            return redirect()->route('login');
         }
+        
         try {
-            $existingCartItem = Cart::where('product_id', $request->id)
+            $existingCartItem = Cart::where('product_id', $request->product_id)
                 ->where('user_id', Auth::user()->id)
                 ->first();
     
             if ($existingCartItem) {
+                // dd($existingCartItem);
                 // Increment quantity instead of replacing
                 $existingCartItem->increment('quantity', $request->quantity);
             } else {
                 Cart::create([
-                    'product_id' => $request->id,
+                    'product_id' => $request->product_id,
                     'user_id' => Auth::user()->id,
                     'quantity' => $request->quantity
                 ]);
@@ -49,47 +50,54 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
         } catch(\Exception $e) {
             Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while adding to cart.');
+            return back()->with('error', 'Something went wrong while adding to cart.');
         }
     }
   
-
-    public function remove(Request $request)
-    {
-        try {
-            $cartItem = Cart::where('product_id', $request->id)
-                ->where('user_id', Auth::user()->id)
-                ->first();
-    
-            if ($cartItem) {
-                // If quantity is 1, remove the entire cart item
-                if ($cartItem->quantity <= 1) {
-                    $cartItem->delete();
-                } else {
-                    // Decrement the quantity by 1
-                    $cartItem->decrement('quantity');
-                }
-    
-                return redirect()->back()->with('success', 'Product quantity reduced successfully!');
+    public function update(Request $request)
+{
+    try {
+        $cartItem = Cart::findOrFail($request->id);
+        
+        if ($request->action == 'increase') {
+            $cartItem->increment('quantity');
+            $message = 'Quantity increased successfully';
+        } elseif ($request->action == 'decrease') {
+            if ($cartItem->quantity > 1) {
+                $cartItem->decrement('quantity');
+                $message = 'Quantity decreased successfully';
+            } else {
+                $cartItem->delete();
+                $message = 'Item removed from cart';
             }
-    
-            return redirect()->back()->with('error', 'Cart item not found.');
-        } catch(\Exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while removing from cart.');
         }
+
+        return response()->json([
+            'success' => true, 
+            'message' => $message,
+            'quantity' => $cartItem->quantity ?? 0
+        ]);
+    } catch(\Exception $e) {
+        Log::error($e->getMessage());
+        return response()->json([
+            'success' => false, 
+            'message' => 'Error updating cart'
+        ], 500);
     }
+}
+
+
+    
   
-  
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         try{
-            $cart = Cart::where('user_id', Auth::user()->id)->firstOrFail();
+            $cart = Cart::findOrFail($id);
             $cart->delete();
-            return redirect()->back()->with('success', 'Cart removed successfully!');
+            return back()->with('success', 'Cart removed successfully!');
         }catch(\Exception $e){
             Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong, please try again later.');
+            return back()->with('error', 'Something went wrong, please try again later.');
         }
         
     }

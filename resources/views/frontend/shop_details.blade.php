@@ -89,10 +89,11 @@
                                                 <div class="product__details-quantity d-flex align-items-center mb-15">
                                                    @csrf
                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                   <input type="hidden" name="slug" value="{{ $product->slug }}">
                                                    <b>Qty:</b>
                                                    <div class="product__details-count mr-10 mb-10">
                                                        <span class="cart-minus"><i class="far fa-minus"></i></span>
-                                                       <input class="tp-cart-input" type="text" name="quantity" value="1">
+                                                       <input class="tp-cart-input" type="text" name="quantity" class="" value="1">
                                                        <span class="cart-plus"><i class="far fa-plus"></i></span>
                                                    </div>
                                                    <div class="product__details-btn">

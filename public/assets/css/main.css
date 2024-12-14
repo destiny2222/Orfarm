@@ -7905,3 +7905,14 @@ p.checkout-coupon input[type=text]:focus {
   z-index: 999; */
 }
 
+
+.cart-input.loading {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f0f0f0 url('data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwsrKygAAAJycnLy8vB8fHwAAACH+GkNyZWF0ZWQgd2l0aCBhamF4bG9hZC5pbmZvACH5BAAKAAAAIf8LTkVUU0NBUEUyLjABAQAAAAAAAAAAAAAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQACgABACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkUhISECH5BAAKAAIALAAAAAAQABAAAAMzCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==') no-repeat center right 10px;
+  background-size: 20px 20px;
+}
+
+.cart-input.loading:focus {
+  outline: none;
+}

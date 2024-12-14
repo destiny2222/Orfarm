@@ -1,123 +1,243 @@
 @extends('layouts.main')
 @section('content')
-    <!-- breadcrumb-area-start -->
-    <div class="breadcrumb__area pt-5 pb-5">
-        <div class="container">
-           <div class="row">
-              <div class="col-lg-12">
-                 <div class="tp-breadcrumb__content">
-                    <div class="tp-breadcrumb__list">
-                       <span class="tp-breadcrumb__active"><a href="index.html">Home</a></span>
-                       <span class="dvdr">/</span>
-                       <span>Cart</span>
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </div>
-     </div>
-     <!-- breadcrumb-area-end -->
 
-     <!-- cart area -->
-     <section class="cart-area pb-80">
-        <div class="container">
+<!-- breadcrumb-area-start -->
+<div class="breadcrumb__area pt-5 pb-5">
+    <div class="container">
         <div class="row">
-           <div class="col-12">
-                 <form action="#">
-                    <div class="table-content table-responsive">
-                       <table class="table">
-                             <thead>
-                                <tr>
-                                   <th class="product-thumbnail">Images</th>
-                                   <th class="cart-product-name">Courses</th>
-                                   <th class="product-price">Unit Price</th>
-                                   <th class="product-quantity">Quantity</th>
-                                   <th class="product-subtotal">Total</th>
-                                   <th class="product-remove">Remove</th>
-                                </tr>
-                             </thead>
-                             <tbody>
-                                <tr>
-                                   <td class="product-thumbnail">
-                                      <a href="shop-details.html">
-                                         <img src="assets/img/product/products19-min.jpg" alt="">
-                                      </a>
-                                   </td>
-                                   <td class="product-name">
-                                      <a href="shop-details.html">Summer Breakfast For Healthy Morning</a>
-                                   </td>
-                                   <td class="product-price">
-                                      <span class="amount">$130.00</span>
-                                   </td>
-                                   <td class="product-quantity">
-                                         <span class="cart-minus">-</span>
-                                         <input class="cart-input" type="text" value="1">
-                                         <span class="cart-plus">+</span>
-                                   </td>
-                                   <td class="product-subtotal">
-                                      <span class="amount">$130.00</span>
-                                   </td>
-                                   <td class="product-remove">
-                                      <a href="#"><i class="fa fa-times"></i></a>
-                                   </td>
-                                </tr>
-                                <tr>
-                                   <td class="product-thumbnail">
-                                      <a href="shop-details.html">
-                                         <img src="assets/img/product/products20-min.jpg" alt="">
-                                      </a>
-                                   </td>
-                                   <td class="product-name">
-                                      <a href="shop-details.html">The Best Great Benefits Of Fresh Beef</a>
-                                   </td>
-                                   <td class="product-price">
-                                      <span class="amount">$120.50</span>
-                                   </td>
-                                   <td class="product-quantity">
-                                         <span class="cart-minus">-</span>
-                                         <input class="cart-input" type="text" value="1">
-                                         <span class="cart-plus">+</span>
-                                   </td>
-                                   <td class="product-subtotal">
-                                      <span class="amount">$120.50</span>
-                                   </td>
-                                   <td class="product-remove">
-                                      <a href="#"><i class="fa fa-times"></i></a>
-                                   </td>
-                                </tr>
-                             </tbody>
-                       </table>
+            <div class="col-lg-12">
+                <div class="tp-breadcrumb__content">
+                    <div class="tp-breadcrumb__list">
+                        <span class="tp-breadcrumb__active"><a href="index.html">Home</a></span>
+                        <span class="dvdr">/</span>
+                        <span>Checkout</span>
                     </div>
-                    <div class="row">
-                       <div class="col-12">
-                             <div class="coupon-all">
-                                <div class="coupon">
-                                   <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                   <button class="tp-btn tp-color-btn banner-animation" name="apply_coupon" type="submit">Apply
-                                         Coupon</button>
-                                </div>
-                                <div class="coupon2">
-                                   <button class="tp-btn tp-color-btn banner-animation" name="update_cart" type="submit">Update cart</button>
-                                </div>
-                             </div>
-                       </div>
-                    </div>
-                    <div class="row justify-content-end">
-                       <div class="col-md-5 ">
-                             <div class="cart-page-total">
-                                <h2>Cart totals</h2>
-                                <ul class="mb-20">
-                                   <li>Subtotal <span>$250.00</span></li>
-                                   <li>Total <span>$250.00</span></li>
-                                </ul>
-                                <a href="checkout.html" class="tp-btn tp-color-btn banner-animation">Proceed to Checkout</a>
-                             </div>
-                       </div>
-                    </div>
-                 </form>
-           </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
+<!-- breadcrumb-area-end -->
+
+<!-- cart area -->
+<section class="cart-area pb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-content table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Images</th>
+                                <th class="cart-product-name">Courses</th>
+                                <th class="product-price">Unit Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @php
+                              $total = 0;
+                           @endphp
+                           @foreach($carts as $cart)
+                              @php
+                                 $subtotal = $cart->product->price * $cart->quantity;
+                                 $total += $subtotal;
+                              @endphp
+                            <tr data-id="{{$cart->id}}">
+                                <td class="product-thumbnail">
+                                    {{-- @foreach ($cart->product->photos as $image) --}}
+                                    <a href="javascript:void()">
+                                        <img src="{{ asset('storage/upload/product/'.$cart->product->photos->first()->image_path) }}" alt="">
+                                    </a>
+                                    {{-- @endforeach --}}
+                                </td>
+                                <td class="product-name">
+                                    <a href="javascript:void()">{{ $cart->product->title  }}</a>
+                                </td>
+                                <td class="product-price">
+                                    <span class="amount">${{ number_format($cart->product->price, 2) }}</span>
+                                </td>
+                                <td class="product-quantity">
+                                    <span class="cart-minus remove-from-cart">-</span>
+                                    <input class="cart-input" class=" quantity" type="text" value="{{ $cart->quantity }}">
+                                    <span class="cart-plus update-cart">+</span>
+                                </td>
+                                <td class="product-subtotal">
+                                    <span class="amount">${{ number_format($subtotal, 2)}}</span>
+                                </td>
+                                <td class="product-remove">
+                                    <a href="{{ route('cart.destroy', $cart->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $cart->id }}').submit();"><i class="fa fa-times"></i></a>
+                                    <form action="{{ route('cart.destroy', $cart->id) }}"  method="post" id="delete-form-{{ $cart->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="coupon-all">
+                            <div class="coupon2">
+                                <a href="" class="tp-btn tp-color-btn banner-animation" name="update_cart">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-md-5 ">
+                        <div class="cart-page-total">
+                            <h2>Cart totals</h2>
+                            <ul class="mb-20">
+                                <li>Total <span>${{ number_format($total) }}</span></li>
+                            </ul>
+                            <a href="{{ route('checkout') }}" class="tp-btn tp-color-btn banner-animation">Proceed to Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-     </section>
-     <!-- cart area end-->
+    </div>
+</section>
+<!-- cart area end-->
 @endsection
+@push('scripts')
+<script type="text/javascript">
+ $(document).ready(function() {
+    // Function to show loading state
+    function showLoading($input) {
+        $input.addClass('loading');
+        $input.prop('disabled', true);
+    }
+
+    // Function to hide loading state
+    function hideLoading($input) {
+        $input.removeClass('loading');
+        $input.prop('disabled', false);
+    }
+
+    // Cart Minus Event Handler
+    $('.cart-minus').on('click', function() {
+        var $button = $(this);
+        var $quantityContainer = $button.parent();
+        var $input = $quantityContainer.find('input');
+        var cartId = $button.closest('tr').data('id');
+        var currentVal = parseInt($input.val());
+
+        // Prevent decrease if quantity is already 1
+        if (currentVal <= 1) {
+            toastr.warning('Minimum quantity is 1', 'Warning');
+            return;
+        }
+
+        // Show loading state
+        showLoading($input);
+
+        $.ajax({
+            url: '{{ route('cart.update') }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: cartId,
+                action: 'decrease'
+            },
+            success: function(response) {
+                // Hide loading state
+                hideLoading($input);
+
+                if (response.success) {
+                    // Update input value
+                    $input.val(response.quantity);
+                    
+                    // Show success toast
+                    toastr.success(response.message, 'Success');
+
+                    // Reload page or update totals
+                    location.reload();
+                } else {
+                    // Show error toast
+                    toastr.error(response.message, 'Error');
+                }
+            },
+            error: function(xhr) {
+                // Hide loading state
+                hideLoading($input);
+
+                // Parse error message
+                var errorMessage = 'An unexpected error occurred';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                // Show error toast
+                toastr.error(errorMessage, 'Error');
+
+                // Log error for debugging
+                console.error('Cart Decrease Error:', xhr.responseText);
+            }
+        });
+    });
+
+    // Cart Plus Event Handler
+    $('.cart-plus').on('click', function() {
+        var $button = $(this);
+        var $quantityContainer = $button.parent();
+        var $input = $quantityContainer.find('input');
+        var cartId = $button.closest('tr').data('id');
+
+        // Show loading state
+        showLoading($input);
+
+        $.ajax({
+            url: '{{ route('cart.update') }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: cartId,
+                action: 'increase'
+            },
+            success: function(response) {
+                // Hide loading state
+                hideLoading($input);
+
+                if (response.success) {
+                    // Update input value
+                    $input.val(response.quantity);
+                    
+                    // Show success toast
+                    toastr.success(response.message, 'Success');
+
+                    // Reload page or update totals
+                    location.reload();
+                } else {
+                    // Show error toast
+                    toastr.error(response.message, 'Error');
+                }
+            },
+            error: function(xhr) {
+                // Hide loading state
+                hideLoading($input);
+
+                // Parse error message
+                var errorMessage = 'An unexpected error occurred';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                // Show error toast
+                toastr.error(errorMessage, 'Error');
+
+                // Log error for debugging
+                console.error('Cart Increase Error:', xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+@endpush

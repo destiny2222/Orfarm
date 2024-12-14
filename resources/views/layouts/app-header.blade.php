@@ -364,9 +364,12 @@
                                     <a class="dropdown-item" href="lockscreen.html">
                                         <i class="dropdown-icon fe fe-lock"></i> Lockscreen
                                     </a>
-                                    <a class="dropdown-item" href="authentication-signin.html">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
                                     </a>
+                                    <form action="{{ route('logout') }}" id="logout-form" method="post" style="display: none">
+                                        @csrf
+                                    </form>
                                 </div>
                             </div>
 

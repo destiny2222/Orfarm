@@ -19,5 +19,6 @@ Route::prefix('dashboard')->group(function (){
     
         // checkout routes
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+        Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.placeOrder');
     });
 });

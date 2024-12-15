@@ -5,9 +5,31 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Paystack;
 
 class PaymentController extends Controller
 {
+
+
+    public function redirectToGateway(Request $request){
+        try{
+            $paymentData = [
+                'email' => $request->input('email'),
+                'amount' => $order->total_amount,
+                "reference" => $request->input('reference'),
+                "currency" => "NGN",
+                'metadata' => [
+                    'order_id' => $order->id
+                ],
+            ];
+            return Paystack::getAuthorizationUrl()->redirectNow();
+        }catch(\Exception $e) {
+            Log::error($e->getMessage());
+            return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
+        }   
+    }
+
     public function handleWebhook(Request $request)
     {
         // First check is the headeris present. Else, terminate the code.

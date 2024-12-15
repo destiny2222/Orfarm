@@ -118,7 +118,7 @@
                         <div class="different-address">
                             <div class="ship-different-title">
                                 <h3>
-                                    <label>Ship to a different address?</label>
+                                    <label>Delivery Details?</label>
                                     <input id="ship-box" type="checkbox">
                                 </h3>
                             </div>

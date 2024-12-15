@@ -3,6 +3,7 @@
 use App\Http\Middleware\AdminLog;
 use App\Http\Middleware\AdminLogged;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\AuthenticatedUser;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -19,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin.logged_in'=> AdminLog::class,
             'admin.logged_out'=> AdminLogged::class,
-            // 'authentication.user'=>UserAuthentication::class,
+            'check.user'=>AuthenticatedUser::class,
         ]);
         $middleware->validateCsrfTokens(except: [
             '/dashboard/payment/*',

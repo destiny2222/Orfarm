@@ -10,12 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class CheckoutController extends Controller
 {
     public function checkout(){
-        $cartItems = Cart::where('user_id', Auth::user()->id)->get();
-        $totalPrice = $cartItems->sum('product.price * quantity');  // Assuming price and quantity are fields in the Product model
-        // dd($totalPrice);
+        $cartItem = Cart::where('user_id', Auth::user()->id)->get();
         return view('frontend.checkout', [
-            'cartItems' => $cartItems,
-            'totalPrice' => $totalPrice
+            'cartItems' => $cartItem,
         ]);
     }
 }

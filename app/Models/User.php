@@ -26,6 +26,7 @@ class User extends Authenticatable
         'state',
         'city',
         'address',
+        'image'
     ];
 
 
@@ -33,6 +34,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(ReviewRating::class);
+    }
+
 
 
     /**

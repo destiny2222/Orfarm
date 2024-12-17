@@ -158,13 +158,17 @@
                                 @break
                                 @endforeach
                                 <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-50%</span>
+                                    <span class="tpproduct__info-discount bage__discount">{{ App\Models\Product::calculateDiscount($product->price, $product->discount) }}%</span>
                                     <span class="tpproduct__info-hot bage__hot">{{ $product->badge }}</span>
                                 </div>
                                 <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
+                                    <a class="tpproduct__shopping-wishlist" onclick="event.preventDefault(); document.getElementById('wish-{{ $product->id  }}').submit()" href="{{ route('wishlist.add') }}"><i class="icon-heart icons"></i></a>
+                                    {{-- <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a> --}}
+                                    <a class="tpproduct__shopping-cart" href="{{ route('product.details', $product->slug) }}"><i class="icon-eye"></i></a>
+                                    <form action="{{ route('wishlist.add') }}" id="wish-{{ $product->id  }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    </form>
                                 </div>
                             </div>
                             <div class="tpproduct__content">
@@ -188,7 +192,13 @@
                             </div>
                             <div class="tpproduct__hover-text">
                                 <div class="tpproduct__hover-btn d-flex justify-content-center ">
-                                    <a class="tp-btn-2" href="#">Add to cart</a>
+                                    <form action="{{ route('cart.add') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="slug" value="{{ $product->slug }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button class="tp-btn-2" type="submit">Add to cart</button>
+                                    </form>
                                 </div>
                                 {{-- <div class="tpproduct__descrip">
                                     <ul>

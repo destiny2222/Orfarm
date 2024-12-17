@@ -37,47 +37,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @php
-                              $total = 0;
-                           @endphp
-                           @foreach($carts as $cart)
-                              @php
-                                 $subtotal = $cart->product->price * $cart->quantity;
-                                 $total += $subtotal;
-                              @endphp
-                            <tr data-id="{{$cart->id}}">
-                                <td class="product-thumbnail">
-                                    {{-- @foreach ($cart->product->photos as $image) --}}
-                                    <a href="javascript:void()">
-                                        <img src="{{ asset('storage/upload/product/'.$cart->product->photos->first()->image_path) }}" alt="">
-                                    </a>
-                                    {{-- @endforeach --}}
-                                </td>
-                                <td class="product-name">
-                                    <a href="javascript:void()">{{ $cart->product->title  }}</a>
-                                </td>
-                                <td class="product-price">
-                                    <span class="amount">${{ number_format($cart->product->price, 2) }}</span>
-                                </td>
-                                <td class="product-quantity">
-                                    <span class="cart-minus remove-from-cart">-</span>
-                                    <input class="cart-input" class=" quantity" type="text" value="{{ $cart->quantity }}">
-                                    <span class="cart-plus update-cart">+</span>
-                                </td>
-                                <td class="product-subtotal">
-                                    <span class="amount">${{ number_format($subtotal, 2)}}</span>
-                                </td>
-                                <td class="product-remove">
-                                    <a href="{{ route('cart.destroy', $cart->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $cart->id }}').submit();"><i class="fa fa-times"></i></a>
-                                    <form action="{{ route('cart.destroy', $cart->id) }}"  method="post" id="delete-form-{{ $cart->id }}">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td>
+                            @php
+                                $total = 0;
+                            @endphp
+                            @forelse($carts as $cart)
+                                @php
+                                $subtotal = $cart->product->price * $cart->quantity;
+                                $total += $subtotal;
+                                @endphp
+                                <tr data-id="{{$cart->id}}">
+                                    <td class="product-thumbnail">
+                                        {{-- @foreach ($cart->product->photos as $image) --}}
+                                        <a href="javascript:void()">
+                                            <img src="{{ asset('storage/upload/product/'.$cart->product->photos->first()->image_path) }}" alt="">
+                                        </a>
+                                        {{-- @endforeach --}}
+                                    </td>
+                                    <td class="product-name">
+                                        <a href="javascript:void()">{{ $cart->product->title  }}</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="amount">&#8358;{{ number_format($cart->product->price, 2) }}</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <span class="cart-minus remove-from-cart">-</span>
+                                        <input class="cart-input" class=" quantity" type="text" value="{{ $cart->quantity }}">
+                                        <span class="cart-plus update-cart">+</span>
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="amount">&#8358;{{ number_format($subtotal, 2)}}</span>
+                                    </td>
+                                    <td class="product-remove">
+                                        <a href="{{ route('cart.destroy', $cart->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $cart->id }}').submit();"><i class="fa fa-times"></i></a>
+                                        <form action="{{ route('cart.destroy', $cart->id) }}"  method="post" id="delete-form-{{ $cart->id }}">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6"><h2>Empty Cart</h2></td>
                             </tr>
-                            @endforeach
-
-
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -85,7 +87,7 @@
                     <div class="col-12">
                         <div class="coupon-all">
                             <div class="coupon2">
-                                <a href="" class="tp-btn tp-color-btn banner-animation" name="update_cart">Continue Shopping</a>
+                                <a href="/product" class="tp-btn tp-color-btn banner-animation">Continue Shopping</a>
                             </div>
                         </div>
                     </div>

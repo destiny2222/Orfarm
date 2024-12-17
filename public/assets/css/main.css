@@ -44,7 +44,8 @@
 /*----------------------------------------*/
 /*  01. THEME DEFAULT CSS START
 /*----------------------------------------*/
-@import url("../../../css2");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Schoolbell&display=swap");
+
 :root {
   /**
   @font family declaration
@@ -7915,4 +7916,15 @@ p.checkout-coupon input[type=text]:focus {
 
 .cart-input.loading:focus {
   outline: none;
+}
+
+.icon-star_outline1 {
+    color: #ddd; /* Default color for unselected stars */
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.icon-star_outline1.active {
+    color: #ffc107; /* Color for selected stars */
 }

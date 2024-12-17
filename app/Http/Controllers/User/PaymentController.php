@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\User;
+use App\Notifications\OrderConfirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Paystack;
 
@@ -12,22 +16,68 @@ class PaymentController extends Controller
 {
 
 
-    public function redirectToGateway(Request $request){
+    public function redirectToGateway(Order $order){
+
+        // dd($order);
         try{
             $paymentData = [
-                'email' => $request->input('email'),
-                'amount' => $order->total_amount,
-                "reference" => $request->input('reference'),
+                'first_name' => $order->shipping_first_name,
+                'email' => $order->shipping_email,
+                'amount' => $order->total_amount * 100,
+                "reference" => Paystack::genTranxRef(),
+                // 'callback_url' => route(''),
                 "currency" => "NGN",
                 'metadata' => [
                     'order_id' => $order->id
                 ],
+                'customer' => [
+                    'first_name' => $order->shipping_first_name,
+                    'email' => $order->shipping_email,
+                    'phone' => $order->shipping_phone,
+                ]
             ];
-            return Paystack::getAuthorizationUrl()->redirectNow();
+
+            // Update checkout with transaction reference
+            $order->update([
+                'transaction_reference' => $paymentData['reference']
+            ]);
+            return Paystack::getAuthorizationUrl($paymentData)->redirectNow();
         }catch(\Exception $e) {
             Log::error($e->getMessage());
             return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
         }   
+    }
+
+
+    public function handleCallback()
+    {
+        $paymentDetails = Paystack::getPaymentData();
+
+        // dd($paymentDetails);
+
+        try {
+           
+
+            $order = Order::where('transaction_reference', $paymentDetails['data']['reference'])->latest();
+
+            if ($paymentDetails['data']['status'] === 'success') {
+                // Update order status
+                $order->update([
+                    'payment_status' => 'processing',
+                    // 'order_status' => 'processing'
+                ]);
+                return redirect()->route('order.success')->with('success', 'Payment is in progress. You will be notify when the transaction is completed!');
+            } else {
+                $order->update([
+                    'payment_status' => 'failed'
+                ]);
+
+                return redirect()->route('order.failed')->with('error', 'Payment failed');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('order.failed')->with('error', 'Payment verification failed');
+        }
+       
     }
 
     public function handleWebhook(Request $request)
@@ -36,33 +86,33 @@ class PaymentController extends Controller
         if (!$request->hasHeader("x-paystack-signature"))
             exit("No header present");
 
-        // Get our paystack screte key from our .env file
-        $secret = env("PAYSTACK_SECRET_KEY");
+        // Get our paystack screte key 
+        $secret = config('services.paystack.secret_key');
 
         // Validate the signature
         if ($request->header("x-paystack-signature") !== hash_hmac("sha512", $request->getContent(), $secret))
             exit("Invalid signatute");
-
-        $event = $request->event; // event type. e.g charge.success
-        $data = $request->data; // request payload.
+            $event = $request->event; // event type. e.g charge.success
+            $data = $request->data; // request payload.
 
         // You can log it into laravel.log for view all the data sent from paystack
         Log::info('PAYSTACK PAYLOAD', ['data' => $data]);
 
         if ($event === "charge.success") {
-
             // Transaction info
-            $reference = $data["reference"];
-            $amount = $data["amount"];
+            $order = Order::where('transaction_reference', $data['reference'])->first();
+            // Update order status
+            $order->update([
+                'payment_status' => 'completed',
+                'order_status' => 'processing'
+            ]);
+            // Clear user's cart
+            Cart::where('user_id', $order->user_id)->delete();
 
-            // Customer information 
-            $firstname = $data["customer"]["first_name"];
-            $email = $data["customer"]["email"];
-
-            // etc
-
-            // ........... DISPATCH JOBS OR PERFORM CRUD .......... //
-
+            // Send email to user
+            $user = User::find($order->user_id);
+            $user->notify(new OrderConfirmation($order));
+            
         }
 
         return response()->json('', 200);

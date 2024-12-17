@@ -1,8 +1,11 @@
 <?php
-use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\User\CheckoutController;
-use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\WishListController;
+use App\Http\Controllers\User\ReviewRatingController;
+
 
 
 
@@ -10,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('dashboard')->group(function (){
     Route::middleware(['auth','verified','check.user'])->group(function (){
         Route::get("",[HomeController::class, "index"])->name("home");
+
+        // profile routes
+        Route::get("/profile", [HomeController::class, "profileView"])->name("profile");
+
+        // order route list
+        Route::get('/order/list', [HomeController::class, 'orderHistory'])->name('orders.index');
+
+        
 
         // cart routes
         Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
@@ -19,6 +30,20 @@ Route::prefix('dashboard')->group(function (){
     
         // checkout routes
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-        Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.placeOrder');
+        Route::post('/order/process', [CheckoutController::class, 'processCheckout'])->name('checkout.placeOrder');
+        Route::get('/order/success', [CheckoutController::class, 'success'])->name('order.success');
+        Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
+
+        // wishlist
+        Route::get('/wishlist', [WishListController::class, 'index'])->name('wishlist.index');
+        Route::post('/wishlist/add/', [WishListController::class, 'addProduct'])->name('wishlist.add');
+        Route::post('/wishlist/add/cart', [WishListController::class, 'addProductToCart'])->name('wishlist.add.cart');
+        Route::delete('/wishlist/{id}/remove', [WishListController::class, 'removeProduct'])->name('wishlist.remove');
+
+        // review routes
+        Route::post('/reviews', [ReviewRatingController::class, 'reviewstore'])->name('review.store');
+
+       
+
     });
 });

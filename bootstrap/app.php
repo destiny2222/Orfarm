@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(except: [
             '/dashboard/payment/*',
+            'api/webhook/payment'
 			// 'http://example.com/foo/bar',
 			// 'http://example.com/foo/*',
 		]);

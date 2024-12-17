@@ -39,19 +39,20 @@ class CheckoutController extends Controller
 
     public function processCheckout(CheckoutRequest $request){
         try {
+            // dd($request->all());
             // Shipping Details
             $order = Order::create([
                 'user_id' => Auth::user()->id,
-                'shipping_different' => $request->shipping_different ?? false,
-                'shipping_first_name' => $request->shipping_different ? $request->shipping_first_name : null,
-                'shipping_last_name' => $request->shipping_different ? $request->shipping_last_name : null,
-                'shipping_email' => $request->shipping_different ? $request->shipping_email : null,
-                'shipping_phone' => $request->shipping_different ? $request->shipping_phone : null,
-                'shipping_country' => $request->shipping_different ? $request->shipping_country : null,
-                'shipping_state' => $request->shipping_different ? $request->shipping_state : null,
-                'shipping_city' => $request->shipping_different ? $request->shipping_city : null,
-                'shipping_address' => $request->shipping_different ? $request->shipping_address : null,
-                'shipping_postal_code' => $request->shipping_different ? $request->shipping_postal_code : null,
+                // 'shipping_default' => $request->shipping_default ?? false,
+                'shipping_first_name' => $request->shipping_first_name ,
+                'shipping_last_name' => $request->shipping_last_name ,
+                'shipping_email' => $request->shipping_email ,
+                'shipping_phone' => $request->shipping_phone ,
+                'shipping_country' => $request->shipping_country ,
+                'shipping_state' => $request->shipping_state ,
+                'shipping_city' => $request->shipping_city ,
+                'shipping_address' => $request->shipping_address ,
+                'shipping_postal_code' => $request->shipping_postal_code ,
                 // Total Amount
                 'total_amount' => $this->calculateTotal(),
                 'payment_method' => 'paystack',
@@ -75,5 +76,13 @@ class CheckoutController extends Controller
             });
     }
 
+
+    public function failed(){
+        return view('frontend.failed_order');
+    }
+
+    public function success(){
+        return view('frontend.success_order');
+    }
 
 }

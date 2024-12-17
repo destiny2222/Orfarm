@@ -35,13 +35,28 @@ class Product extends Model
     {
         return Str::slug($this->title);
     }
-    public function getDiscountPriceAttribute(): float
+    // public function getDiscountPriceAttribute(): float
+    // {
+    //     return $this->price - ($this->price * $this->discount / 100);
+    // }
+
+    public static function calculateDiscount($price, $discount)
     {
-        return $this->price - ($this->price * $this->discount / 100);
+        return $discount ? (1 - $price / $discount) * 100 : 0;
+    }
+    
+    public function carts(){
+        return $this->hasMany(Cart::class);
     }
 
     public  function photos(){
         return $this->hasMany(ProductImage::class);
+    }
+
+
+    public function reviews()
+    {
+        return $this->hasMany(ReviewRating::class);
     }
 
    

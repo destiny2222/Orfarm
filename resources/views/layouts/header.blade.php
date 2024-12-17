@@ -1,3 +1,9 @@
+@php
+   $carts = \App\Models\Cart::where('user_id', optional(Auth::user())->id)->get();
+   $wishlist = \App\Models\Wishlist::where('user_id', optional(Auth::user())->id)->get();
+   $categories = \App\Models\Category::orderBy('id', 'DESC')->get();
+@endphp
+
 <header>
     <div class="header__top theme-bg-1 d-none d-md-block">
        <div class="container">
@@ -14,40 +20,6 @@
                       <a href="#">Order Tracking</a>
                       <a href="faq.html">FAQs</a>
                    </div>
-                   <div class="header__lang">
-                      <span class="header__lang-select">English <i class="far fa-angle-down"></i></span>
-                      <ul class="header__lang-submenu">
-                         <li>
-                            <a href="#">Australia</a>
-                         </li>
-                         <li>
-                            <a href="#">Spain</a>
-                         </li>
-                         <li>
-                            <a href="#">Brazil</a>
-                         </li>
-                         <li>
-                            <a href="#">English</a>
-                         </li>
-                         <li>
-                            <a href="#">France</a>
-                         </li>
-                         <li>
-                            <a href="#">United States</a>
-                         </li>
-                      </ul>
-                   </div>
-                   <div class="header__top-price">
-                      <select>
-                         <option>USD</option>
-                         <option>ARS</option>
-                         <option>AUD</option>
-                         <option>BRL</option>
-                         <option>GBP</option>
-                         <option>DKK</option>
-                         <option>EUR</option>
-                      </select>
-                   </div>
                 </div>
              </div>
           </div>
@@ -59,7 +31,7 @@
              <div class="row align-items-center">
                 <div class="col-xl-3">
                    <div class="header__logo">
-                      <a href="/"><img src="assets/img/logo/logo.png" alt="logo"></a>
+                      <a href="/"><img src="/assets/img/logo/logo.png" alt="logo"></a>
                    </div>
                 </div>
                 <div class="col-xl-6">
@@ -69,23 +41,11 @@
                             <li class="">
                               <a href="/">Home</a>
                             </li>
+                            <li><a href="/about">About Us</a></li>
                             <li class="">
-                               <a href="course-grid.html">Shop</a>
+                              <a href="/product">Product</a>
                             </li>
-                            <li class="">
-                               <a href="blog.html">Blog</a>
-                               <ul class="sub-menu">
-                                  <li><a href="blog.html">Big image</a></li>
-                                  <li><a href="blog-right-sidebar.html">Right sidebar</a></li>
-                                  <li><a href="blog-left-sidebar.html">Left sidebar</a></li>
-                                  <li><a href="blog-details.html">Single Post</a></li>
-                               </ul>
-                            </li>
-                            <li class="">
-                               <a href="about.html">Pages</a>
-                            </li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="/contact">Contact Us</a></li>
                          </ul>
                       </nav>
                    </div>
@@ -96,14 +56,23 @@
                          <button class="tp-search-toggle"><i class="icon-search"></i></button>
                       </div>
                       <div class="header__info-user tpcolor__yellow ml-10">
-                         <a href="/login"><i class="icon-user"></i></a>
+                        @guest
+                           <a href="/login"><i class="icon-user"></i></a>
+                        @else
+                           <a href="{{ route('home') }}"><i class="icon-user"></i></a>
+                        @endguest
                       </div>
-                      <div class="header__info-wishlist tpcolor__greenish ml-10">
-                         <a href="wishlist.html"><i class="icon-heart icons"></i></a>
+                      <div class="header__info-cart tpcolor__greenish ml-10">
+                        <a href="{{ route('wishlist.index') }}">
+                           <button>
+                              <i class="icon-heart icons"></i>
+                              <span>{{ count($wishlist) }}</span>
+                           </button>
+                        </a>
                       </div>
                       <div class="header__info-cart tpcolor__oasis ml-10 tp-cart-toggle">
-                         <button><i><img src="assets/img/icon/cart-1.svg" alt=""></i>
-                            <span>5</span>
+                         <button><i><img src="/assets/img/icon/cart-1.svg" alt=""></i>
+                            <span>{{ count($carts) }}</span>
                          </button>
                       </div>
                    </div>
@@ -143,75 +112,57 @@
           <div class="tpcart__product">
              <div class="tpcart__product-list">
                 <ul>
-                   <li>
-                      <div class="tpcart__item">
-                         <div class="tpcart__img">
-                            <img src="assets/img/product/products1-min.jpg" alt="">
-                            <div class="tpcart__del">
-                               <a href="#"><i class="icon-x-circle"></i></a>
-                            </div>
-                         </div>
-                         <div class="tpcart__content">
-                            <span class="tpcart__content-title"><a href="shop-details.html">Stacy's Pita Chips Parmesan Garlic & Herb From Nature</a>
-                            </span>
-                            <div class="tpcart__cart-price">
-                               <span class="quantity">1 x</span>
-                               <span class="new-price">$162.80</span>
-                            </div>
-                         </div>
-                      </div>
-                   </li>
-                   <li>
-                      <div class="tpcart__item">
-                         <div class="tpcart__img">
-                            <img src="assets/img/product/products12-min.jpg" alt="">
-                            <div class="tpcart__del">
-                               <a href="#"><i class="icon-x-circle"></i></a>
-                            </div>
-                         </div>
-                         <div class="tpcart__content">
-                            <span class="tpcart__content-title"><a href="shop-details.html">Banana, Beautiful Skin, Good For Health 1Kg</a>
-                            </span>
-                            <div class="tpcart__cart-price">
-                               <span class="quantity">1 x</span>
-                               <span class="new-price">$138.00</span>
-                            </div>
-                         </div>
-                      </div>
-                   </li>
-                   <li>
-                      <div class="tpcart__item">
-                         <div class="tpcart__img">
-                            <img src="assets/img/product/products3-min.jpg" alt="">
-                            <div class="tpcart__del">
-                               <a href="#"><i class="icon-x-circle"></i></a>
-                            </div>
-                         </div>
-                         <div class="tpcart__content">
-                            <span class="tpcart__content-title"><a href="shop-details.html">Quaker Popped Rice Crisps Snacks Chocolate</a>
-                            </span>
-                            <div class="tpcart__cart-price">
-                               <span class="quantity">1 x</span>
-                               <span class="new-price">$162.8</span>
-                            </div>
-                         </div>
-                      </div>
-                   </li>
+                  @php
+                     $total = 0;
+                  @endphp
+                  @forelse ($carts as $cartItem)
+                  @php
+                     $subtotal = $cartItem->product->price * $cartItem->quantity;
+                     $total += $subtotal;
+                  @endphp
+                  <li>
+                     <div class="tpcart__item">
+                        <div class="tpcart__img">
+                           <img src="{{ asset('storage/upload/product/'.$cartItem->product->photos->first()->image_path) }}" alt="">
+                           <div class="tpcart__del">
+                              <a href="{{ route('cart.destroy',$cartItem->id) }}" onclick="event.preventDefault(); document.getElementById('delete-{{ $cartItem->id  }}').submit()" ><i class="icon-x-circle"></i></a>
+                           </div>
+                           <form action="{{ route('cart.destroy',$cartItem->id ) }}" id="delete-{{ $cartItem->id  }}" method="POST">
+                              @csrf
+                              @method('DELETE')
+                           </form>
+                        </div>
+                        <div class="tpcart__content">
+                           <span class="tpcart__content-title"><a href="{{ route('product.details', $cartItem->product->slug) }}">{{ \Str::limit($cartItem->product->title, 50) }}</a></span>
+                           </span>
+                           <div class="tpcart__cart-price">
+                              <span class="quantity">{{ $cartItem->quantity }} x</span>
+                              <span class="new-price">&#8358;{{ number_format($cartItem->product->price, 2) }}</span>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  @empty
+                     <li>
+                        <div class="tpcart__item">
+                           <div class="tpcart__content">
+                              <span class="tpcart__content-title">No Items</span>
+                           </div>
+                        </div>
+                     </li>
+                  @endforelse
                 </ul>
              </div>
              <div class="tpcart__checkout">
                 <div class="tpcart__total-price d-flex justify-content-between align-items-center">
-                   <span> Subtotal:</span>
-                   <span class="heilight-price"> $300.00</span>
+                   <span> Total:</span>
+                   <span class="heilight-price">&#8358;{{ number_format($total, 2) }}</span>
                 </div>
                 <div class="tpcart__checkout-btn">
-                   <a class="tpcart-btn mb-10" href="cart.html">View Cart</a>
-                   <a class="tpcheck-btn" href="checkout.html">Checkout</a>
+                   <a class="tpcart-btn mb-10" href="{{ route('cart.index') }}">View Cart</a>
+                   <a class="tpcheck-btn" href="{{ route('checkout') }}">Checkout</a>
                 </div>
              </div>
-          </div>
-          <div class="tpcart__free-shipping text-center">
-             <span>Free shipping for orders <b>under 10km</b></span>
           </div>
        </div>
     </div>
@@ -229,7 +180,7 @@
              </div>
              <div class="col-lg-4 col-md-4 col-6 col-sm-4">
                 <div class="header__logo text-center">
-                   <a href="index.html"><img src="assets/img/logo/logo.png" alt="logo"></a>
+                   <a href="/"><img src="/assets/img/logo/logo.png" alt="logo"></a>
                 </div>
              </div>
              <div class="col-lg-4 col-md-4 col-3 col-sm-5">
@@ -238,14 +189,23 @@
                       <button class="tp-search-toggle"><i class="icon-search"></i></button>
                    </div>
                    <div class="header__info-user tpcolor__yellow ml-10 d-none d-sm-block">
-                      <a href="#"><i class="icon-user"></i></a>
+                     @guest
+                        <a href="/login"><i class="icon-user"></i></a>
+                     @else
+                        <a href="{{ route('home') }}"><i class="icon-user"></i></a>
+                     @endguest
                    </div>
-                   <div class="header__info-wishlist tpcolor__greenish ml-10 d-none d-sm-block">
-                      <a href="#"><i class="icon-heart icons"></i></a>
+                   <div class="header__info-cart tpcolor__greenish ml-10 d-none d-sm-block">
+                     <a href="{{ route('wishlist.index') }}">
+                        <button>
+                           <i class="icon-heart icons"></i>
+                           <span>{{ count($wishlist) }}</span>
+                        </button>
+                     </a>
                    </div>
-                   <div class="header__info-cart tpcolor__oasis ml-10 tp-cart-toggle">
-                      <button><i><img src="assets/img/icon/cart-1.svg" alt=""></i>
-                         <span>5</span>
+                   <div class="header__info-cart tpcolor__oasis ml-10 tp-cart-toggle ">
+                      <button><i><img src="/assets/img/icon/cart-1.svg" alt=""></i>
+                         <span>{{ count($carts) }}</span>
                       </button>
                    </div>
                 </div>
@@ -281,24 +241,24 @@
              </div>
              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                 <div class="tpsidebar-categories">
-                   <ul>
-                      <li><a href="shop-details.html">Dairy Farm</a></li>
-                      <li><a href="shop-details.html">Healthy Foods</a></li>
-                      <li><a href="shop-details.html">Lifestyle</a></li>
-                      <li><a href="shop-details.html">Organics</a></li>
-                      <li><a href="shop-details.html">Photography</a></li>
-                      <li><a href="shop-details.html">Shopping</a></li>
-                      <li><a href="shop-details.html">Tips & Tricks</a></li>
-                   </ul>
+                  <ul>
+                     @foreach ($categories as $category)
+                      <li><a href="#">{{ $category->title }}</a></li>
+                     @endforeach
+                  </ul>
                 </div>
              </div>
            </div>
        </div>
        <div class="tpsideinfo__account-link">							
-          <a href="log-in.html"><i class="icon-user icons"></i> Login / Register</a>
+         @guest
+           <a href="/login"><i class="icon-user icons"></i> Login / Register</a>
+         @else
+           <a href="{{ route('home') }}"><i class="icon-user icons"></i> Dashboard</a>
+         @endguest
        </div>
        <div class="tpsideinfo__wishlist-link">
-          <a href="wishlist.html" target="_parent"><i class="icon-heart"></i> Wishlist</a>
+          <a href="{{ route('wishlist.index') }}" target="_parent"><i class="icon-heart"></i> Wishlist</a>
        </div>
     </div> 
     <!-- sidebar-menu-area-end -->

@@ -73,7 +73,7 @@
              <div class="row">
                 <div class="col-lg-6 col-md-7 col-sm-12">
                    <div class="tpfooter__copyright">
-                      <span class="tpfooter__copyright-text">Copyright © <a href="#">ORFARM</a> all rights reserved. Powered by <a href="#">ThemePure</a>.</span>
+                      <span class="tpfooter__copyright-text">Copyright © <a href="#"></a> all rights reserved. Powered by <a href="#"></a>.</span>
                    </div>
                 </div>
                 <div class="col-lg-6 col-md-5 col-sm-12">

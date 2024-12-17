@@ -9,4 +9,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post("/webhook/paystack", [PaymentController::class, "handleWebhook"]);
+Route::post("/webhook/payment", [PaymentController::class, "handleWebhook"]);
+Route::get("/payment/callback", [PaymentController::class, "handleCallback"]);

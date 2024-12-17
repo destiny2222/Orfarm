@@ -103,13 +103,11 @@
                                             </form>
                                             <ul class="product__details-check">
                                                 <li>
-                                                    <a href="#"><i class="icon-heart icons"></i> add to wishlist</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon-layers"></i> Add to Compare</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"><i class="icon-share-2"></i> Share</a>
+                                                    <a href="{{ route('wishlist.add') }}"><i class="icon-heart icons" onclick="event.preventDefault(); document.getElementById('wish-{{ $product->id  }}').submit()" href="{{ route('wishlist.add') }}"></i> add to wishlist</a>         
+                                                    <form action="{{ route('wishlist.add') }}" id="wish-{{ $product->id  }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                    </form>
                                                 </li>
                                             </ul>
                                         </div>
@@ -134,7 +132,7 @@
                                 <div class="nav nav-tabs" role="tablist">
                                     <button class="nav-link active" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true">Product Description</button>
                                     <button class="nav-link" id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-information" type="button" role="tab" aria-controls="nav-information" aria-selected="false">ADDITIONAL INFORMATION</button>
-                                    <button class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Reviews (1)</button>
+                                    <button class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Reviews ({{ count($reviews) }})</button>
                                 </div>
                             </nav>
                         </div>
@@ -210,57 +208,54 @@
 
                             <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab" tabindex="0">
                                 <div class="tpreview__wrapper">
-                                    <h4 class="tpreview__wrapper-title">1 review for Cheap and delicious fresh chicken</h4>
-                                    <div class="tpreview__comment">
-                                        <div class="tpreview__comment-img mr-20">
-                                            <img src="assets/img/testimonial/test-avata-1.png" alt="">
-                                        </div>
-                                        <div class="tpreview__comment-text">
-                                            <div class="tpreview__comment-autor-info d-flex align-items-center justify-content-between">
-                                                <div class="tpreview__comment-author">
-                                                    <span>admin</span>
-                                                </div>
-                                                <div class="tpreview__comment-star">
-                                                    <i class="icon-star_outline1"></i>
-                                                    <i class="icon-star_outline1"></i>
-                                                    <i class="icon-star_outline1"></i>
-                                                    <i class="icon-star_outline1"></i>
-                                                    <i class="icon-star_outline1"></i>
-                                                </div>
+                                    @foreach ($product->reviews as $review)
+                                        <div class="tpreview__comment">
+                                            <div class="tpreview__comment-img mr-20">
+                                                <img src="/assets/img/testimonial/test-avata-1.png" alt="">
                                             </div>
-                                            <span class="date mb-20">--April 9, 2022: </span>
-                                            <p>very good</p>
+                                            <div class="tpreview__comment-text">
+                                                <div class="tpreview__comment-autor-info d-flex align-items-center justify-content-between">
+                                                    <div class="tpreview__comment-author">
+                                                        <span>{{ $review->user->name ?? 'Anonymous' }}</span>
+                                                    </div>
+                                                    <div class="tpreview__comment-star">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $review->rating)
+                                                                <i class="icon-star_outline1" style="color: #ffc107;"></i> <!-- Filled Star -->
+                                                            @else
+                                                                <i class="icon-star_outline1" style="color: #ddd;"></i> <!-- Empty Star -->
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                                <span class="date mb-20">{{ $review->created_at->format('F j, Y') }}:</span>
+                                                <p>{{ $review->review }}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endforeach
+
                                     <div class="tpreview__form">
                                         <h4 class="tpreview__form-title mb-25">Add a review </h4>
-                                        <form action="#">
+                                        <form action="{{ route('review.store') }}" method="POST"> 
+                                            @csrf
                                             <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="tpreview__input mb-30">
-                                                        <input type="text" placeholder="Name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="tpreview__input mb-30">
-                                                        <input type="email" placeholder="Email">
-                                                    </div>
-                                                </div>
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <div class="col-lg-12">
                                                     <div class="tpreview__star mb-20">
                                                         <h4 class="title">Your Rating</h4>
                                                         <div class="tpreview__star-icon">
-                                                            <a href="#"><i class="icon-star_outline1"></i></a>
-                                                            <a href="#"><i class="icon-star_outline1"></i></a>
-                                                            <a href="#"><i class="icon-star_outline1"></i></a>
-                                                            <a href="#"><i class="icon-star_outline1"></i></a>
-                                                            <a href="#"><i class="icon-star_outline1"></i></a>
+                                                            <a href="#" data-value="1"><i class="icon-star_outline1"></i></a>
+                                                            <a href="#" data-value="2"><i class="icon-star_outline1"></i></a>
+                                                            <a href="#" data-value="3"><i class="icon-star_outline1"></i></a>
+                                                            <a href="#" data-value="4"><i class="icon-star_outline1"></i></a>
+                                                            <a href="#" data-value="5"><i class="icon-star_outline1"></i></a>
                                                         </div>
-                                                    </div>
+                                                        <input type="hidden" name="rating" id="rating" value="">
+                                                    </div>                                                    
                                                     <div class="tpreview__input mb-30">
-                                                        <textarea name="text" placeholder="Message"></textarea>
+                                                        <textarea name="review" placeholder="Write your review here..."></textarea>
                                                         <div class="tpreview__submit mt-30">
-                                                            <button class="tp-btn">Submit</button>
+                                                            <button type="submit" class="tp-btn">Submit</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,126 +270,44 @@
             </div>
             <div class="col-lg-2 col-md-12">
                 <div class="tpsidebar pb-30">
-                    <div class="tpsidebar__warning mb-30">
-                        <ul>
-                            <li>
-                                <div class="tpsidebar__warning-item">
-                                    <div class="tpsidebar__warning-icon">
-                                        <i class="icon-package"></i>
-                                    </div>
-                                    <div class="tpsidebar__warning-text">
-                                        <p>Free shipping apply to all <br> orders over $90</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="tpsidebar__warning-item">
-                                    <div class="tpsidebar__warning-icon">
-                                        <i class="icon-shield"></i>
-                                    </div>
-                                    <div class="tpsidebar__warning-text">
-                                        <p>Guaranteed 100% Organic <br> from nature farms</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="tpsidebar__warning-item">
-                                    <div class="tpsidebar__warning-icon">
-                                        <i class="icon-package"></i>
-                                    </div>
-                                    <div class="tpsidebar__warning-text">
-                                        <p>60 days returns if you change <br> your mind</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                     <div class="tpsidebar__banner mb-30">
                         <img src="assets/img/shape/sidebar-product-1.png" alt="">
                     </div>
                     <div class="tpsidebar__product">
                         <h4 class="tpsidebar__title mb-15">Recent Products</h4>
+                        @foreach ($recent_products as $recent_product)
                         <div class="tpsidebar__product-item">
                             <div class="tpsidebar__product-thumb p-relative">
-                                <img src="assets/img/product/sidebar-pro-1.jpg" alt="">
+                                <img src="{{ asset('storage/upload/product/'.$recent_product->photos->first()->image_path) }}" alt="">
                                 <div class="tpsidebar__info bage">
-                                    <span class="tpproduct__info-hot bage__hot">HOT</span>
+                                    <span class="tpproduct__info-hot bage__hot">{{ $recent_product->badge }}</span>
                                 </div>
                             </div>
                             <div class="tpsidebar__product-content">
                                 <span class="tpproduct__product-category">
-                                    <a href="shop-details-3.html">Fresh Fruits</a>
+                                    <a href="shop-details-3.html">{{ \Str::limit($recent_product->category->title, 50)  }}</a>
                                 </span>
                                 <h4 class="tpsidebar__product-title">
-                                    <a href="shop-details-3.html">Fresh Mangosteen 100% Organic From VietNamese</a>
+                                    <a href="shop-details-3.html">{{ \Str::limit($recent_product->title, 50)}}</a>
                                 </h4>
                                 <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
+                                    @foreach ($recent_product->reviews as $review)
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $review->rating)
+                                                <i class="icon-star_outline1" style="color: #ffc107;"></i> <!-- Filled Star -->
+                                            @else
+                                                <i class="icon-star_outline1" style="color: #ddd;"></i> <!-- Empty Star -->
+                                            @endif
+                                        @endfor
+                                    @endforeach
                                 </div>
                                 <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
+                                    <span>&#8358;{{ number_format($recent_product->price, 2) }}</span>
+                                    <del>&#8358;{{ number_format($recent_product->discount, 2)}}</del>
                                 </div>
                             </div>
                         </div>
-                        <div class="tpsidebar__product-item">
-                            <div class="tpsidebar__product-thumb p-relative">
-                                <img src="assets/img/product/sidebar-pro-2.jpg" alt="">
-                                <div class="tpsidebar__info bage">
-                                    <span class="tpproduct__info-hot bage__hot">HOT</span>
-                                </div>
-                            </div>
-                            <div class="tpsidebar__product-content">
-                                <span class="tpproduct__product-category">
-                                    <a href="shop-details-3.html">Fresh Fruits</a>
-                                </span>
-                                <h4 class="tpsidebar__product-title">
-                                    <a href="shop-details-3.html">Fresh Mangosteen 100% Organic From VietNamese</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tpsidebar__product-item">
-                            <div class="tpsidebar__product-thumb p-relative">
-                                <img src="assets/img/product/sidebar-pro-3.jpg" alt="">
-                                <div class="tpsidebar__info bage">
-                                    <span class="tpproduct__info-hot bage__hot">HOT</span>
-                                </div>
-                            </div>
-                            <div class="tpsidebar__product-content">
-                                <span class="tpproduct__product-category">
-                                    <a href="shop-details-3.html">Fresh Fruits</a>
-                                </span>
-                                <h4 class="tpsidebar__product-title">
-                                    <a href="shop-details-grid.html">Fresh Mangosteen 100% Organic From VietNamese</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -414,291 +327,71 @@
         <div class="tpproduct__arrow double-product p-relative">
             <div class="swiper-container tpproduct-active tpslider-bottom p-relative">
                 <div class="swiper-wrapper">
+                    @forelse ($related_products as $related_product)
                     <div class="swiper-slide">
-                        <div class="tpproduct p-relative">
+                        <div class="tpproduct p-relative mb-20">
                             <div class="tpproduct__thumb p-relative text-center">
-                                <a href="#"><img src="assets/img/product/products29-min.jpg" alt=""></a>
-                                <a class="tpproduct__thumb-img" href="shop-details.html"><img src="assets/img/product/products30-min.jpg" alt=""></a>
-                                <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-50%</span>
-                                    <span class="tpproduct__info-hot bage__hot">HOT</span>
-                                </div>
-                                <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
-                                </div>
+                               <a href="{{ route('product.details', $related_product->slug) }}"><img src="{{ asset('storage/upload/product/'.$related_product->photos->first()->image_path) }}" alt=""></a>
+                               <a class="tpproduct__thumb-img" href="{{ route('product.details', $related_product->slug)  }}"><img src="{{ asset('storage/upload/product/'.$related_product->photos->first()->image_path) }}" alt=""></a>
+                               <div class="tpproduct__info bage">
+                                  <span class="tpproduct__info-discount bage__discount">{{ App\Models\Product::calculateDiscount($related_product->price, $related_product->discount) }}%</span>
+                                  <span class="tpproduct__info-hot bage__hot">{{ $related_product->badge }}</span>
+                               </div>
+                               <div class="tpproduct__shopping">
+                                  <a class="tpproduct__shopping-wishlist" onclick="event.preventDefault(); document.getElementById('wish-{{ $related_product->id  }}').submit()" href="{{ route('wishlist.add') }}"><i class="icon-heart icons"></i></a>
+                                  <form action="{{ route('wishlist.add') }}" id="wish-{{ $related_product->id  }}" method="post">
+                                     @csrf
+                                     <input type="hidden" name="product_id" value="{{ $related_product->id }}">
+                                  </form>
+                                  <a class="tpproduct__shopping-cart" href="{{ route('product.details', $related_product->slug)  }}"><i class="icon-eye"></i></a>
+                               </div>
                             </div>
                             <div class="tpproduct__content">
-                                <span class="tpproduct__content-weight">
-                                    <a href="shop-details.html">Fresh Meat</a>
-                                </span>
-                                <h4 class="tpproduct__title">
-                                    <a href="shop-details-top-.html">Mangosteen Organic From VietNamese</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
+                               <span class="tpproduct__content-weight">
+                                  <a href="{{ route('product.details', $related_product->slug) }}) }}">{{ $related_product->category->name }}</a>
+                               </span>
+                               <h4 class="tpproduct__title">
+                                  <a href="{{ route('product.details', $related_product->slug) }}) }}">{{ \Str::limit($related_product->title, 50) }}</a>
+                               </h4>
+                               <div class="tpproduct__rating mb-5">
+                                @foreach ($related_product->reviews as $review)
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $review->rating)
+                                            <i class="icon-star_outline1" style="color: #ffc107;"></i> <!-- Filled Star -->
+                                        @else
+                                            <i class="icon-star_outline1" style="color: #ddd;"></i> <!-- Empty Star -->
+                                        @endif
+                                    @endfor
+                                @endforeach
+                               </div>
+                               <div class="tpproduct__price">
+                                  <span>&#8358;{{ number_format($related_product->price, 2) }}</span>
+                                  <del>&#8358;{{ number_format($related_product->discount, 2)}}</del>
+                               </div>
                             </div>
                             <div class="tpproduct__hover-text">
-                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                    <a class="tp-btn-2" href="cart.html">Add to cart</a>
-                                </div>
-                                <div class="tpproduct__descrip">
-                                    <ul>
-                                        <li>Type: Organic</li>
-                                        <li>MFG: August 4.2021</li>
-                                        <li>LIFE: 60 days</li>
-                                    </ul>
-                                </div>
+                               <form action="{{ route('cart.add') }}" method="post">
+                                  @csrf
+                                  <input type="hidden" name="product_id" value="{{ $related_product->id }}">
+                                  <input type="hidden" name="slug" value="{{ $related_product->slug }}">
+                                  <input type="hidden" name="quantity" class="" value="1">
+                                  <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
+                                     <button type="submit" class="tp-btn-2">Add to cart</button>
+                                  </div>
+                               </form>
+                               {{-- <div class="tpproduct__descrip">
+                                  <ul>
+                                     <li>Type: Organic</li>
+                                     <li>MFG: August 4.2021</li>
+                                     <li>LIFE: 60 days</li>
+                                  </ul>
+                               </div> --}}
                             </div>
-                        </div>
+                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="tpproduct p-relative">
-                            <div class="tpproduct__thumb p-relative text-center">
-                                <a href="#"><img src="assets/img/product/products9-min.jpg" alt=""></a>
-                                <a class="tpproduct__thumb-img" href="shop-details.html"><img src="assets/img/product/products10-min.jpg" alt=""></a>
-                                <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-40%</span>
-                                </div>
-                                <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="tpproduct__content">
-                                <span class="tpproduct__content-weight">
-                                    <a href="shop-details.html">Fresh Meat</a>
-                                </span>
-                                <h4 class="tpproduct__title">
-                                    <a href="shop-details-top.html">Soda Sparkling Water Maker (Rose Gold)</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                            <div class="tpproduct__hover-text">
-                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                    <a class="tp-btn-2" href="cart.html">Add to cart</a>
-                                </div>
-                                <div class="tpproduct__descrip">
-                                    <ul>
-                                        <li>Type: Organic</li>
-                                        <li>MFG: August 4.2021</li>
-                                        <li>LIFE: 60 days</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="tpproduct p-relative">
-                            <div class="tpproduct__thumb p-relative text-center">
-                                <a href="#"><img src="assets/img/product/products13-min.jpg" alt=""></a>
-                                <a class="tpproduct__thumb-img" href="shop-details.html"><img src="assets/img/product/products35-min.jpg" alt=""></a>
-                                <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-10%</span>
-                                </div>
-                                <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="tpproduct__content">
-                                <span class="tpproduct__content-weight">
-                                    <a href="shop-details-3.html">Fresh Fruits</a>
-                                </span>
-                                <h4 class="tpproduct__title">
-                                    <a href="shop-details.html">HOT - Lettuce Fresh Produce Fruit Vegetables</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                            <div class="tpproduct__hover-text">
-                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                    <a class="tp-btn-2" href="cart.html">Add to cart</a>
-                                </div>
-                                <div class="tpproduct__descrip">
-                                    <ul>
-                                        <li>Type: Organic</li>
-                                        <li>MFG: August 4.2021</li>
-                                        <li>LIFE: 60 days</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="tpproduct p-relative">
-                            <div class="tpproduct__thumb p-relative text-center">
-                                <a href="#"><img src="assets/img/product/products27-min.jpg" alt=""></a>
-                                <a class="tpproduct__thumb-img" href="shop-details.html"><img src="assets/img/product/products14-min.jpg" alt=""></a>
-                                <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-90%</span>
-                                    <span class="tpproduct__info-hot bage__hot">HOT</span>
-                                </div>
-                                <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="tpproduct__content">
-                                <span class="tpproduct__content-weight">
-                                    <a href="shop-details-3.html">Fresh Fruits</a>
-                                </span>
-                                <h4 class="tpproduct__title">
-                                    <a href="shop-details-grid.html">Pure Irish Organic Beef Quarter Pounder Burgers</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                            <div class="tpproduct__hover-text">
-                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                    <a class="tp-btn-2" href="cart.html">Add to cart</a>
-                                </div>
-                                <div class="tpproduct__descrip">
-                                    <ul>
-                                        <li>Type: Organic</li>
-                                        <li>MFG: August 4.2021</li>
-                                        <li>LIFE: 60 days</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="tpproduct p-relative">
-                            <div class="tpproduct__thumb p-relative text-center">
-                                <a href="#"><img src="assets/img/product/products15-min.jpg" alt=""></a>
-                                <a class="tpproduct__thumb-img" href="shop-details.html"><img src="assets/img/product/products32-min.jpg" alt=""></a>
-                                <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-50%</span>
-                                </div>
-                                <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="tpproduct__content">
-                                <span class="tpproduct__content-weight">
-                                    <a href="shop-details-3.html">Vagetables</a>
-                                </span>
-                                <h4 class="tpproduct__title">
-                                    <a href="shop-details-3.html">Ginger Fresh, Whole, Organic - 250gram</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                            <div class="tpproduct__hover-text">
-                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                    <a class="tp-btn-2" href="cart.html">Add to cart</a>
-                                </div>
-                                <div class="tpproduct__descrip">
-                                    <ul>
-                                        <li>Type: Organic</li>
-                                        <li>MFG: August 4.2021</li>
-                                        <li>LIFE: 60 days</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="tpproduct p-relative">
-                            <div class="tpproduct__thumb p-relative text-center">
-                                <a href="#"><img src="assets/img/product/products12-min.jpg" alt=""></a>
-                                <a class="tpproduct__thumb-img" href="shop-details.html"><img src="assets/img/product/products28-min.jpg" alt=""></a>
-                                <div class="tpproduct__info bage">
-                                    <span class="tpproduct__info-discount bage__discount">-40%</span>
-                                    <span class="tpproduct__info-hot bage__hot">HOT</span>
-                                </div>
-                                <div class="tpproduct__shopping">
-                                    <a class="tpproduct__shopping-wishlist" href="wishlist.html"><i class="icon-heart icons"></i></a>
-                                    <a class="tpproduct__shopping-wishlist" href="#"><i class="icon-layers"></i></a>
-                                    <a class="tpproduct__shopping-cart" href="#"><i class="icon-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="tpproduct__content">
-                                <span class="tpproduct__content-weight">
-                                    <a href="shop-details-3.html">Fresh Fruits</a>
-                                </span>
-                                <h4 class="tpproduct__title">
-                                    <a href="shop-details-grid.html">Laffy Taffy Laff Bites Gone Bananas - 4 Packs</a>
-                                </h4>
-                                <div class="tpproduct__rating mb-5">
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                    <a href="#"><i class="icon-star_outline1"></i></a>
-                                </div>
-                                <div class="tpproduct__price">
-                                    <span>$56.00</span>
-                                    <del>$19.00</del>
-                                </div>
-                            </div>
-                            <div class="tpproduct__hover-text">
-                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                    <a class="tp-btn-2" href="cart.html">Add to cart</a>
-                                </div>
-                                <div class="tpproduct__descrip">
-                                    <ul>
-                                        <li>Type: Organic</li>
-                                        <li>MFG: August 4.2021</li>
-                                        <li>LIFE: 60 days</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @empty
+                        
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -706,3 +399,30 @@
 </section>
 <!-- product-area-end -->
 @endsection
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const starIcons = document.querySelectorAll('.tpreview__star-icon a');
+        const ratingInput = document.getElementById('rating');
+
+        starIcons.forEach(star => {
+            star.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const selectedValue = star.getAttribute('data-value');
+                ratingInput.value = selectedValue;
+
+                // Remove active class from all stars
+                starIcons.forEach(s => s.querySelector('i').classList.remove('active'));
+
+                // Add active class to all stars up to the clicked one
+                starIcons.forEach((s, index) => {
+                    if (index < selectedValue) {
+                        s.querySelector('i').classList.add('active');
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endpush

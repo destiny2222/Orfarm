@@ -26,7 +26,7 @@
 
     <!--- FONT-ICONS CSS -->
     <link href="/assetss/css/icons.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css">
     <!-- INTERNAL Switcher css -->
     <link href="/assetss/switcher/css/switcher.css" rel="stylesheet">
     <link href="/assetss/switcher/demo.css" rel="stylesheet">
@@ -379,33 +379,18 @@
     <!--{ BOOTSTRAP JS }-->
     <script src="/assetss/js/plugins/bootstrap/js/popper.min.js"></script>
     <script src="/assetss/js/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!--{ SPARKLINE JS }-->
-    <script src="/assetss/js/jquery.sparkline.min.js"></script>
     <!--{ Sticky js }-->
     <script src="/assetss/js/sticky.js"></script>
-    <!--{ PIETY CHART JS }-->
-    <script src="/assetss/js/plugins/peitychart/jquery.peity.min.js"></script>
-    <script src="/assetss/js/plugins/peitychart/peitychart.init.js"></script>
     <!--{ SIDEBAR JS }-->
     <script src="/assetss/js/plugins/sidebar/sidebar.js"></script>
-    <!-- Perfect SCROLLBAR JS-->
-    <script src="/assetss/js/plugins/p-scroll/perfect-scrollbar.js"></script>
-    <script src="/assetss/js/plugins/p-scroll/pscroll.js"></script>
-    <script src="/assetss/js/plugins/p-scroll/pscroll-1.js"></script>
     <!--{ INTERNAL CHARTJS CHART JS }-->
     <script src="/assetss/js/plugins/chart/Chart.bundle.js"></script>
     <script src="/assetss/js/plugins/chart/utils.js"></script>
-    <!--{ Select2 js }-->
-    <script src="/assetss/js/plugins/select2/select2.full.min.js"></script>
-    <script src="/assetss/js/plugins/select2/select2.init.js"></script>
     <!--{  INTERNAL Data tables js }-->
     <script src="/assetss/js/plugins/datatable/jquery.dataTables.min.js"></script>
     <script src="/assetss/js/plugins/datatable/dataTables.bootstrap5.min.js"></script>
     <!--{ INTERNAL APEXCHART JS }-->
     <script src="/assetss/js/apexcharts.js"></script>
-    <!--{ INTERNAL Vector js }-->
-    <script src="/assetss/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="/assetss/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <!--{ SIDE-MENU JS }-->
     <script src="/assetss/js/plugins/sidemenu/sidemenu.js"></script>
     <!--{ INTERNAL INDEX JS }-->
@@ -418,6 +403,6 @@
     <script src="/assetss/js/custom-swicher.js"></script>
     <!--{ Switcher js }-->
     <script src="/assetss/switcher/js/switcher.js"></script>
-
+    @include('layouts.message')
 </body>
 </html>

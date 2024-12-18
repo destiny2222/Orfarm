@@ -30,7 +30,3 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: /text.dexnovate.com/
-          exclude: |
-            .github
-            .github/**
-            .htaccess

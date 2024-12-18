@@ -25,20 +25,23 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-        username: ${{ secrets.LARAVEL_SITE_USER}}
         password: ${{ secrets.LARAVEL_SITE_PASS}}
         server: ${{ secrets.LARAVEL_SITE_SERVER}}
+        username: ${{ secrets.LARAVEL_SITE_USER}}
+        passive: true
+        timeout: 60
+        log-level: verbose
 
     - name: ssh key passphrase
       uses: appleboy/ssh-action@v0.1.8
       with:
         host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        port: ${{ secrets.SSH_PORT }}
         password: ${{ secrets.SSH_PASSWORD }}
+        port: ${{ secrets.SSH_PORT }}
+        username: ${{ secrets.SSH_USERNAME }}
         script: |
           whoami
           ls -al
-          cd folder
+          cd text.dexnovate.com
           composer install --ignore-platform-reqs
           php artisan storage:link

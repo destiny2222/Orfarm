@@ -3,11 +3,11 @@
 
 <!--{ PAGE HEADER START }-->
 <div class="page-header">
-    <h1 class="page-title">Ecommerce</h1>
+    <h1 class="page-title">Dashboard</h1>
     <div>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Ecommerce</li>
+            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </div>
 </div>
@@ -23,7 +23,7 @@
                         <div class="d-flex">
                             <div class="mt-2">
                                 <h6 class="">All Order</h6>
-                                <h2 class="mb-0 number-font">44,278</h2>
+                                <h2 class="mb-0 number-font">{{ $total_orders }}</h2>
                             </div>
                             <div class="ms-auto">
                                 <div class="chart-wrapper mt-1">
@@ -42,7 +42,7 @@
                         <div class="d-flex">
                             <div class="mt-2">
                                 <h6 class="">Completed Order</h6>
-                                <h2 class="mb-0 number-font">67,987</h2>
+                                <h2 class="mb-0 number-font">{{ $total_completed_orders }}</h2>
                             </div>
                             <div class="ms-auto">
                                 <div class="chart-wrapper mt-1">
@@ -61,7 +61,7 @@
                         <div class="d-flex">
                             <div class="mt-2">
                                 <h6 class="">Processing Order</h6>
-                                <h2 class="mb-0 number-font">$76,965</h2>
+                                <h2 class="mb-0 number-font">{{ $total_processing_orders }}</h2>
                             </div>
                             <div class="ms-auto">
                                 <div class="chart-wrapper mt-1">
@@ -80,7 +80,7 @@
                         <div class="d-flex">
                             <div class="mt-2">
                                 <h6 class="">Pending Order</h6>
-                                <h2 class="mb-0 number-font">$76,965</h2>
+                                <h2 class="mb-0 number-font">{{ $total_pending_orders }}</h2>
                             </div>
                             <div class="ms-auto">
                                 <div class="chart-wrapper mt-1">
@@ -99,7 +99,7 @@
                         <div class="d-flex">
                             <div class="mt-2">
                                 <h6 class="">Failed</h6>
-                                <h2 class="mb-0 number-font">$76,965</h2>
+                                <h2 class="mb-0 number-font">{{ $total_failed_orders }}</h2>
                             </div>
                             <div class="ms-auto">
                                 <div class="chart-wrapper mt-1">

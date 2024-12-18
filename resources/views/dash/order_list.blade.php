@@ -21,8 +21,8 @@
                             <div
                                 class="d-flex justify-content-between align-items-start card-widget-1 pb-3 pb-sm-0">
                                 <div>
-                                    <h6 class="mb-2 fw-semibold">Pending Payment</h6>
-                                    <h4 class="mb-2">$5,345.43</h4>
+                                    <h6 class="mb-2 fw-semibold">All Order</h6>
+                                    <h4 class="mb-0 number-font">{{ $total_orders }}</h4>
                                 </div>
                                 <div class="avatar me-sm-4">
                                     <span class="avatar  bg-primary">
@@ -40,7 +40,7 @@
                                 class="d-flex justify-content-between align-items-start card-widget-2  pb-3 pb-sm-0">
                                 <div>
                                     <h6 class="mb-2 fw-semibold">Completed</h6>
-                                    <h4 class="mb-2">$674,347.12</h4>
+                                    <h4 class="mb-2">{{ $total_completed_orders }}</h4>
                                 </div>
                                 <div class="avatar me-lg-4">
                                     <span class="avatar bg-success">
@@ -57,8 +57,8 @@
                             <div
                                 class="d-flex justify-content-between align-items-start pb-3 pb-sm-0 card-widget-3">
                                 <div>
-                                    <h6 class="mb-2 fw-semibold">Refunded</h6>
-                                    <h4 class="mb-2">$8,345.23</h4>
+                                    <h6 class="mb-2 fw-semibold">Processing Order</h6>
+                                    <h4 class="mb-2">{{ $total_processing_orders }}</h4>
                                 </div>
                                 <div class="avatar  me-sm-4">
                                     <span class="avatar bg-info">
@@ -74,8 +74,8 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start ">
                                 <div>
-                                    <h6 class="mb-2 fw-semibold">Failed</h6>
-                                    <h4 class="mb-2">$14,235.12</h4>
+                                    <h6 class="mb-2 fw-semibold">Pending Order</h6>
+                                    <h4 class="mb-2">{{ $total_pending_orders }}</h4>
                                 </div>
                                 <div class="avatar">
                                     <span class="avatar bg-danger">
@@ -95,542 +95,81 @@
                         <table class="table table-bordered" id="orderListTable">
                             <thead>
                                 <tr>
-                                    <th>customers</th>
-                                    <th>date</th>
-                                    <th>order</th>
-                                    <th>payment</th>
-                                    <th>status</th>
-                                    <th>method</th>
+                                    <th>Product</th>
+                                    <th>Order ID</th>
+                                    <th>Total</th>
+                                    <th>Date Purchased</th>
+                                    <th>Payment Status</th>
+                                    <th>Order Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse ($orderHistory as $orderItem)
                                 <tr>
                                     <td>
                                         <div
                                             class="d-flex justify-content-start align-items-center order-name text-nowrap">
                                             <div class="avatar-wrapper">
                                                 <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/1.jpg"
-                                                        alt="Avatar" class="rounded-circle">
+                                                    <img src="{{ asset('storage/upload/product/'.$orderItem->product->photos->first()->image_path) }}" alt="Avatar" class="rounded-circle">
                                                 </div>
                                             </div>
                                             <div class="d-flex flex-column">
                                                 <h6 class="m-0">
-                                                    <a href="#"> John Doe</a>
+                                                    <a href="#">{{ \Str::limit($orderItem->product->title, 30) }}</a>
                                                 </h6>
-                                                <small
-                                                    class="text-muted">john.doe@example.com</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="text-nowrap">Mar 14, 2023, 10:21</span></td>
+                                    <td></td>
                                     <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#564</span></a>
+                                        <span class="fw-semibold">&#8358;{{ number_format($orderItem->product->price) }}</span>
                                     </td>
+                                    <td><span class="text-nowrap">{{ $orderItem->created_at->format('d/m/Y h:i') }}</span></td>
                                     <td>
+                                        @if ($orderItem->order->payment_status == 'pending')
                                         <h6 class="mb-0 w-px-100 text-warning">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Pending
+                                            <i class="bx bxs-circle fs-tiny me-2"></i> Pending
                                         </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-success"
-                                            text-capitalized="">Delivered</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/mastercard.png"
-                                                alt="mastercard" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>2356</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/2.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">Jane Smith</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">jane.smith@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 20, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#6989</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-secondary">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Cancelled
+                                        @elseif ($orderItem->order->payment_status == 'processing')
+                                        <h6 class="mb-0 w-px-100 text-info">
+                                            <i class="bx bxs-circle fs-tiny me-2"></i> Processing
                                         </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-danger"
-                                            text-capitalized="">Cancelled</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/mastercard.png"
-                                                alt="mastercard" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>2369</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/3.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">Emily Davis</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">emily.davis@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 21, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#6989</span></a>
-                                    </td>
-                                    <td>
+                                        @elseif ($orderItem->order->payment_status == 'completed')
                                         <h6 class="mb-0 w-px-100 text-success">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Paid
+                                            <i class="bx bxs-circle fs-tiny me-2"></i> Paid
                                         </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-warning">Dispatched</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/paypal_logo.png"
-                                                alt="paypal" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>2365</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/4.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#"> Ethan White</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">ethan.white@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 21, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#9876</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-danger"><i
-                                                class="bx bxs-circle fs-tiny me-2"></i>Failed</h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-primary">Out for Delivery</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/paypal_logo.png"
-                                                alt="paypal" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>9106</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-original-title="Delete">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/5.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">James Brown</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">james.brown@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 26, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#6989</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-success">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Paid
+                                        @elseif ($orderItem->order->payment_status == 'failed')
+                                        <h6 class="mb-0 w-px-100 text-danger">
+                                            <i class="bx bxs-circle fs-tiny me-2"></i> Failed
                                         </h6>
+                                        @endif
                                     </td>
                                     <td>
-                                        <span class="badge px-2 bg-warning">Dispatched</span>
+                                        @if ($orderItem->order->order_status == 'delivered')
+                                         <span class="badge px-2 bg-success" text-capitalized="">Delivered</span>
+                                        @elseif ($orderItem->order->order_status == 'processing')
+                                         <span class="badge px-2 bg-info" text-capitalized="">Out for Delivery</span>
+                                        @elseif ($orderItem->order->order_status == 'cancelled')
+                                         <span class="badge px-2 bg-danger" text-capitalized="">Cancelled</span>
+                                        @elseif ($orderItem->order->order_status == 'pending')
+                                         <span class="badge px-2 bg-danger" text-capitalized="">Pending</span> 
+                                        @endif
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/mastercard.png"
-                                                alt="mastercard" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>1564</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
+                                        <a href="{{ route('invoice.index',$orderItem->id ) }}" class="btn btn-icon border" data-bs-toggle="tooltip" data-bs-original-title="View">
+                                            <i class="ti ti-eye fs-18"></i>
                                         </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
+                                       
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/6.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">Ava Anderson</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">ava.anderson@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 13, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#5642</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-warning">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Pending
-                                        </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-success"
-                                            text-capitalized="">Delivered</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/mastercard.png"
-                                                alt="mastercard" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>2356</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/7.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">Benjamin
-                                                        Thomas</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">jane.smith@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 20, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#6989</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-secondary">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Cancelled
-                                        </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-danger"
-                                            text-capitalized="">Cancelled</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/mastercard.png"
-                                                alt="mastercard" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>2369</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/8.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">Mia Moore</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">mia.moore@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 21, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#6989</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-success">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Paid
-                                        </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-warning">Dispatched</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/paypal_logo.png"
-                                                alt="paypal" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>2365</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/9.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#"> Alexander
-                                                        Hall</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">alexander.hall@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 29, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#7845</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-danger"><i
-                                                class="bx bxs-circle fs-tiny me-2"></i>Failed</h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-primary">Out for Delivery</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/paypal_logo.png"
-                                                alt="paypal" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>9106</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-original-title="Delete">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div
-                                            class="d-flex justify-content-start align-items-center order-name text-nowrap">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar me-2">
-                                                    <img src="../assets/images/profiles/3.jpg"
-                                                        alt="Avatar" class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="m-0">
-                                                    <a href="#">Sophia Taylor</a>
-                                                </h6>
-                                                <small
-                                                    class="text-muted">sophia.taylor@example.com</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="text-nowrap">Mar 26, 2023, 10:21</span></td>
-                                    <td>
-                                        <a href="#"><span
-                                                class="fw-semibold">#6989</span></a>
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-0 w-px-100 text-success">
-                                            <i class="bx bxs-circle fs-tiny me-2"></i>Paid
-                                        </h6>
-                                    </td>
-                                    <td>
-                                        <span class="badge px-2 bg-warning">Dispatched</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <img src="../assets/images/icons/mastercard.png"
-                                                alt="mastercard" class="me-2" width="16">
-                                            <span><i
-                                                    class="bx bx-dots-horizontal-rounded"></i>7894</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#"
-                                            class="btn btn-icon border" data-bs-toggle="tooltip"
-                                            data-bs-original-title="View">
-                                            <i class="fe fe-eye fs-18"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" class="btn btn-icon border"
-                                            data-bs-toggle="tooltip" data-bs-original-title="Delet">
-                                            <i class="fe fe-trash fs-18"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">No order items</td>
+                                    </tr>
+                                @endforelse
+                                
                             </tbody>
                         </table>
                     </div>

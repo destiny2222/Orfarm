@@ -81,58 +81,103 @@
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>First Name <span class="required">*</span></label>
-                                    <input type="text" name="shipping_first_name" placeholder="">
+                                    <input type="text" name="shipping_first_name" class="@error('shipping_first_name') is-invalid @enderror" required placeholder="">
                                 </div>
+                                @error('shipping_first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Last Name <span class="required">*</span></label>
-                                    <input type="text" name="shipping_last_name" placeholder="">
+                                    <input type="text" name="shipping_last_name" class="@error('shipping_last_name') is-invalid @enderror" required placeholder="">
                                 </div>
+                                @error('shipping_last_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-12">
                                 <div class="country-select">
                                     <label>Country <span class="required">*</span></label>
-                                    <select name="shipping_country">
+                                    <select name="shipping_country" class="@error('shipping_country') is-invalid @enderror" required>
                                         <option value="nigeria">Nigeria</option>
                                     </select>
                                 </div>
+                                @error('shipping_country')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Address <span class="required">*</span></label>
-                                    <input type="text" name="shipping_address" placeholder="Street address">
+                                    <input type="text" name="shipping_address" class="@error('shipping_address') is-invalid @enderror" required placeholder="Street address">
                                 </div>
+                                @error('shipping_address')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Town / City <span class="required">*</span></label>
-                                    <input type="text" name="shipping_city" placeholder="Town / City">
+                                    <input type="text" name="shipping_city" class="@error('shipping_city') is-invalid @enderror" required placeholder="Town / City">
                                 </div>
+                                @error('shipping_city')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>State / County <span class="required">*</span></label>
-                                    <input type="text" name="shipping_state" placeholder="">
+                                    <input type="text" name="shipping_state" class="@error('shipping_state') is-invalid @enderror" required placeholder="">
                                 </div>
+                                @error('shipping_state')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Postcode / Zip <span class="required">*</span></label>
-                                    <input type="text" name="shipping_postal_code" placeholder="Postcode / Zip">
+                                    <input type="text" name="shipping_postal_code" class="@error('shipping_postal_code') is-invalid @enderror" required placeholder="Postcode / Zip">
                                 </div>
+                                @error('shipping_postal_code')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Email Address <span class="required">*</span></label>
-                                    <input type="email" name="shipping_email" placeholder="">
+                                    <input type="email" name="shipping_email" class="@error('shipping_email') is-invalid @enderror" required placeholder="">
                                 </div>
+                                @error('shipping_email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Phone <span class="required">*</span></label>
-                                    <input type="text" name="shipping_phone" placeholder="Postcode / Zip">
+                                    <input type="text" name="shipping_phone" class="@error('shipping_phone') is-invalid @enderror" required placeholder="Postcode / Zip">
                                 </div>
+                                @error('shipping_phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>

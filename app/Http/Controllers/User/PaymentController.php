@@ -5,9 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use App\Notifications\OrderConfirmation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Paystack;
@@ -17,9 +19,16 @@ class PaymentController extends Controller
 
 
     public function redirectToGateway(Order $order){
-
-        // dd($order);
         try{
+        // Get the current user's cart items
+        $cartItems = Cart::where('user_id', Auth::user()->id)->get();
+
+        // Check if cart is empty
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Your cart is empty.');
+        }
+
+
             $paymentData = [
                 'first_name' => $order->shipping_first_name,
                 'email' => $order->shipping_email,
@@ -36,6 +45,17 @@ class PaymentController extends Controller
                     'phone' => $order->shipping_phone,
                 ]
             ];
+
+            // orderItems
+            foreach ($cartItems as $cartItem) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $cartItem->product_id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $cartItem->product->price, 
+                ]);
+            }
+
 
             // Update checkout with transaction reference
             $order->update([
@@ -66,16 +86,18 @@ class PaymentController extends Controller
                     'payment_status' => 'processing',
                     // 'order_status' => 'processing'
                 ]);
-                return redirect()->route('order.success')->with('success', 'Payment is in progress. You will be notify when the transaction is completed!');
+
+                return redirect()->route('orders.index')->with('success', 'Payment is in progress. You will be notify when the transaction is completed!');
             } else {
                 $order->update([
-                    'payment_status' => 'failed'
+                    'payment_status' => 'failed',
+                    'order_status' => 'failed'
                 ]);
 
-                return redirect()->route('order.failed')->with('error', 'Payment failed');
+                return back()->with('error', 'Payment failed');
             }
         } catch (\Exception $e) {
-            return redirect()->route('order.failed')->with('error', 'Payment verification failed');
+            return back()->with('error', 'Payment verification failed');
         }
        
     }
@@ -104,7 +126,7 @@ class PaymentController extends Controller
             // Update order status
             $order->update([
                 'payment_status' => 'completed',
-                'order_status' => 'processing'
+                // 'order_status' => 'pending'
             ]);
             // Clear user's cart
             Cart::where('user_id', $order->user_id)->delete();

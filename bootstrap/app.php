@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.user'=>AuthenticatedUser::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            '/dashboard/payment/*',
+            // '/dashboard/payment/*',
             'api/webhook/payment'
 			// 'http://example.com/foo/bar',
 			// 'http://example.com/foo/*',

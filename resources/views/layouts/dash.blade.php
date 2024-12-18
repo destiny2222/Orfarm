@@ -36,7 +36,7 @@
 
     <!--{ Pre-loder start }-->
     <div id="global-loader">
-        <img src="/assetss/images/loader.svg" class="loader-img" alt="Loader">
+        <img src="/assetss/images/loader.gif"  class="loader-img" alt="Loader">
     </div>
     <!--{ Pre-loder end }-->
 

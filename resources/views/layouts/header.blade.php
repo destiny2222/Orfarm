@@ -31,7 +31,7 @@
              <div class="row align-items-center">
                 <div class="col-xl-3">
                    <div class="header__logo">
-                      <a href="/"><img src="/assets/img/logo/logo.png" alt="logo"></a>
+                      <a href="/"><img src="/assets/img/logo/logo.png" width="100" alt="logo"></a>
                    </div>
                 </div>
                 <div class="col-xl-6">
@@ -180,7 +180,7 @@
              </div>
              <div class="col-lg-4 col-md-4 col-6 col-sm-4">
                 <div class="header__logo text-center">
-                   <a href="/"><img src="/assets/img/logo/logo.png" alt="logo"></a>
+                   <a href="/"><img src="/assets/img/logo/logo.png" width="100" alt="logo"></a>
                 </div>
              </div>
              <div class="col-lg-4 col-md-4 col-3 col-sm-5">

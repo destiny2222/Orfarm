@@ -19,7 +19,7 @@ Route::prefix('dashboard')->group(function (){
 
         // order route list
         Route::get('/order/list', [HomeController::class, 'orderHistory'])->name('orders.index');
-
+        Route::get('/order/{id}/invoice', [HomeController::class, 'invoice'])->name('invoice.index');
         
 
         // cart routes

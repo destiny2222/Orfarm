@@ -26,7 +26,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          server: ${{ secrets.ftp_server }}
-          username: ${{ secrets.ftp_username }}
-          password: ${{ secrets.ftp_password }}
+          server: ${{ secrets.LARAVEL_SITE_SERVER }}
+          username: ${{ secrets.LARAVEL_SITE_USER }}
+          password: ${{ secrets.LARAVEL_SITE_PASS }}
           server-dir: /text.dexnovate.com/

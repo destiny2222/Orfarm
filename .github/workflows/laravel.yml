@@ -30,3 +30,4 @@ jobs:
           username: ${{ secrets.LARAVEL_SITE_USER}}
           password: ${{ secrets.LARAVEL_SITE_PASS}}
           server-dir: text.dexnovate.com/
+          timeout: 300000

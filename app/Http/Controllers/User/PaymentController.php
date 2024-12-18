@@ -86,7 +86,6 @@ class PaymentController extends Controller
                     'payment_status' => 'processing',
                     // 'order_status' => 'processing'
                 ]);
-
                 return redirect()->route('orders.index')->with('success', 'Payment is in progress. You will be notify when the transaction is completed!');
             } else {
                 $order->update([

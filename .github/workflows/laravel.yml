@@ -28,8 +28,6 @@ jobs:
         password: ${{ secrets.LARAVEL_SITE_PASS}}
         server: ${{ secrets.LARAVEL_SITE_SERVER}}
         username: ${{ secrets.LARAVEL_SITE_USER}}
-        passive: true
-        timeout: 60
         log-level: verbose
 
     - name: ssh key passphrase

@@ -1,32 +1,41 @@
-name: Publish Website to CPanel
+name: 🚀 Deploy website on push
+
+# Controls when the action will run.
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  FTP-Deploy-Action:
-    name: Deploy-Action
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.1.0
-      with:
-        fetch-depth: 2 
-    - name: Build assets
-      run: npm install && npm run build
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3.4.0
 
-    - name: Install PHP and Composer
-      uses: shivammathur/setup-php@v2
-      with:
-          php-version: '8.2' 
-          tools: 'composer'
+      # https://github.com/actions/checkout
+      - name: Checkout WP Plugin
+        uses: actions/checkout@v3.4.0
+        with:
+          repository: XXX
+          token: ${{ secrets.my_pat }}
+          path: mu-plugins
 
-    - name: Install PHP dependencies
-      run: composer install --no-dev --optimize-autoloader
-        
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
-      with:
-        server: ${{ secrets.LARAVEL_SITE_SERVER }}
-        username: ${{ secrets.LARAVEL_SITE_USER }}
-        password: ${{ secrets.LARAVEL_SITE_PASS }}
-        server-dir: /text.dexnovate.com/
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /text.dexnovate.com/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .git*
+            .git*/**
+            .github/*

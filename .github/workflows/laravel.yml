@@ -1,30 +1,35 @@
-name: 🚀 Deploy website on push
-
-# Controls when the action will run.
+name: Publish Website to CPanel
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    branches:
+      - main
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /text.dexnovate.com/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            .git*
-            .git*/**
-            .github/*
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2 
+    - name: Build assets
+      run: npm install && npm run build
+
+    - name: Install PHP and Composer
+      uses: shivammathur/setup-php@v2
+      with:
+          php-version: '8.2' # Adjust to match the PHP version used by your Laravel project
+          tools: 'composer'
+
+    - name: Install PHP dependencies
+      run: composer install --no-dev --optimize-autoloader
+        
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.LARAVEL_SITE_SERVER }}
+        username: ${{ secrets.LARAVEL_SITE_USER }}
+        password: ${{ secrets.LARAVEL_SITE_PASS }}
+        protocol: ftps
+        port: 21098
+        dry-run: true
+        server-dir: /text.dexnovate.com/

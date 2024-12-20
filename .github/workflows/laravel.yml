@@ -24,12 +24,12 @@ jobs:
       run: composer install --no-dev --optimize-autoloader
         
     - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
         server: ${{ secrets.LARAVEL_SITE_SERVER }}
         username: ${{ secrets.LARAVEL_SITE_USER }}
         password: ${{ secrets.LARAVEL_SITE_PASS }}
         protocol: ftps
         port: 21098
-        dry-run: true
+        local-dir: public/
         server-dir: /text.dexnovate.com/

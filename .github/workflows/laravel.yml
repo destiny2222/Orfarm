@@ -27,8 +27,8 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
         server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.LARAVEL_SITE_USER }}
-        password: ${{ secrets.FTP_USER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftps
         port: 21098
         server-dir: /text.dexnovate.com/

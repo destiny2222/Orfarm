@@ -89,7 +89,7 @@ class PaymentController extends Controller
                 return redirect()->route('orders.index')->with('success', 'Payment is in progress. You will be notify when the transaction is completed!');
             } else {
                 $order->update([
-                    'payment_status' => 'failed',
+                    'payment_status' => 'unpaid',
                     'order_status' => 'failed'
                 ]);
 
@@ -124,7 +124,7 @@ class PaymentController extends Controller
             $order = Order::where('transaction_reference', $data['reference'])->first();
             // Update order status
             $order->update([
-                'payment_status' => 'completed',
+                'payment_status' => 'paid',
                 // 'order_status' => 'pending'
             ]);
             // Clear user's cart

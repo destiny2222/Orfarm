@@ -20,7 +20,7 @@
      <ul class="navbar-nav" id="navbar-nav">
 
           <li class="nav-item">
-               <a class="nav-link" href="index.html">
+               <a class="nav-link" href="{{ route('admin.home') }}">
                     <span class="nav-icon">
                          <iconify-icon icon="solar:widget-5-bold-duotone"></iconify-icon>
                     </span>
@@ -44,7 +44,7 @@
                     <span class="nav-icon">
                          <iconify-icon icon="solar:users-group-two-rounded-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Customers </span>
+                    <span class="nav-text"> Customers Lists</span>
                </a>
                <div class="collapse" id="sidebarCustomers">
                     <ul class="nav sub-navbar-nav">
@@ -102,32 +102,6 @@
           </li>
 
           <li class="nav-item">
-               <a class="nav-link menu-arrow" href="#sidebarSellers" data-bs-toggle="collapse" role="button"
-                    aria-expanded="false" aria-controls="sidebarSellers">
-                    <span class="nav-icon">
-                         <iconify-icon icon="solar:shop-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Sellers </span>
-               </a>
-               <div class="collapse" id="sidebarSellers">
-                    <ul class="nav sub-navbar-nav">
-                         <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="seller-list.html">List</a>
-                         </li>
-                         <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="seller-details.html">Details</a>
-                         </li>
-                         <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="seller-edit.html">Edit</a>
-                         </li>
-                         <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="seller-add.html">Create</a>
-                         </li>
-                    </ul>
-               </div>
-          </li>
-
-          <li class="nav-item">
                <a class="nav-link menu-arrow" href="#sidebarOrders" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="sidebarOrders">
                     <span class="nav-icon">
@@ -139,18 +113,22 @@
                     <ul class="nav sub-navbar-nav">
 
                          <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="orders-list.html">List</a>
+                              <a class="sub-nav-link" href="{{ route('admin.order.list') }}">All Orders</a>
                          </li>
                          <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="order-detail.html">Details</a>
+                              <a class="sub-nav-link" href="{{ route('admin.order.pending') }}">Pending Orders</a>
                          </li>
                          <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="order-cart.html">Cart</a>
+                              <a class="sub-nav-link" href="{{ route('admin.order.progress') }}">Progress Orders</a>
                          </li>
                          <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="order-checkout.html">Check Out</a>
+                              <a class="sub-nav-link" href="{{ route('admin.order.delivered') }}">Delivered Orders</a>
+                         </li>
+                         <li class="sub-nav-item">
+                              <a class="sub-nav-link" href="{{ route('admin.order.cancel') }}"> Canceled Orders</a>
                          </li>
                     </ul>
+                   
                </div>
           </li>
 
@@ -160,15 +138,15 @@
                     <span class="nav-icon">
                          <iconify-icon icon="solar:card-send-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Purchases </span>
+                    <span class="nav-text"> Manage site </span>
                </a>
                <div class="collapse" id="sidebarPurchases">
                     <ul class="nav sub-navbar-nav">
                          <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="purchase-list.html">List</a>
+                              <a class="sub-nav-link" href="{{ route('admin.home.page') }}">Home Page</a>
                          </li>
                          <li class="sub-nav-item">
-                              <a class="sub-nav-link" href="purchase-order.html">Order</a>
+                              <a class="sub-nav-link" href="#">Slider</a>
                          </li>
                          <li class="sub-nav-item">
                               <a class="sub-nav-link" href="purchase-returns.html">Return</a>

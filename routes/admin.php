@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\SiteManagementController;
 
 
 
@@ -42,6 +44,25 @@ Route::prefix('admin')->name('admin.')->group(function (){
         Route::put('/product/{id}/update', [ProductController::class, 'update'])->name('product.update');
         Route::delete('/product/{id}/delete', [ProductController::class, 'destroy'])->name('product.delete');
 
+        // order list
+        Route::get('order/list', [OrderController::class , 'index'])->name('order.list');   
+        Route::get('/order/pending', [OrderController::class, 'pendingOrder'])->name('order.pending');  
+        Route::get('/order/progress', [OrderController::class,  'processingOrder'])->name('order.progress');
+        Route::get('/order/delivered', [OrderController::class, 'deliveredOrder'])->name('order.delivered');
+        Route::get('/order/cancel', [OrderController::class, 'cancelledOrder'])->name('order.cancel');
+        Route::put('/order/{id}/update', [OrderController::class, 'update'])->name('order.update');
+        Route::delete('/order/{id}/delete', [OrderController::class, 'destroy'])->name('order.delete');
+
+        // site management
+        Route::get('/home-page', [SiteManagementController::class, 'index'])->name('home.page');
+        Route::post('/home/banner/store', [SiteManagementController::class, 'bannerStore'])->name('home.banner.store');
+        Route::post('/home/promotion/store', [SiteManagementController::class, 'promotionStore'])->name('home.promotion.store');
+
+        // shipping route 
+        Route::get('/shipping', [SiteManagementController::class, 'shippingIndex'])->name('shipping.index');
+        Route::post('/shipping/store', [SiteManagementController::class, 'shippingStore'])->name('shipping.store');
+        Route::put('/shipping/{id}/update', [SiteManagementController::class, 'shippingUpdate'])->name('shipping.update');
+        
         
         // plugin
         // Route::get('/plugin', [PluginController::class, 'index'])->name('plugin.index');

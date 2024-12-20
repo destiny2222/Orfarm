@@ -1,34 +1,46 @@
-name: Publish Website to CPanel
+name: Laravel
+
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  deployment:
+
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2.1.0
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        fetch-depth: 2 
-    - name: Build assets
-      run: npm install && npm run build
-
-    - name: Install PHP and Composer
-      uses: shivammathur/setup-php@v2
+        php-version: '8.0'
+    - uses: actions/checkout@v3
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      
+    - name: Directory Permissions
+      run: chmod -R 777 storage bootstrap/cache
+      
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
-          php-version: '8.2' # Adjust to match the PHP version used by your Laravel project
-          tools: 'composer'
-
-    - name: Install PHP dependencies
-      run: composer install --no-dev --optimize-autoloader
+        server: ${{ secrets.FTP_SERVER}}
+        username: ${{ secrets.FTP_USER}}
+        password: ${{ secrets.FTP_PASSWORD}}
         
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+
+    - name: ssh key passphrase
+      uses: appleboy/ssh-action@v0.1.8
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USER }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        protocol: ftps
-        port: 21098
-        server-dir: /text.dexnovate.com/
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        port: ${{ secrets.SSH_PORT }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          whoami
+          ls -al
+          cd text.dexnovate.com/
+          composer install --ignore-platform-reqs
+          php artisan storage:link
+          

@@ -11,6 +11,7 @@
                         <iconify-icon icon="solar:settings-bold-duotone" class="text-primary fs-20"></iconify-icon>
                         Three Banner Section
                     </h4>
+                    <a href=""></a>
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-between g-3">
@@ -100,14 +101,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="mb-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" name="status" {{ ($promotion?->status == 1) ? 'checked' : '' }}  type="checkbox" role="switch" id="flexSwitchCheckChecked">
                                         <label class="form-check-label" for="flexSwitchCheckChecked">Active/Inactive</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="meta-description" class="form-label">Description</label>
@@ -135,229 +136,69 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <form>
+                    <form action="{{ route('admin.home.promotion.store') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label for="store-name" class="form-label">Store Name</label>
-                                    <input type="text" id="store-name" class="form-control" placeholder="Enter name">
+                                    <label for="meta-name" class="form-label"> Title</label>
+                                    <input type="text" id="meta-name" name="title" value="{{ $dealOfDay->title ?? ''  }}" class="form-control" placeholder="Title">
                                 </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <form>
+                            </div>
+                            <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label for="owner-name" class="form-label">Store Owner Full Name</label>
-                                    <input type="text" id="owner-name" class="form-control" placeholder="Full name">
+                                    <label for="meta-tag" class="form-label">Subtitle</label>
+                                    <input type="text" id="meta-tag" name="subtitle" value="{{ $dealOfDay->subtitle ?? ''  }}" class="form-control" placeholder="">
                                 </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="schedule-number" class="form-label">Owner Phone number</label>
-                                <input type="number" id="schedule-number" name="schedule-number" class="form-control" placeholder="Number">
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="">Offer time</label>
+                                    <input type="datetime" name="offer_end_time" class="form-control" value="{{ $dealOfDay->offer_end_time ?? ''  }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-12 col-lg-8">
+                                        <div class="mb-3">
+                                            <label for="meta-description" class="form-label">Image</label>
+                                            <input type="file" name="image" value="" id="" value="{{ $dealOfDay->image ?? ''  }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <div class="mb-3">
+                                            <img src="" class="img-fluid" alt="" style="width: 50%; height: auto;object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" name="status" {{ ($dealOfDay?->status == 1) ? 'checked' : '' }}  type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Active/Inactive</label>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="meta-description" class="form-label">Description</label>
+                                    <textarea class="form-control bg-light-subtle" id="meta-description" name="description" cols="30" rows="4" placeholder="Type description">{{ $dealOfDay->description ?? ''  }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <button type="submit"  class="btn btn-success">Save Change</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="schedule-email" class="form-label">Owner Email</label>
-                                    <input type="email" id="schedule-email" name="schedule-email" class="form-control" placeholder="Email">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Full Address</label>
-                                <textarea class="form-control bg-light-subtle" id="address" rows="3" placeholder="Type address"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="your-zipcode" class="form-label">Zip-Code</label>
-                                    <input type="number" id="your-zipcode" class="form-control" placeholder="zip-code">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-4">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="choices-city" class="form-label">City</label>
-                                    <select class="form-control" id="choices-city" data-choices data-choices-groups data-placeholder="Select City" name="choices-city">
-                                        <option value="">Choose a city</option>
-                                        <optgroup label="UK">
-                                            <option value="London">London</option>
-                                            <option value="Manchester">Manchester</option>
-                                            <option value="Liverpool">Liverpool</option>
-                                        </optgroup>
-                                        <optgroup label="FR">
-                                            <option value="Paris">Paris</option>
-                                            <option value="Lyon">Lyon</option>
-                                            <option value="Marseille">Marseille</option>
-                                        </optgroup>
-                                        <optgroup label="DE" disabled>
-                                            <option value="Hamburg">Hamburg</option>
-                                            <option value="Munich">Munich</option>
-                                            <option value="Berlin">Berlin</option>
-                                        </optgroup>
-                                        <optgroup label="US">
-                                            <option value="New York">New York</option>
-                                            <option value="Washington" disabled>
-                                                Washington
-                                            </option>
-                                            <option value="Michigan">Michigan</option>
-                                        </optgroup>
-                                        <optgroup label="SP">
-                                            <option value="Madrid">Madrid</option>
-                                            <option value="Barcelona">Barcelona</option>
-                                            <option value="Malaga">Malaga</option>
-                                        </optgroup>
-                                        <optgroup label="CA">
-                                            <option value="Montreal">Montreal</option>
-                                            <option value="Toronto">Toronto</option>
-                                            <option value="Vancouver">Vancouver</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-4">
-                            <form>
-                                <label for="choices-country" class="form-label">Country</label>
-                                <select class="form-control" id="choices-country" data-choices data-choices-groups data-placeholder="Select Country" name="choices-country">
-                                    <option value="">Choose a country</option>
-                                    <optgroup label="">
-                                        <option value="">United Kingdom</option>
-                                        <option value="Fran">France</option>
-                                        <option value="Netherlands">Netherlands</option>
-                                        <option value="U.S.A">U.S.A</option>
-                                        <option value="Denmark">Denmark</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="India">India</option>
-                                        <option value="Germany">Germany</option>
-                                        <option value="Spain">Spain</option>
-                                        <option value="United Arab Emirates">United Arab Emirates</option>
-                                    </optgroup>
-                                </select>
-                            </form>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title d-flex align-items-center gap-1">
-                        <iconify-icon icon="solar:compass-bold-duotone" class="text-primary fs-20"></iconify-icon>Localization Settings
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="choices-country1" class="form-label">Country</label>
-                                    <select class="form-control" id="choices-country1" data-choices data-choices-groups data-placeholder="Select Country" name="choices-country">
-                                        <option value="">Choose a country</option>
-                                        <optgroup label="">
-                                            <option value="">United Kingdom</option>
-                                            <option value="Fran">France</option>
-                                            <option value="Netherlands">Netherlands</option>
-                                            <option value="U.S.A">U.S.A</option>
-                                            <option value="Denmark">Denmark</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="Australia">Australia</option>
-                                            <option value="India">India</option>
-                                            <option value="Germany">Germany</option>
-                                            <option value="Spain">Spain</option>
-                                            <option value="United Arab Emirates">United Arab Emirates</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="choices-language" class="form-label">Language</label>
-                                    <select class="form-control" id="choices-language" data-choices data-choices-groups data-placeholder="Select language" name="choices-language">
-                                        <option value="">English</option>
-                                        <optgroup label="">
-                                            <option value="">Russian</option>
-                                            <option value="Arabic">Arabic</option>
-                                            <option value="Spanish">Spanish</option>
-                                            <option value="Turkish">Turkish</option>
-                                            <option value="German">German</option>
-                                            <option value="Armenian">Armenian</option>
-                                            <option value="Italian">Italian</option>
-                                            <option value="Catalán">Catalán</option>
-                                            <option value="Hindi">Hindi</option>
-                                            <option value="Japanese">Japanese</option>
-                                            <option value="French">French</option>
-                                        </optgroup>
-                                    </select>
-
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="choices-currency" class="form-label">Currency</label>
-                                    <select class="form-control" id="choices-currency" data-choices data-choices-groups data-placeholder="Select Currency" name="choices-currency">
-                                        <option value="">Us Dollar</option>
-                                        <optgroup label="">
-                                            <option value="">Pound</option>
-                                            <option value="Indian Rupee">Indian Rupee</option>
-                                            <option value="Euro">Euro</option>
-                                            <option value="Australian Dollar">Australian Dollar</option>
-                                            <option value="Japanese Yen">Japanese Yen</option>
-                                            <option value="Korean Won">Korean Won</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="choices-length" class="form-label">Length Class</label>
-                                    <select class="form-control" id="choices-length" data-choices data-choices-groups data-placeholder="Select Length" name="choices-length">
-                                        <option value="">Centimeter</option>
-                                        <optgroup label="">
-                                            <option value="">Millimeter</option>
-                                            <option value="Inch">Inch</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-6">
-                            <form>
-                                <div class="">
-                                    <label for="choices-weight" class="form-label">Weight Class</label>
-                                    <select class="form-control" id="choices-weight" data-choices data-choices-groups data-placeholder="Select Weight" name="choices-weight">
-                                        <option value="">Kilogram</option>
-                                        <optgroup label="">
-                                            <option value="">Gram</option>
-                                            <option value="Pound">Pound</option>
-                                            <option value="Ounce">Ounce</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <div class="row">
         <div class="col-lg-3">

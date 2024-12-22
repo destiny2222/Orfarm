@@ -68,6 +68,10 @@ class SiteManagementController extends Controller
         }
     }
 
+    public function bannerCreate(){
+        return view('admin.homepage.bannerCreate');
+    }
+
     public function bannerEdit($id){
         $banner = Banner::find($id);
         return view('admin.homepage.banner.edit', compact('banner'));
@@ -190,7 +194,11 @@ class SiteManagementController extends Controller
 
     public function  pluginStore(PluginRequest $request){
         try {
-            Plugin::firstOrCreate($request->all());
+            if (Plugin::count()) {
+                Plugin::first()->update($request->all());
+            }else{
+                Plugin::create($request->all());
+            }
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');

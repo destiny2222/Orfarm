@@ -55,8 +55,15 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
         // site management
         Route::get('/home-page', [SiteManagementController::class, 'index'])->name('home.page');
-        Route::post('/home/banner/store', [SiteManagementController::class, 'bannerStore'])->name('home.banner.store');
         Route::post('/home/promotion/store', [SiteManagementController::class, 'promotionStore'])->name('home.promotion.store');
+        Route::post('/hone/deal/store', [SiteManagementController::class, 'dealStore'])->name('home.dealStore');
+        Route::post('/home/plugin/store', [SiteManagementController::class, 'pluginStore'])->name('home.pluginStore');
+
+        // banner
+        Route::get('/home/banner/create', [SiteManagementController::class, 'bannerCreate'])->name('home.bannerCreate');
+        Route::post('/home/banner/store', [SiteManagementController::class, 'bannerStore'])->name('home.banner.store');
+        Route::put('/home/banner/{id}/update', [SiteManagementController::class, 'bannerUpdate'])->name('home.banner.update');
+        Route::delete('/home/banner/{id}/delete', [SiteManagementController::class, 'bannerDelete'])->name('home.banner.delete');
 
         // shipping route 
         Route::get('/shipping', [SiteManagementController::class, 'shippingIndex'])->name('shipping.index');

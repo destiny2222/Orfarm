@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title> - Invoice</title>
+    <title> {{ config('app.name') }} - Invoice</title>
     <meta name="author" content="dexnovate" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -44,11 +44,11 @@
                             <div class="header-bottom">
                                 <div class="row align-items-center justify-content-between">
                                     <div class="col-auto">
-                                        <p class="invoice-number me-4"><b>Invoice No: </b>#745664</p>
+                                        <p class="invoice-number me-4"><b>Invoice No: </b>{{ $orderItems->order->invoice_number }}</p>
                                         <div class="shape-left"></div>
                                     </div>
                                     <div class="col-auto">
-                                        <p class="invoice-date"><b>Date: </b>22/03/2023</p>
+                                        <p class="invoice-date"><b>Date: </b>{{ $orderItems->order->created_at->format('d M Y') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -57,8 +57,8 @@
                             <div class="col-auto">
                                 <div class="invoice-left">
                                     <b>Order Details:</b><br>
-                                    <span>Transaction Id: </span><br>
-                                    <span>Order Id: </span><br>
+                                    <span>Transaction Id: {{ $orderItems->order->transaction_reference }}</span><br>
+                                    <span>Order Id: {{ $orderItems->order->invoice_number }}</span><br>
                                     <span>Order Date: {{ $orderItems->order->created_at->format('m:d:y') }} </span><br>
                                     <span>Payment Status: 
                                      @if ($orderItems->order->payment_status == 'completed')

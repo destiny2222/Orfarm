@@ -3,10 +3,12 @@
    <head>
       <meta charset="utf-8">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title>Orfarm - Multipurpose eCommerce HTML5 Template </title>
-      <meta name="description" content="">
+      <title>{{ config('app.name') }}  </title>
+      <meta name="description" content="An ecommerce platform offering a wide range of products with fast delivery, secure payment options, and 24/7 customer support.">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-
+      <meta name="author" content="Dexnovate" />
+      <meta name="keywords" content="ecommerce, online shopping, fast delivery, secure payment, customer support">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <!-- Place favicon.ico in the root directory -->
       <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo/favicon.png">
 
@@ -53,7 +55,7 @@
         @yield('content')
 
          <!-- feature-area-start -->
-         <section class="feature-area mainfeature__bg pt-50 pb-40" data-background="/assets/img/shape/footer-shape-1.svg">
+         <section class="feature-area mainfeature__bg pt-50 pb-40">
             <div class="container">
                <div class="mainfeature__border pb-15">
                   <div class="row row-cols-lg-5 row-cols-md-3 row-cols-2">

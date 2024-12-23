@@ -19,7 +19,7 @@ class Category extends Model
         return Str::slug($this->title);
     }
     public  function product(){
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
     
     

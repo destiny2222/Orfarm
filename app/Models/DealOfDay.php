@@ -15,4 +15,10 @@ class DealOfDay extends Model
         'is_active',
         'cta_text', 
     ];
+
+
+    protected $casts = [
+      'offer_end_time'=>'date',
+    ];
+    
 }

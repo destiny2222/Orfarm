@@ -42,7 +42,7 @@
 
 **********************************************/
 /*----------------------------------------*/
-/*  01. THEME DEFAULT CSS START
+/*  01. THEME DEFAULT CSS START #96AE00
 /*----------------------------------------*/
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Schoolbell&display=swap");
 
@@ -60,7 +60,7 @@
   */
   --tp-common-white: #ffffff;
   --tp-common-black: #000;
-  --tp-heading-primary: #2D2A6E;
+  --tp-heading-primary: #187E4A;
   --tp-heading-secondary: #96AE00;
   --tp-grey-1: #F2F2F6;
   --tp-grey-2: #F5F6F8;
@@ -71,17 +71,17 @@
   --tp-grey-7: #C4C4C4;
   --tp-grey-8: #F7F7F9;
   --tp-grey-9: #B4DEA4;
-  --tp-grey-10: #B0AFCC;
+  --tp-grey-10: #ffffff;
   --tp-text-body: #4D5574;
   --tp-text-1: #FFB800;
   --tp-text-2: #334763;
   --tp-text-3: #79819C;
   --tp-text-4: #FACFD4;
   --tp-text-5: #FFD600;
-  --tp-theme-1: #2D2A6E;
+  --tp-theme-1: #187E4A;
   --tp-theme-2: #EA0D42;
   --tp-theme-3: #12B7CE;
-  --tp-theme-4: #2D2C6E;
+  --tp-theme-4: #187E4A;
   --tp-theme-5: #D91212;
   --tp-border-1: #E6EBF0;
   --tp-border-2: #ACAFB7;
@@ -117,7 +117,7 @@ h4,
 h5,
 h6 {
   font-family: var(--tp-ff-heading);
-  color: #2D2A6E;
+  color: #187E4A;
   margin-top: 0px;
   font-weight: var(--tp-fw-sbold);
   line-height: 1.2;
@@ -1683,7 +1683,7 @@ input::placeholder {
 }
 
 .tpsideinfo {
-  background: #2D2A6E;
+  background: #187E4A;
   position: fixed;
   left: 0;
   top: 0;
@@ -4059,7 +4059,7 @@ input::placeholder {
   font-size: 12px;
   line-height: 17px;
   text-transform: uppercase;
-  color: #2D2A6E;
+  color: #187E4A;
   flex: 0 0 auto;
   margin-right: 8px;
 }
@@ -4170,7 +4170,7 @@ input::placeholder {
   font-size: 12px;
   line-height: 17px;
   text-transform: uppercase;
-  color: #2D2A6E;
+  color: #187E4A;
 }
 .product__color-switch .form-check-input:checked {
   background-color: var(--tp-common-black);
@@ -5321,6 +5321,7 @@ input::placeholder {
   animation: animation-plus 1s infinite linear alternate;
 }
 .mainfeature__bg {
+  background-color: #187E4A;
   background-repeat: repeat-x;
 }
 .mainfeature__icon {
@@ -5343,7 +5344,7 @@ input::placeholder {
   margin-bottom: 2px;
 }
 .mainfeature__border {
-  border-bottom: 1px solid #484492;
+  border-bottom: 1px solid #35634a;
 }
 
 .whight-feature .mainfeature__title {
@@ -7601,7 +7602,7 @@ p.checkout-coupon input[type=text]:focus {
   font-weight: 700;
   font-size: 18px;
   letter-spacing: -0.03em;
-  color: #2D2A6E;
+  color: #187E4A;
 }
 .tpfaq__content {
   border-bottom: 1px solid var(--tp-border-1);
@@ -7675,7 +7676,7 @@ p.checkout-coupon input[type=text]:focus {
 /*  27. FOOTER CSS
 /*----------------------------------------*/
 .tpfooter__top {
-  border-bottom: 1px solid #484492;
+  border-bottom: 1px solid #35634a;
 }
 .tpfooter__widget-title {
   text-transform: uppercase;
@@ -7877,7 +7878,7 @@ p.checkout-coupon input[type=text]:focus {
   content: "";
   height: 100%;
   width: 1px;
-  background-color: #484492;
+  background-color: #35634a;
   left: -100px;
   top: 50%;
   transform: translateY(-50%);
@@ -7927,4 +7928,62 @@ p.checkout-coupon input[type=text]:focus {
 
 .icon-star_outline1.active {
     color: #ffc107; /* Color for selected stars */
+}
+
+
+.auth {
+  padding: 60px 0;
+  overflow: hidden;
+  margin: auto 30%;
+}
+@media (max-width: 1024px) {
+
+.auth{
+  margin: auto 0;
+}
+}
+
+.h-100 {
+  height: 50% !important;
+}
+
+.auth__logo {
+  max-height: 70px;
+  margin:0 5rem;
+}
+
+.login-page {
+  font-size: 15px;
+}
+.login-page .forgot-pass {
+  z-index: 99;
+  position: relative;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .auth__logo {
+    
+  margin:0 auto;
+}
+.auth{
+  margin: auto 0;
+}
+}
+
+
+.auth .card {
+  max-width: 450px;
+  display: block;
+  margin: 0 30px;
+  padding: 20px 30px;
+  border-color: #edf2f9;
+  -webkit-box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+  box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+}
+
+@media (max-width: 600px) {
+  .auth .card {
+      margin: 0 10px;
+  }
 }

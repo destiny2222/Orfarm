@@ -29,6 +29,7 @@ class SiteManagementController extends Controller
         $dealOfDay = DealOfDay::orderBy('id','desc')->first();
         $promotion = ProductPromotion::orderBy('id','desc')->first();
         $plugin = Plugin::orderBy('id','desc')->first();
+        
         return view('admin.homepage.index',[
             'banners'=>$banner,
             'dealOfDays'=>$dealOfDay,
@@ -61,7 +62,7 @@ class SiteManagementController extends Controller
                 'description'=>$request->description,
                 'image'=>$imageName,
             ]);
-            return back()->with('success', 'Updated Successfully');
+            return redirect()->route('admin.home.page')->with('success', 'Updated Successfully');
         }catch(\Exception $exception){
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');
@@ -74,12 +75,12 @@ class SiteManagementController extends Controller
 
     public function bannerEdit($id){
         $banner = Banner::find($id);
-        return view('admin.homepage.banner.edit', compact('banner'));
+        return view('admin.homepage.bannerEdit', compact('banner'));
     }
 
     public function bannerUpdate(Request $request, $id){
         try{
-            $imageName = null;
+            // $imageName = null;
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -94,8 +95,9 @@ class SiteManagementController extends Controller
                  'title'=>$request->title,
                 'sub_title'=>$request->sub_title,
                 'description'=>$request->description,
-                'image'=>$imageName ?? $request->image,
+                'image'=>$imageName ?? $banner->image,
             ]);
+            return redirect()->route('admin.home.page')->with('success', 'Banner updated successfully');
         }catch(\Exception $exception){
             Log::error($exception->getMessage());
             return back()->with('error', 'An error has occurred please try again');
@@ -118,32 +120,33 @@ class SiteManagementController extends Controller
         try{
             $imageName = null;
             if ($request->hasFile('image')) {
-                $image = request()->file('image');
+                $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 
                 $manager = new ImageManager(new Driver());
                 $processedImage = $manager->read($image);
-                $processedImage->resize(300, 300);
+                $processedImage->resize(1920, 700);
                 $processedImage->save(public_path('upload/deal/') . $imageName);
             }
 
-            if (DealOfDay::count()) {
-                DealOfDay::first()->update([
+            $existingDealOfDay = DealOfDay::first();
+            if ($existingDealOfDay) {
+                $existingDealOfDay->update([ 
                     'title'=>$request->title,
-                    'subtitle'=>$request->sub_title,
+                    'subtitle'=>$request->subtitle,
                     'description'=>$request->description,
                     'offer_end_time'=>$request->offer_end_time,
-                    'is_active'=>$request->is_active,
-                    'image'=>$request->image,
+                    // 'is_active'=>$request->is_active,
+                    'image'=>$imageName ?? $existingDealOfDay->image,
                 ]);
             } else {
                 DealOfDay::create([
                     'title'=>$request->title,
-                    'subtitle'=>$request->sub_title,
+                    'subtitle'=>$request->subtitle,
                     'description'=>$request->description,
                     'offer_end_time'=>$request->offer_end_time,
-                    'is_active'=>$request->is_active,
-                    'image'=>$request->image,
+                    // 'is_active'=>$request->is_active,
+                    'image'=>$imageName,
                 ]);
             }
             return back()->with('success', ' Updated successfully');
@@ -155,33 +158,34 @@ class SiteManagementController extends Controller
 
 
     public function promotionStore(ProductPromotionRequest $request){
+        // dd($request->all());
         try{
             $imageName = null;
             if ($request->hasFile('image')) {
-                $image = request()->file('image');
+                $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 
                 $manager = new ImageManager(new Driver());
                 $processedImage = $manager->read($image);
-                $processedImage->resize(300, 300);
+                $processedImage->resize(602,  548);
                 $processedImage->save(public_path('upload/promotion/') . $imageName);
             }
 
-            if (ProductPromotion::count()) {
-                ProductPromotion::first()->update([ 
-                    'title'=>$request->title,
-                    'subtitle'=>$request->subtitle,
-                    'description'=>$request->description,
-                    'status'=>$request->status,
-                    'image'=>$imageName,
+            $existingPromotion = ProductPromotion::first();
+
+            if ($existingPromotion) {
+                $existingPromotion->update([
+                    'title' => $request->title,
+                    'subtitle' => $request->subtitle,
+                    'description' => $request->description,
+                    'image' => $imageName ?? $existingPromotion->image,
                 ]);
             } else {
                 ProductPromotion::create([
-                    'title'=>$request->title,
-                    'subtitle'=>$request->subtitle,
-                    'description'=>$request->description,
-                    'status'=>$request->status,
-                    'image'=>$imageName,
+                    'title' => $request->title,
+                    'subtitle' => $request->subtitle,
+                    'description' => $request->description,
+                    'image' => $imageName,
                 ]);
             }
             return back()->with('success', 'created successfully');
@@ -195,10 +199,11 @@ class SiteManagementController extends Controller
     public function  pluginStore(PluginRequest $request){
         try {
             if (Plugin::count()) {
-                Plugin::first()->update($request->all());
+                Plugin::first()->update($request->validated());
             }else{
-                Plugin::create($request->all());
+                Plugin::create($request->validated());
             }
+            return back()->with('success', 'Updated successfully');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');
@@ -208,7 +213,13 @@ class SiteManagementController extends Controller
 
     public function shippingIndex(){
         $shipping = Shipping::orderBy('id', 'desc')->get();
-        return view('admin.shipping.index');
+        return view('admin.shipping.index',[
+            'shippings'=>$shipping,
+        ]);
+    }
+
+    public function shippingCreate(){
+        return view('admin.shipping.create');
     }
 
 
@@ -220,8 +231,9 @@ class SiteManagementController extends Controller
 
     public function shippingStore(ShippingRequest $request){
         try{
-            Shipping::firstOrCreate($request->all());
-            return back()->with('success','shipping order added successfully');
+            // dd($request->all());
+            Shipping::create($request->all());
+            return redirect()->route('admin.shipping.index')->with('success','shipping order added successfully');
         }catch(\Exception $exception){
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');
@@ -230,9 +242,14 @@ class SiteManagementController extends Controller
 
     public function shippingUpdate(ShippingRequest $request, $id){
         try{
-            $shipping = Shipping::find($id);
-            $shipping->update($request->all());
-            return back()->with('success','shipping order updated successfully');
+            // dd($request->all());
+            $shipping = Shipping::findOrFail($id);
+            $shipping->update([
+                'title'=>$request->title,
+                'price'=>$request->price,
+                'status'=>$request->status,
+            ]);
+            return redirect()->route('admin.shipping.index')->with('success','shipping order updated successfully');
         }catch(\Exception $exception){
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');
@@ -240,9 +257,20 @@ class SiteManagementController extends Controller
     }
 
 
+    public function shippingDelete($id){
+        try {
+            $shipping = Shipping::findOrFail($id);
+            $shipping->delete();
+            return back()->with('success', 'shipping delete');
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return back()->with('error', 'Something went wrong');
+        }
+    }
+
     public function  sliderIndex(){
-        $slider = Slider::orderBy('id', 'desc')->get();
-        return view('admin.slider.index');
+        $slide = Slider::orderBy('id', 'desc')->get();
+        return view('admin.slider.index',['sliders'=>$slide]);
     }
 
     public function sliderCreate(){
@@ -255,12 +283,12 @@ class SiteManagementController extends Controller
             $imageName = null;
 
             if ($request->hasFile('image')) {
-                $image = request()->file('image');
+                $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 
                 $manager = new ImageManager(new Driver());
                 $processedImage = $manager->read($image);
-                $processedImage->resize(457, 220);
+                $processedImage->resize(824, 582);
                 $processedImage->save(public_path('upload/slider/') . $imageName);
             }
 
@@ -270,7 +298,7 @@ class SiteManagementController extends Controller
                 'description'=>$request->description,
                 'image'=>$imageName,
             ]);
-            return back()->with('success', ' Updated successfully');
+            return redirect()->route('admin.slider.index')->with('success', ' Updated successfully');
         }catch(\Exception $exception){
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');
@@ -280,7 +308,7 @@ class SiteManagementController extends Controller
     public function sliderEdit($id){
         $slider = Slider::findOrFail($id);
         return view('admin.slider.edit',[
-            'slider' => $slider
+            'slide' => $slider
         ]);
     }
 
@@ -290,12 +318,12 @@ class SiteManagementController extends Controller
             // resize image with intervention image version 3
             $imageName = null;
             if ($request->hasFile('image')) {
-                $image = request()->file('image');
+                $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 
                 $manager = new ImageManager(new Driver());
                 $processedImage = $manager->read($image);
-                $processedImage->resize(457, 220);
+                $processedImage->resize(824, 582);
                 $processedImage->save(public_path('upload/slider/') . $imageName);
             }
 
@@ -307,7 +335,7 @@ class SiteManagementController extends Controller
                 'description'=>$request->input('description'),
                 'image'=>$imageName ?? $slider->image,
             ]);
-            return back()->with('success', 'Updated successfully');
+            return redirect()->route('admin.slider.index')->with('success', 'Updated successfully');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return back()->with('error', 'An error occurred');

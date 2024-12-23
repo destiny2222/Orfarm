@@ -46,10 +46,13 @@
                                         <td>{!! $banner->description !!}</td>
                                         <td>
                                             <div class="d-flex gap-2">
-                                                    <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                                    <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                                    <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                <a href="{{ route('admin.banner.edit', $banner->id)  }}" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                <a href="{{ route('admin.home.banner.delete', $banner->id) }}" onclick="document.getElementById('delete-banner-{{ $banner->id }}').submit()" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
                                             </div>
+                                            <form action="{{ route('admin.home.banner.delete', $banner->id) }}" id="delete-banner-{{ $banner->id }}" method="post" class="d-none">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -69,7 +72,7 @@
                 <div class="card-header">
                     <h4 class="card-title d-flex align-items-center gap-1">
                         <iconify-icon icon="solar:settings-bold-duotone" class="text-primary fs-20"></iconify-icon>
-                        Two Banner Section
+                        Two Column Section
                     </h4>
                 </div>
                 <div class="card-body">
@@ -93,12 +96,12 @@
                                     <div class="col-12 col-lg-8">
                                         <div class="mb-3">
                                             <label for="meta-description" class="form-label">Image</label>
-                                            <input type="file" name="image" value="" id="" value="{{ $promotion->image ?? ''  }}" class="form-control">
+                                            <input type="file" name="image"  id="" value="{{  $promotion->image ?? ''  }}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-4">
                                         <div class="mb-3">
-                                            <img src="" class="img-flui" alt="" style="width: 50%; height: auto;object-fit: cover;">
+                                            <img src="{{ asset('upload/promotion/'.$promotion->image)   }}" class="img-fluid" alt="" style="width: 50%; height: auto;object-fit: cover;">
                                         </div>
                                     </div>
                                 </div>
@@ -144,32 +147,33 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="meta-name" class="form-label"> Title</label>
-                                    <input type="text" id="meta-name" name="title" value="{{ $dealOfDay->title ?? ''  }}" class="form-control" placeholder="Title">
+                                    <input type="text" id="meta-name" name="title" value="{{ $dealOfDays->title ?? ''  }}" class="form-control" placeholder="Title">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="meta-tag" class="form-label">Subtitle</label>
-                                    <input type="text" id="meta-tag" name="subtitle" value="{{ $dealOfDay->subtitle ?? ''  }}" class="form-control" placeholder="">
+                                    <input type="text" id="meta-tag" name="subtitle" value="{{ $dealOfDays->subtitle ?? ''  }}" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="">Offer time</label>
-                                    <input type="datetime" name="offer_end_time" class="form-control" value="{{ $dealOfDay->offer_end_time ?? ''  }}">
+                                    <input type="date" name="offer_end_time" class="form-control" 
+                                           value="{{ $dealOfDays->offer_end_time ? $dealOfDays->offer_end_time->format('Y-m-d') : '' }}">
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-12 col-lg-8">
                                         <div class="mb-3">
                                             <label for="meta-description" class="form-label">Image</label>
-                                            <input type="file" name="image" value="" id="" value="{{ $dealOfDay->image ?? ''  }}" class="form-control">
+                                            <input type="file" name="image" id="" value="{{ $dealOfDays->image ?? ''  }}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-4">
                                         <div class="mb-3">
-                                            <img src="" class="img-fluid" alt="" style="width: 50%; height: auto;object-fit: cover;">
+                                            <img src="{{ asset('upload/deal/'.$dealOfDays->image)   }}" class="img-fluid" alt="" style="width: 50%; height: auto;object-fit: cover;">
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +189,7 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="meta-description" class="form-label">Description</label>
-                                    <textarea class="form-control bg-light-subtle" id="meta-description" name="description" cols="30" rows="4" placeholder="Type description">{{ $dealOfDay->description ?? ''  }}</textarea>
+                                    <textarea class="form-control bg-light-subtle" id="description" name="description" cols="30" rows="4">{{ $dealOfDays->description ?? ''  }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -217,13 +221,13 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="meta-name" class="form-label"> Paystack Public key</label>
-                                    <input type="text" id="meta-name" name="title" value="{{ $plugin->paystack_secret ?? ''  }}" class="form-control" placeholder="">
+                                    <input type="text" id="meta-name" name="paystack_secret" value="{{ $plugins->paystack_secret ?? ''  }}" class="form-control" placeholder="">
                                 </div>
                             </div> 
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="meta-tag" class="form-label">Paystack script key</label>
-                                    <input type="text" id="meta-tag" name="subtitle" value="{{ $plugin->paystack_key ?? ''  }}" class="form-control" placeholder="">
+                                    <input type="text" id="meta-tag" name="paystack_key" value="{{ $plugins->paystack_key ?? ''  }}" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -236,13 +240,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-   
-
-    <div class="text-end">
-        <a href="#!" class="btn btn-danger">Cancel</a>
-        <a href="#!" class="btn btn-success">Save Change</a>
     </div>
 </div>
 <!-- End Container Fluid -->

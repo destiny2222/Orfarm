@@ -6,8 +6,9 @@
      <meta charset="utf-8" />
      <title>Admin Dashboard | {{ config('app.name')  }} </title>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta name="description" content="" />
+     <meta name="description" content="An ecommerce platform offering a wide range of products with fast delivery, secure payment options, and 24/7 customer support.">
      <meta name="author" content="Dexnovate" />
+     <meta name="keywords" content="ecommerce, online shopping, fast delivery, secure payment, customer support">
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
      <!-- App favicon -->
@@ -54,8 +55,8 @@
                    <div class="container-fluid">
                        <div class="row">
                            <div class="col-12 text-center">
-                               <script>document.write(new Date().getFullYear())</script> &copy; Larkon. Crafted by <iconify-icon icon="iconamoon:heart-duotone" class="fs-18 align-middle text-danger"></iconify-icon> <a
-                                   href="#" class="fw-bold footer-text" target="_blank">Dexnovate</a>
+                               <script>document.write(new Date().getFullYear())</script> &copy; {{ config('app.name') }}. Crafted by <iconify-icon icon="iconamoon:heart-duotone" class="fs-18 align-middle text-danger"></iconify-icon> <a
+                                   href="https://www.dexnovate.com/" class="fw-bold footer-text" target="_blank">Dexnovate</a>
                            </div>
                        </div>
                    </div>
@@ -81,7 +82,7 @@
      <script src="/admin_style/assets/vendor/jsvectormap/js/jsvectormap.min.js"></script>
      <script src="/admin_style/assets/vendor/jsvectormap/maps/world-merc.js"></script>
      <script src="/admin_style/assets/vendor/jsvectormap/maps/world.js"></script>
-
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
      <!-- Dashboard Js -->
      <script src="/admin_style/assets/js/pages/dashboard.js"></script>
      @include('layouts.message')
@@ -97,5 +98,17 @@
                   console.error('Error during initialization of the editor', error);
               });
       </script>
+     <script>
+          // Initialize CKEditor
+          ClassicEditor
+              .create(document.querySelector('#description'))
+              .then(editor => {
+                  console.log('Editor was initialized', editor);
+              })
+              .catch(error => {
+                  console.error('Error during initialization of the editor', error);
+              });
+      </script>
+      @stack('scripts')
 </body>
 </html>

@@ -80,15 +80,46 @@
                         <!-- end table-responsive -->
                    </div>
                    <div class="card-footer border-top">
-                        <nav aria-label="Page navigation example">
-                             <ul class="pagination justify-content-end mb-0">
-                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                                  <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-                             </ul>
-                        </nav>
+                    @if ($products->hasPages())
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end mb-0">
+                            {{-- Previous Page Link --}}
+                            @if ($products->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link">Previous</span>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $products->previousPageUrl() }}" rel="prev">Previous</a>
+                                </li>
+                            @endif
+                
+                            {{-- Pagination Elements --}}
+                            @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                @if ($page == $products->currentPage())
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ $page }}</span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
+                
+                            {{-- Next Page Link --}}
+                            @if ($products->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $products->nextPageUrl() }}" rel="next">Next</a>
+                                </li>
+                            @else
+                                <li class="page-item disabled">
+                                    <span class="page-link">Next</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </nav>
+                @endif
                    </div>
               </div>
          </div>

@@ -22,8 +22,8 @@ class ShippingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>['nullable'],
-            'price'=>['nullable'],
+            'title'=>['nullable', 'string'],
+            'price'=>['nullable', 'numeric'],
             'status'=>['boolean'],
         ];
     }

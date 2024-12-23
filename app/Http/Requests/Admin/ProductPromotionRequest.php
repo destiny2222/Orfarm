@@ -26,7 +26,7 @@ class ProductPromotionRequest extends FormRequest
             'subtitle'=>['required', 'string'],
             'description'=>['nullable', 'string'],
             'status'=>['boolean'],
-            // 'image'=>['nullable','mimes:png,jpg,jpeg,gif']
+            'image'=>['nullable','image','mimes:png,jpg,jpeg,gif']
         ];
     }
 }

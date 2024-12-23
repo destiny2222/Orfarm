@@ -3,10 +3,10 @@
     <div class="app-sidebar">
         <div class="side-header">
             <a class="header-brand1" href="/">
-                <img src="" class="header-brand-img desktop-logo" alt="logo">
-                <img src="" class="header-brand-img toggle-logo" alt="logo">
-                <img src="" class="header-brand-img light-logo" alt="logo">
-                <img src="" class="header-brand-img light-logo1" alt="logo">
+                <img src="/assets/img/logo/logo.png" style="width:70px !important;" class="header-brand-img desktop-logo" alt="logo">
+                <img src="/assets/img/logo/logo.png" style="width:70px !important;" class="header-brand-img toggle-logo" alt="logo">
+                <img src="/assets/img/logo/logo.png" style="width:70px !important;" class="header-brand-img light-logo" alt="logo">
+                <img src="/assets/img/logo/logo.png" style="width:70px !important;" class="header-brand-img light-logo1" alt="logo">
             </a>
             <!-- LOGO -->
         </div>

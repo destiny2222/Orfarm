@@ -1,12 +1,60 @@
-<x-mail::message>
-# Introduction
+@component('mail::layout')
+<style>
+  .table-head{
+    border-collapse:collapse;
+    width: 100%;
+  }
 
-The body of your message.
+  .table-head td{
+    border:1px solid #ccc;
+    padding: 10px;
+  }
+</style>
 
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
+    {{-- Header --}}
+    @slot('header')
+    @component('mail::header', ['url' => config('app.url')])
+        <!-- header here -->
+        <h1>Contact Request</h1>
+    @endcomponent
+    @endslot
 
-Thanks,<br>
-{{ config('app.name') }}
-</x-mail::message>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 style="padding: 10px 0;">Contact Request</h2>
+      <table class="table-head">
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td><code>First Name</code></td>
+          <td>{{  $name }}</td>
+        </tr>
+        <tr>
+          <td><code>Email Address</code></td>
+          <td>{{  $email }}</td>
+        </tr>
+        <tr>
+          <td><code>Subject</code></td>
+          <td>{{  $subject }}</td>
+        </tr>
+        <tr>
+          <td><code>Message</code></td>
+          <td>{{  $message }}</td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+   {{-- Footer --}}
+   @slot('footer')
+   @component('mail::footer')
+       <!-- footer here -->
+       {{-- De bay lux hotel and suites. All rights reserved --}}
+   @endcomponent
+@endslot
+
+@endcomponent

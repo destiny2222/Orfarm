@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Order;
+use App\Models\Shipping;
 
 class CheckoutController extends Controller
 {
@@ -24,8 +25,15 @@ class CheckoutController extends Controller
 
     public function checkout(){
         $cart = Cart::where('user_id', Auth::user()->id)->get();
-        $total = $cart->sum(function($item) {
-            return $item->product->price * $item->quantity;
+        $shipping = Shipping::where('status', 1)->first();
+
+        if (!$shipping) {
+            return back()->with('error', 'No shipping method available.');
+        }
+
+        $shippingPrice = $shipping->price;
+        $total = $cart->sum(function($item) use ($shippingPrice) {
+            return $item->product->price * $item->quantity + $shippingPrice;
         });
 
 
@@ -33,6 +41,7 @@ class CheckoutController extends Controller
             'cartItems' => $cart,
             'total' => $total,
             'user' => Auth::user(),
+            'shipping' => $shipping
         ]);
     }
 
@@ -53,7 +62,7 @@ class CheckoutController extends Controller
                 'shipping_city' => $request->shipping_city ,
                 'shipping_address' => $request->shipping_address ,
                 'shipping_postal_code' => $request->shipping_postal_code ,
-                // Total Amount
+                'invoice_number' => Order::generateInvoiceNumber(),
                 'total_amount' => $this->calculateTotal(),
                 'payment_method' => 'paystack',
             ]);
@@ -69,10 +78,15 @@ class CheckoutController extends Controller
 
     private function calculateTotal()
     {
+        $shipping = Shipping::where('status', 1)->first();
+        if (!$shipping) {
+            return back()->with('error', 'No shipping method available.');
+        }
         return Cart::where('user_id', Auth::user()->id)
             ->get()
-            ->sum(function($item) {
-                return $item->product->price * $item->quantity;
+            ->sum(function($item) use ($shipping) {
+                $shippingPrice = $shipping->price;
+                return $item->product->price * $item->quantity + $shippingPrice;
             });
     }
 

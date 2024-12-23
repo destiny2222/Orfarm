@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Dashsage – Bootstrap 5  Admin & Dashboard Template">
-    <meta name="author" content="Techne Infosys">
-    <meta name="keywords" content="admin template, Dashsage admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="An ecommerce platform offering a wide range of products with fast delivery, secure payment options, and 24/7 customer support.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Dexnovate" />
+    <meta name="keywords" content="ecommerce, online shopping, fast delivery, secure payment, customer support">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" type="image/x-icon" href="/assetss/images/brand/favicon.ico">
@@ -364,7 +365,7 @@
         <div class="container">
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-md-12 col-sm-12 text-center">
-                    <div>Copyright © <span id="year"></span> <a href="javascript:void(0)">DashSage</a>. Designed with <span class="fa fa-heart text-danger"></span> by <a href="https://codecanyon.net/user/techneinfosys"> techneinfosys </a> All rights reserved.</div>
+                    <div>Copyright © <span id="year"></span> <a href="javascript:void(0)">{{ config('app.name') }}</a>. All rights reserved.</div>
                 </div>
             </div>
         </div>

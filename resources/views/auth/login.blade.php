@@ -65,7 +65,7 @@
                               <label class="form-check-label" for="flexCheckDefault2">Remember me</label>
                            </div>
                            <div class="tpsign__pass">
-                              <a href="#">Forget Password</a>
+                              <a href="{{ route('password.request') }}">Forget Password</a>
                            </div>
                         </div>
                         <div class="tptrack__btn mb-10">

@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="row">
-            <div class="col-12 col-lg-4 col-sm-4 col-md-6 col-xl-4">
+            <div class="col-12 col-lg-6 col-sm-6 col-md-6 col-xl-6">
                 <div class="card overflow-hidden">
                     <div class="card-body">
                         <div class="d-flex">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 col-sm-4 col-md-6 col-xl-4">
+            <div class="col-12 col-lg-6 col-sm-6 col-md-6 col-xl-6">
                 <div class="card overflow-hidden">
                     <div class="card-body">
                         <div class="d-flex">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 col-sm-4 col-md-6 col-xl-4">
+            <div class="col-12 col-lg-6 col-sm-6 col-md-6 col-xl-6">
                 <div class="card overflow-hidden">
                     <div class="card-body">
                         <div class="d-flex">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 col-sm-4 col-md-6 col-xl-4">
+            <div class="col-12 col-lg-6 col-sm-6 col-md-6 col-xl-6">
                 <div class="card overflow-hidden">
                     <div class="card-body">
                         <div class="d-flex">
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 col-sm-4 col-md-6 col-xl-4">
+            <div class="col-12 col-lg-6 col-sm-6 col-md-6 col-xl-6">
                 <div class="card ">
                     <div class="card-body">
                         <div class="d-flex">
@@ -116,21 +116,11 @@
     </div>
 </div>
 <!--{ row-2 start}-->
-<div class="row">
-   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-       <div class="card">
-           <div class="card-header">
-               <h3 class="card-title">Sales Analytics</h3>
-           </div>
-           <div class="card-body">
-               <div class="chartjs-wrapper-demo">
-                   <canvas id="transactions" class="chart-dropshadow" height="370" width="1120"></canvas>
-               </div>
-           </div>
-       </div>
-   </div>
-</div>
+
 <!--{ row-2 end }-->
-
-
 @endsection
+@push('scripts')
+    <script>
+        
+    </script>
+@endpush

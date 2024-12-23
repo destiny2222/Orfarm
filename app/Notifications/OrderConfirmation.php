@@ -38,7 +38,7 @@ class OrderConfirmation extends Notification
         return (new MailMessage)
             ->line('The introduction to the notification.')
             ->line('Thank you for placing your order with us!')
-            ->markdown('', ['order' => $this->order])
+            ->markdown('mail.order_confirm', ['order' => $this->order])
             ->action('Notification Action', url('/'))
             ->line('Thank you for using our application!');
     }

@@ -200,26 +200,23 @@
                                             {{ \Str::limit($cart->product->title, 30) }} <strong class="product-quantity"> × {{ $cart->quantity }}</strong>
                                         </td>
                                         <td class="product-total">
-                                            <span class="amount">${{ $cart->product->price * $cart->quantity}}</span>
+                                            <span class="amount">&#8358;{{ $cart->product->price * $cart->quantity}}</span>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
+                                    @if($shipping)
                                     <tr class="shipping">
-                                        <th>Shipping</th>
+                                        <th>{{ $shipping->title }} Shipping </th>
                                         <td>
-                                            <ul>
-                                                <li>
-                                                    <input type="radio" name="shipping">
-                                                    <label>Free Shipping:</label>
-                                                </li>
-                                            </ul>
+                                            &#8358;{{ number_format($shipping->price, 2) }}
                                         </td>
                                     </tr>
+                                    @endif
                                     <tr class="order-total">
                                         <th>Order Total</th>
-                                        <td><strong><span class="amount">${{ $total }}</span></strong>
+                                        <td><strong><span class="amount">&#8358;{{ $total  }}</span></strong>
                                         </td>
                                     </tr>
                                 </tfoot>

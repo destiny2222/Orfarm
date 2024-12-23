@@ -101,41 +101,56 @@ class PaymentController extends Controller
        
     }
 
-    public function handleWebhook(Request $request)
+        public function handleWebhook(Request $request)
     {
-        // First check is the headeris present. Else, terminate the code.
-        if (!$request->hasHeader("x-paystack-signature"))
+        // First check if the header is present. Else, terminate the code.
+        if (!$request->hasHeader("x-paystack-signature")) {
             exit("No header present");
-
-        // Get our paystack screte key 
+        }
+    
+        // Get our Paystack secret key 
         $secret = config('services.paystack.secret_key');
-
+    
         // Validate the signature
-        if ($request->header("x-paystack-signature") !== hash_hmac("sha512", $request->getContent(), $secret))
-            exit("Invalid signatute");
-            $event = $request->event; // event type. e.g charge.success
-            $data = $request->data; // request payload.
-
-        // You can log it into laravel.log for view all the data sent from paystack
+        if ($request->header("x-paystack-signature") !== hash_hmac("sha512", $request->getContent(), $secret)) {
+            exit("Invalid signature");
+        }
+    
+        $payload = json_decode($request->getContent(), true);
+        $event = $payload['event']; // event type. e.g charge.success
+        $data = $payload['data']; // request payload.
+    
+        // You can log it into laravel.log to view all the data sent from Paystack
         Log::info('PAYSTACK PAYLOAD', ['data' => $data]);
-
+    
         if ($event === "charge.success") {
             // Transaction info
             $order = Order::where('transaction_reference', $data['reference'])->first();
-            // Update order status
-            $order->update([
-                'payment_status' => 'paid',
-                // 'order_status' => 'pending'
-            ]);
-            // Clear user's cart
-            Cart::where('user_id', $order->user_id)->delete();
-
-            // Send email to user
-            $user = User::find($order->user_id);
-            $user->notify(new OrderConfirmation($order));
-            
+            if ($order) {
+                // Update order status
+                $order->update([
+                    'payment_status' => 'paid',
+                    // 'order_status' => 'pending'
+                ]);
+                // Clear user's cart
+                Cart::where('user_id', $order->user_id)->delete();
+    
+                // Send email to user
+                $user = User::find($order->user_id);
+                $user->notify(new OrderConfirmation($order));
+            }
+        } elseif ($event === "charge.failed") {
+            // Transaction info
+            $order = Order::where('transaction_reference', $data['reference'])->first();
+            if ($order) {
+                // Update order status
+                $order->update([
+                    'payment_status' => 'failed',
+                    'order_status' => 'failed'
+                ]);
+            }
         }
-
+    
         return response()->json('', 200);
     }
 }

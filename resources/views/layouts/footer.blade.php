@@ -1,3 +1,6 @@
+@php
+    $categories = App\Models\Category::all();
+@endphp
 <footer>
     <div class="tpfooter__area theme-bg-2">
        <div class="tpfooter__top pb-15">
@@ -35,11 +38,9 @@
                       <h4 class="tpfooter__widget-title">HOT CATEGORIES</h4>
                       <div class="tpfooter__widget-links">
                          <ul>
-                            <li><a href="#">Fruits & Vegetables</a></li>
-                            <li><a href="#">Dairy Products</a></li>
-                            <li><a href="#">Package Foods</a></li>
-                            <li><a href="#">Beverage</a></li>
-                            <li><a href="#">Health & Wellness</a></li>
+                           @foreach ($categories as $category)
+                            <li><a href="#">{{ $category->title }}</a></li>
+                           @endforeach
                          </ul>
                       </div>
                    </div>

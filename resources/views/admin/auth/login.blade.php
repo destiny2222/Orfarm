@@ -35,12 +35,12 @@
                               <div class="col-lg-6 py-lg-5">
                                    <div class="d-flex flex-column h-100 justify-content-center">
                                         <div class="auth-logo mb-4">
-                                             <a href="index.html" class="logo-dark">
-                                                  <img src="/admin_style/assets/images/logo-dark.png" height="24" alt="logo dark">
+                                             <a href="/" class="logo-dark">
+                                                  <img src="/assets/img/logo/logo.png" height="24" alt="logo dark">
                                              </a>
 
-                                             <a href="index.html" class="logo-light">
-                                                  <img src="/admin_style/assets/images/logo-light.png" height="24" alt="logo light">
+                                             <a href="/" class="logo-light">
+                                                  <img src="/assets/img/logo/logo.png" height="24" alt="logo light">
                                              </a>
                                         </div>
 

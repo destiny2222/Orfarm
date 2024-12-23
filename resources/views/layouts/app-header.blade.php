@@ -14,8 +14,8 @@
             </a>
             <!-- sidebar-toggle-->
             <a class="logo-horizontal" href="/">
-                <img src="" class="header-brand-img desktop-logo" alt="logo">
-                <img src="" class="header-brand-img light-logo1" alt="logo">
+                <img src="/assets/img/logo/logo.png" style="width:100px !important;" class="header-brand-img desktop-logo" alt="logo">
+                <img src="/assets/img/logo/logo.png" style="width:100px !important;" class="header-brand-img light-logo1" alt="logo">
             </a>
             <!-- LOGO -->
             <div class="main-header-center ms-3 d-none d-lg-block">
@@ -33,7 +33,7 @@
                             <div class="d-flex">
                                 <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                     <span class="dark-layout"><i class="ti ti-moon-stars"></i></span>
-                                    <span class="light-layout"><i class="fe fe-sun"></i></span>
+                                    <span class="light-layout"><i class="ti ti-sun"></i></span>
                                 </a>
                             </div>
                             <!-- Theme-Layout -->

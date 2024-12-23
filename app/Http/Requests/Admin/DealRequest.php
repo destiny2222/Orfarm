@@ -28,7 +28,7 @@ class DealRequest extends FormRequest
             'offer_end_time'=>['date','nullable'],
             'is_active'=>['boolean'],
             'cta_text'=>['nullable', 'string'],
-            'image'=>['nullable','mimes:png,jpg,jpeg,gif']
+            'image'=>['nullable', 'image','mimes:png,jpg,jpeg,gif']
         ];
     }
 }

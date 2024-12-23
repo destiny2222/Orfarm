@@ -10,15 +10,15 @@
           <div class="row align-items-center">
              <div class="col-lg-6 col-md-12">
                 <div class="header__top-left">
-                   <span>Due to the <strong>COVID-19</strong> epidemic, orders may be processed with a slight delay.</span>
+                     <span>Enjoy free shipping on orders over $50! Shop now and save big.</span>
                 </div>
              </div>
              <div class="col-lg-6 col-md-12">
                 <div class="header__top-right d-flex align-items-center">
                    <div class="header__top-link">
-                      <a href="#">Store Location</a>
-                      <a href="#">Order Tracking</a>
-                      <a href="faq.html">FAQs</a>
+                      <a href="/shop">FAQ</a>
+                      <a href="/contact">Contact</a>
+                      <a href="/about">About</a>
                    </div>
                 </div>
              </div>
@@ -91,9 +91,9 @@
                    <div class="col-6 pt-100 pb-100">
                        <h2 class="tpsearchbar__title">What Are You Looking For?</h2>
                        <div class="tpsearchbar__form">
-                           <form action="#">
-                               <input type="text" name="search" placeholder="Search Product...">
-                               <button class="tpsearchbar__search-btn"><i class="icon-search"></i></button>
+                           <form action="{{ route('search') }}" method="get">
+                              <input type="text" name="search" placeholder="Search Product...">
+                              <button type="submit" class="tpsearchbar__search-btn"><i class="icon-search"></i></button>
                            </form>
                        </div>
                    </div>
@@ -221,9 +221,9 @@
        <button class="tpsideinfo__close">Close<i class="fal fa-times ml-10"></i></button>
        <div class="tpsideinfo__search text-center pt-35">
           <span class="tpsideinfo__search-title mb-20">What Are You Looking For?</span>
-          <form action="#">
-             <input type="text" placeholder="Search Products...">
-             <button><i class="icon-search"></i></button>
+          <form action="{{ route('search') }}" method="get">
+             <input type="text" name="search" placeholder="Search Products...">
+             <button type="submit"><i class="icon-search"></i></button>
           </form>
        </div>
        <div class="tpsideinfo__nabtab">

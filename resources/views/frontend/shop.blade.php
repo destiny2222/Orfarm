@@ -1,28 +1,28 @@
 @extends('layouts.main')
 @section('content')
-    <!-- breadcrumb-area-start -->
-    <div class="breadcrumb__area grey-bg pt-5 pb-5">
-        <div class="container">
-           <div class="row">
-              <div class="col-lg-12">
-                 <div class="tp-breadcrumb__content">
+<!-- breadcrumb-area-start -->
+<div class="breadcrumb__area grey-bg pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tp-breadcrumb__content">
                     <div class="tp-breadcrumb__list">
-                       <span class="tp-breadcrumb__active"><a href="index.html">Home</a></span>
-                       <span class="dvdr">/</span>
-                       <span>Shop</span>
+                        <span class="tp-breadcrumb__active"><a href="/">Home</a></span>
+                        <span class="dvdr">/</span>
+                        <span>Shop</span>
                     </div>
-                 </div>
-              </div>
-           </div>
+                </div>
+            </div>
         </div>
-     </div>
-     <!-- breadcrumb-area-end -->
+    </div>
+</div>
+<!-- breadcrumb-area-end -->
 
-     <!-- shop-area-start -->
-     <section class="shop-area-start grey-bg pb-200">
-        <div class="container">
-           <div class="row">
-              {{-- <div class="col-xl-2 col-lg-12 col-md-12">
+<!-- shop-area-start -->
+<section class="shop-area-start grey-bg pb-200">
+    <div class="container">
+        <div class="row">
+            {{-- <div class="col-xl-2 col-lg-12 col-md-12">
                  <div class="tpshop__leftbar">
                     <div class="tpshop__widget mb-30 pb-25">
                        <h4 class="tpshop__widget-title">Product Categories</h4>
@@ -82,174 +82,119 @@
                     </div>
                  </div>
               </div> --}}
-              <div class="col-xl-12 col-lg-12 col-md-12">
-                 <div class="tpshop__top ml-60">
-                    <div class="tpshop__category">
-                       <div class="swiper-container inner-category-active">
-                          <div class="swiper-wrapper">
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-1.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details-3.html">Vegetables</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-2.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details-3.html">Fresh Fruits</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-3.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details-3.html">Fruit Drink</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-4.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details-3.html">Fresh Bakery</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-5.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details-3.html">Biscuits Snack</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-6.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details.html">Fresh Meat</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="swiper-slide">
-                                <div class="category__item mb-30">
-                                   <div class="category__thumb fix mb-15">
-                                      <a href="shop-details-3.html"><img src="assets/img/catagory/category-7.jpg" alt="category-thumb"></a>
-                                   </div>
-                                   <div class="category__content">
-                                      <h5 class="category__title"><a href="shop-details-3.html">Fresh Milk</a></h5>
-                                   </div>
-                                </div>
-                             </div>
-                          </div>
-                       </div>
-                    </div>
-
+            <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="tpshop__top ml-60">
                     <div class="tab-content" id="nav-tabContent">
-                       <div class="tab-pane fade show active whight-product" id="nav-popular" role="tabpanel" aria-labelledby="nav-popular-tab">
-                          <div class="row row-cols-xxl-3 row-cols-xl-3 row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-1 tpproduct__shop-item">
-                              @foreach ($products as $product)  
-                              <div class="col">
-                                 <div class="tpproduct p-relative mb-20">
-                                    <div class="tpproduct__thumb p-relative text-center">
-                                       <a href="{{ route('product.details', $product->slug) }}"><img src="{{ asset('storage/upload/product/'.$product->photos->first()->image_path) }}" alt=""></a>
-                                       <a class="tpproduct__thumb-img" href="{{ route('product.details', $product->slug)  }}"><img src="{{ asset('storage/upload/product/'.$product->photos->first()->image_path) }}" alt=""></a>
-                                       <div class="tpproduct__info bage">
-                                          <span class="tpproduct__info-discount bage__discount">{{ App\Models\Product::calculateDiscount($product->price, $product->discount) }}%</span>
-                                          <span class="tpproduct__info-hot bage__hot">{{ $product->badge }}</span>
-                                       </div>
-                                       <div class="tpproduct__shopping">
-                                          <a class="tpproduct__shopping-wishlist" onclick="event.preventDefault(); document.getElementById('wish-{{ $product->id  }}').submit()" href="{{ route('wishlist.add') }}"><i class="icon-heart icons"></i></a>
-                                          <form action="{{ route('wishlist.add') }}" id="wish-{{ $product->id  }}" method="post">
-                                             @csrf
-                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                          </form>
-                                          <a class="tpproduct__shopping-cart" href="{{ route('product.details', $product->slug)  }}"><i class="icon-eye"></i></a>
-                                       </div>
-                                    </div>
-                                    <div class="tpproduct__content">
-                                       <span class="tpproduct__content-weight">
-                                          <a href="{{ route('product.details', $product->slug) }}) }}">{{ $product->category->name }}</a>
-                                       </span>
-                                       <h4 class="tpproduct__title">
-                                          <a href="{{ route('product.details', $product->slug) }}) }}">{{ \Str::limit($product->title, 50) }}</a>
-                                       </h4>
-                                       <div class="tpproduct__rating mb-5">
-                                          <a href="#"><i class="icon-star_outline1"></i></a>
-                                          <a href="#"><i class="icon-star_outline1"></i></a>
-                                          <a href="#"><i class="icon-star_outline1"></i></a>
-                                          <a href="#"><i class="icon-star_outline1"></i></a>
-                                          <a href="#"><i class="icon-star_outline1"></i></a>
-                                       </div>
-                                       <div class="tpproduct__price">
-                                          <span>&#8358;{{ number_format($product->price, 2) }}</span>
-                                          <del>&#8358;{{ number_format($product->discount, 2)}}</del>
-                                       </div>
-                                    </div>
-                                    <div class="tpproduct__hover-text">
-                                       <form action="{{ route('cart.add') }}" method="post">
-                                          @csrf
-                                          <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                          <input type="hidden" name="slug" value="{{ $product->slug }}">
-                                          <input type="hidden" name="quantity" class="" value="1">
-                                          <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                             <button type="submit" class="tp-btn-2">Add to cart</button>
-                                          </div>
-                                       </form>
-                                       {{-- <div class="tpproduct__descrip">
+                        <div class="tab-pane fade show active whight-product" id="nav-popular" role="tabpanel" aria-labelledby="nav-popular-tab">
+                            <div class="row  tpproduct__shop-item">
+                                @foreach ($products as $product)
+                                <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+                                    <div class="tpproduct p-relative mb-20">
+                                        <div class="tpproduct__thumb p-relative text-center">
+                                            <a href="{{ route('product.details', $product->slug) }}"><img src="{{ asset('storage/upload/product/'.$product->photos->first()->image_path) }}" alt=""></a>
+                                            <a class="tpproduct__thumb-img" href="{{ route('product.details', $product->slug)  }}"><img src="{{ asset('storage/upload/product/'.$product->photos->first()->image_path) }}" alt=""></a>
+                                            <div class="tpproduct__info bage">
+                                                <span class="tpproduct__info-discount bage__discount">{{ App\Models\Product::calculateDiscount($product->price, $product->discount) }}%</span>
+                                                <span class="tpproduct__info-hot bage__hot">{{ $product->badge }}</span>
+                                            </div>
+                                            <div class="tpproduct__shopping">
+                                                <a class="tpproduct__shopping-wishlist" onclick="event.preventDefault(); document.getElementById('wish-{{ $product->id  }}').submit()" href="{{ route('wishlist.add') }}"><i class="icon-heart icons"></i></a>
+                                                <form action="{{ route('wishlist.add') }}" id="wish-{{ $product->id  }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                </form>
+                                                <a class="tpproduct__shopping-cart" href="{{ route('product.details', $product->slug)  }}"><i class="icon-eye"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="tpproduct__content">
+                                            <span class="tpproduct__content-weight">
+                                                <a href="{{ route('product.details', $product->slug) }}) }}">{{ $product->category->name }}</a>
+                                            </span>
+                                            <h4 class="tpproduct__title">
+                                                <a href="{{ route('product.details', $product->slug) }}) }}">{{ \Str::limit($product->title, 50) }}</a>
+                                            </h4>
+                                            <div class="tpproduct__rating mb-5">
+                                                <a href="#"><i class="icon-star_outline1"></i></a>
+                                                <a href="#"><i class="icon-star_outline1"></i></a>
+                                                <a href="#"><i class="icon-star_outline1"></i></a>
+                                                <a href="#"><i class="icon-star_outline1"></i></a>
+                                                <a href="#"><i class="icon-star_outline1"></i></a>
+                                            </div>
+                                            <div class="tpproduct__price">
+                                                <span>&#8358;{{ number_format($product->discount, 2) }}</span>
+                                                <del>&#8358;{{ number_format($product->price, 2)}}</del>
+                                            </div>
+                                        </div>
+                                        <div class="tpproduct__hover-text">
+                                            <form action="{{ route('cart.add') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="slug" value="{{ $product->slug }}">
+                                                <input type="hidden" name="quantity" class="" value="1">
+                                                <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
+                                                    <button type="submit" class="tp-btn-2">Add to cart</button>
+                                                </div>
+                                            </form>
+                                            {{-- <div class="tpproduct__descrip">
                                           <ul>
                                              <li>Type: Organic</li>
                                              <li>MFG: August 4.2021</li>
                                              <li>LIFE: 60 days</li>
                                           </ul>
                                        </div> --}}
+                                        </div>
                                     </div>
-                                 </div>
-                              </div>
-                              @endforeach
-                          </div>
-                       </div>
-                    </div>   
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                     <div class="basic-pagination text-center mt-35">
-                       <nav>
-                          <ul>
-                             <li>
-                                <span class="current">1</span>
-                             </li>
-                             <li>
-                                <a href="blog.html">2</a>
-                             </li>
-                             <li>
-                                <a href="blog.html">3</a>
-                             </li>
-                             <li>
-                                <a href="blog.html">
-                                   <i class="icon-chevrons-right"></i>
-                                </a>
-                             </li>
-                          </ul>
+                        @if ($products->hasPages())
+                        <nav >
+                            <ul class="justify-content-end mb-0">
+                                {{-- Previous Page Link --}}
+                                @if ($products->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class=""><i class="fa fa-angle-left"></i></span>
+                                </li>
+                                @else
+                                <li >
+                                    <a class="" href="{{ $products->previousPageUrl() }}" rel="prev"><i class="fa fa-angle-left"></i></a>
+                                </li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                @if ($page == $products->currentPage())
+                                <li class=" active">
+                                    <span class="current">{{ $page }}</span>
+                                </li>
+                                @else
+                                <li >
+                                    <a  href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                                @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($products->hasMorePages())
+                                <li >
+                                    <a class="" href="{{ $products->nextPageUrl() }}" rel="next"><i class="fa fa-angle-right"></i></a>
+                                </li>
+                                @else
+                                <li class="page-item disabled">
+                                    <span class=""><i class="fa fa-angle-right"></i></span>
+                                </li>
+                                @endif
+                            </ul>
                         </nav>
-                    </div>   
-                 </div>
-              </div>
-           </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
-     </section>
-     <!-- shop-area-end --> 
+    </div>
+</section>
+<!-- shop-area-end -->
 @endsection

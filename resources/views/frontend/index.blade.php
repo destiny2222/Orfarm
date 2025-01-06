@@ -206,7 +206,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="tpbanner__item mb-30">
                     <a href="shop-3.html">
-                        <div class="tpbanner__content" data-background="assets/img/banner/banner-1.jpg">
+                        <div class="tpbanner__content" data-background="{{ asset('upload/banner/'.$banner->image) }}">
                             <span class="tpbanner__sub-title mb-10">{{ $banner->sub_title }}</span>
                             <h4 class="tpbanner__title mb-30">{{ $banner->title }}</h4>
                             <p>{!! $banner->description !!}</p>

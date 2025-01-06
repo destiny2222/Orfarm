@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="col-12 col-lg-4">
                                         <div class="mb-3">
-                                            <img src="{{ $dealOfDays && $dealOfDays->image ? asset('upload/deal/'.$dealOfDays->image) : asset('default-image-path.jpg') }}" class="img-fluid" alt="" style="width: 50%; height: auto; object-fit: cover;">
+                                            <img src="{{ $promotion && $promotion->image ? asset('upload/promotion/'.$promotion->image) : asset('default-image-path.jpg') }}" class="img-fluid" alt="" style="width: 50%; height: auto; object-fit: cover;">
 
                                         </div>
                                     </div>

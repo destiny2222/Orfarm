@@ -136,13 +136,17 @@
                                         <h6 class="mb-0 w-px-100 text-info">
                                             <i class="bx bxs-circle fs-tiny me-2"></i> Processing
                                         </h6>
-                                        @elseif ($orderItem->order->payment_status == 'completed')
+                                        @elseif ($orderItem->order->payment_status == 'paid')
                                         <h6 class="mb-0 w-px-100 text-success">
                                             <i class="bx bxs-circle fs-tiny me-2"></i> Paid
                                         </h6>
                                         @elseif ($orderItem->order->payment_status == 'failed')
                                         <h6 class="mb-0 w-px-100 text-danger">
                                             <i class="bx bxs-circle fs-tiny me-2"></i> Failed
+                                        </h6>
+                                        @else
+                                        <h6 class="mb-0 w-px-100 text-warning">
+                                            <i class="bx bxs-circle fs-tiny me-2"></i> Unpaid
                                         </h6>
                                         @endif
                                     </td>

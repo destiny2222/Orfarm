@@ -33,7 +33,7 @@
                                 <div class="col-auto">
                                     <div class="header-logo">
                                         <a href="index.html">
-                                            <img src="assets/img/logo.svg" alt="Invar">
+                                            <img src="/assets/img/logo/logo.png" width="150" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                     <span>Order Id: {{ $orderItems->order->invoice_number }}</span><br>
                                     <span>Order Date: {{ $orderItems->order->created_at->format('m:d:y') }} </span><br>
                                     <span>Payment Status: 
-                                     @if ($orderItems->order->payment_status == 'completed')
+                                     @if ($orderItems->order->payment_status == 'paid')
                                         <span class="text-success font-weight-bolder">Paid</span>
                                      @elseif ($orderItems->order->payment_status == 'failed')
                                         <span class="text-danger">Failed</span>
@@ -110,16 +110,18 @@
                                 <table class="total-table2">
                                     <tr>
                                         <th>Shipping:</th>
-                                        <td>$545.00</td>
+                                        @if ($shipping)
+                                         <td>&#8358;{{ $shipping->price }}</td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <th>Total amount due:</th>
-                                        <td>$00.00</td>
+                                        <td>&#8358;{{ number_format($orderItems->price + ($shipping ? $shipping->price : 0), 2) }}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-                        <p class="company-address style2"><b>Invar Inc:</b><br>12th Floor, Plot No.5, IFIC Bank, Gausin
+                        <p class="company-address style2"><b>:{{ config('app.name') }}</b><br>12th Floor, Plot No.5, IFIC Bank, Gausin
                             Rod, Suite 250-20, Franchisco USA 2022.</p>
                         <p class="invoice-note mt-3"><svg width="14" height="18" viewbox="0 0 14 18" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">

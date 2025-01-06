@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Name</title>
+    <title></title>
 </head>
 
 <body bgcolor="#0f3462" style="margin-top:20px;margin-bottom:20px">
@@ -21,13 +21,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <img src="https://image.flaticon.com/icons/svg/149/149314.svg" height="50px" style="display:block; margin:auto;padding-bottom: 25px; ">
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="text-align: center;">
-                            <h1 style="margin: 0px;padding-bottom: 25px; text-transform: uppercase;">Congratulations</h1>
+                            <h1 style="margin: 0px;padding-bottom: 25px; text-align: center;text-transform: uppercase;">Congratulations</h1>
                             <p style=" margin: 0px 40px;padding-bottom: 25px;line-height: 2; font-size: 15px;">
                                 Congratulations! You have successfully placed your order. We appreciate your business and hope you enjoy your purchase.
                             </p>

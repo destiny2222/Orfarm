@@ -12,13 +12,15 @@
     <meta name="keywords" content="ecommerce, online shopping, fast delivery, secure payment, customer support">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" type="image/x-icon" href="/assetss/images/brand/favicon.ico">
-
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo/favicon.png">
+    <meta name="og:image" content="https://text.dexnovate.com/assets/img/logo/logo.png">
     <!-- TITLE -->
     <title> {{ config('app.name') }} - @yield('head') </title>
     <!-- BOOTSTRAP CSS -->
     <link id="style" href="/assetss/css/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
     <!-- STYLE CSS -->
     <link href="/assetss/css/style.css" rel="stylesheet">
 

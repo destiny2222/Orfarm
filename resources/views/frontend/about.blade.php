@@ -40,16 +40,16 @@
              <div class="tpabout__inner-2 mb-30">
                 <div class="tpabout__inner-tag mb-10">
                    <span class="active">About us</span>
-                   <span>Welcome to Orfarm</span>
+                   <span>Welcome to D-LiteFood</span>
                 </div>
-                <h3 class="tpabout__inner-title-2 mb-25">We Help Your <br> Digital Business Grow</h3>
-                <p>We provide digital experience services to startups and small businesses. We help our <br>
-                   clients succeed by creating brand identities, digital experiences, and print materials. Sed <br> trspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
+                <h3 class="tpabout__inner-title-2 mb-25">We Help Your <br> Healthy Lifestyle Grow</h3>
+                <p>We provide fresh and organic food products to support your healthy lifestyle. We help our <br>
+                   clients succeed by offering high-quality, nutritious food options.</p>
                 <div class="tpabout__inner-list">
                    <ul>
-                      <li><i class="icon-check"></i> Track your daily activity.</li>
-                      <li><i class="icon-check"></i> Start a private group video call.</li>
-                      <li><i class="icon-check"></i> All the lorem ipsum generators on the Internet.</li>
+                      <li><i class="icon-check"></i> Track your daily nutrition.</li>
+                      <li><i class="icon-check"></i> Join our community events.</li>
+                      <li><i class="icon-check"></i> Access exclusive recipes and tips.</li>
                    </ul>
                 </div>
              </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="tpabout__content">
                    <h4 class="tpabout__title">Select Your Products</h4>
-                   <p>Choose from select produce to start. <br> Keep, add, or remove items.</p>
+                   <p>Choose from our wide range of fresh produce. <br> Keep, add, or remove items as you like.</p>
                 </div>
              </div>
           </div>
@@ -80,9 +80,8 @@
                    <img src="assets/img/icon/about-svg2.svg" alt="">
                 </div>
                 <div class="tpabout__content">
-                   <h4 class="tpabout__title">Our Shop Orfarm </h4>
-                   <p>We provide 100+ products, provide <br> enough nutrition for your family.
-                   </p>
+                   <h4 class="tpabout__title">Our Shop D-LiteFood</h4>
+                   <p>We provide 100+ organic products, ensuring <br> the best nutrition for your family.</p>
                 </div>
              </div>
           </div>
@@ -92,8 +91,8 @@
                    <img src="assets/img/icon/about-svg3.svg" alt="">
                 </div>
                 <div class="tpabout__content">
-                   <h4 class="tpabout__title">Delivery To Your </h4>
-                   <p>Delivery to your door. Up to 100km  <br> and it's completely free.</p>
+                   <h4 class="tpabout__title">Delivery To Your Door</h4>
+                   <p>Delivery to your door within 100km <br> and it's completely free.</p>
                 </div>
              </div>
           </div>
@@ -111,7 +110,7 @@
              <div class="tpsection mb-35 pt-75">
                 <h4 class="tpsection__sub-title">~ Why choose us? ~</h4>
                 <h4 class="tpsection__title">What makes us different</h4>
-                <p>The liber tempor cum soluta nobis eleifend option congue doming quod mazim.</p>
+                <p>We offer the best organic food options to support your healthy lifestyle.</p>
              </div>
           </div>
        </div>
@@ -123,7 +122,7 @@
                 </div>
                 <div class="tpchoose__content">
                    <h4 class="tpchoose__title">100% Fresh Food</h4>
-                   <p>Adjust global theme options and see design changes in real-time.</p>
+                   <p>We ensure the freshest food options for you and your family.</p>
                    <a href="#" class="tpchoose__details d-flex align-items-center justify-content-center">learn more<i class="icon-chevrons-right"></i></a>
                 </div>
              </div>
@@ -135,7 +134,7 @@
                 </div>
                 <div class="tpchoose__content">
                    <h4 class="tpchoose__title">Premium Quality</h4>
-                   <p>Adjust global theme options and see design changes in real-time.</p>
+                   <p>Our products are of the highest quality, ensuring the best for you.</p>
                    <a href="#" class="tpchoose__details d-flex align-items-center justify-content-center">learn more<i class="icon-chevrons-right"></i></a>
                 </div>
              </div>
@@ -147,7 +146,7 @@
                 </div>
                 <div class="tpchoose__content">
                    <h4 class="tpchoose__title">100% Natural</h4>
-                   <p>Adjust global theme options and see design changes in real-time.</p>
+                   <p>All our products are 100% natural and organic.</p>
                    <a href="#" class="tpchoose__details d-flex align-items-center justify-content-center">learn more<i class="icon-chevrons-right"></i></a>
                 </div>
              </div>
@@ -159,7 +158,7 @@
                 </div>
                 <div class="tpchoose__content">
                    <h4 class="tpchoose__title">100% Organic Goods</h4>
-                   <p>Adjust global theme options and see design changes in real-time.</p>
+                   <p>We offer a wide range of organic goods for a healthier lifestyle.</p>
                    <a href="#" class="tpchoose__details d-flex align-items-center justify-content-center">learn more<i class="icon-chevrons-right"></i></a>
                 </div>
              </div>
@@ -185,8 +184,8 @@
           <div class="col-lg-12 text-center">
              <div class="tpsection mb-35">
                 <h4 class="tpsection__sub-title">~ Happy Customer ~</h4>
-                <h4 class="tpsection__title">What Client Says</h4>
-                <p>The liber tempor cum soluta nobis eleifend option congue doming quod mazim.</p>
+                <h4 class="tpsection__title">What Our Clients Say</h4>
+                <p>We value our clients' feedback and strive to provide the best service.</p>
              </div>
           </div>
        </div>
@@ -200,7 +199,7 @@
                             <img src="assets/img/testimonial/test-avata-1.png" alt="">
                          </div>
                          <div class="tptestimonial__content tptestimonial__content2">
-                            <p>" I think Hub is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. "
+                            <p>" D-LiteFood has transformed my eating habits. The quality and freshness of their products are unmatched. "
                             </p>
                             <div class="tptestimonial__rating mb-5">
                                <a href="#"><i class="icon-star_outline1"></i></a>
@@ -224,7 +223,7 @@
                             <img src="assets/img/testimonial/test-avata-2.png" alt="">
                          </div>
                          <div class="tptestimonial__content tptestimonial__content2">
-                            <p>" I think Hub is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. "
+                            <p>" The variety and quality of organic products at D-LiteFood are amazing. I highly recommend them to anyone looking for healthy food options. "
                             </p>
                             <div class="tptestimonial__rating mb-5">
                                <a href="#"><i class="icon-star_outline1"></i></a>
@@ -248,7 +247,7 @@
                             <img src="assets/img/testimonial/test-avata-3.png" alt="">
                          </div>
                          <div class="tptestimonial__content tptestimonial__content2">
-                            <p>" I think Hub is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. "
+                            <p>" I love the convenience and quality of D-LiteFood's delivery service. Their products are always fresh and delicious. "
                             </p>
                             <div class="tptestimonial__rating mb-5">
                                <a href="#"><i class="icon-star_outline1"></i></a>

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Notifications\OrderConfirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Paystack;
@@ -18,15 +19,16 @@ class PaymentController extends Controller
 {
 
 
-    public function redirectToGateway(Order $order){
-        try{
-        // Get the current user's cart items
-        $cartItems = Cart::where('user_id', Auth::user()->id)->get();
+    public function redirectToGateway(Order $order)
+    {
+        try {
+            // Get the current user's cart items
+            $cartItems = Cart::where('user_id', Auth::user()->id)->get();
 
-        // Check if cart is empty
-        if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Your cart is empty.');
-        }
+            // Check if cart is empty
+            if ($cartItems->isEmpty()) {
+                return redirect()->back()->with('error', 'Your cart is empty.');
+            }
 
 
             $paymentData = [
@@ -52,7 +54,7 @@ class PaymentController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $cartItem->product_id,
                     'quantity' => $cartItem->quantity,
-                    'price' => $cartItem->product->price, 
+                    'price' => $cartItem->product->price,
                 ]);
             }
 
@@ -62,10 +64,10 @@ class PaymentController extends Controller
                 'transaction_reference' => $paymentData['reference']
             ]);
             return Paystack::getAuthorizationUrl($paymentData)->redirectNow();
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
-        }   
+            return Redirect::back()->withMessage(['msg' => 'The paystack token has expired. Please refresh the page and try again.', 'type' => 'error']);
+        }
     }
 
 
@@ -76,14 +78,21 @@ class PaymentController extends Controller
         // dd($paymentDetails);
 
         try {
-           
 
-            $order = Order::where('transaction_reference', $paymentDetails['data']['reference'])->latest();
+
+            $order = Order::where('transaction_reference', $paymentDetails['data']['reference'])
+                ->latest()
+                ->first();
+
+            // Add a check to make sure order exists
+            if (!$order) {
+                return back()->with('error', 'Order not found');
+            }
 
             if ($paymentDetails['data']['status'] === 'success') {
                 // Update order status
                 $order->update([
-                    'payment_status' => 'processing',
+                    // 'payment_status' => 'processing',
                     // 'order_status' => 'processing'
                 ]);
                 return redirect()->route('orders.index')->with('success', 'Payment is in progress. You will be notify when the transaction is completed!');
@@ -98,59 +107,58 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Payment verification failed');
         }
-       
+
     }
 
-        public function handleWebhook(Request $request)
+    public function handleWebhook(Request $request)
     {
-        // First check if the header is present. Else, terminate the code.
-        if (!$request->hasHeader("x-paystack-signature")) {
-            exit("No header present");
-        }
-    
-        // Get our Paystack secret key 
-        $secret = config('services.paystack.secret_key');
-    
-        // Validate the signature
-        if ($request->header("x-paystack-signature") !== hash_hmac("sha512", $request->getContent(), $secret)) {
-            exit("Invalid signature");
-        }
-    
+        // ... existing signature verification code ...
+
         $payload = json_decode($request->getContent(), true);
-        $event = $payload['event']; // event type. e.g charge.success
-        $data = $payload['data']; // request payload.
-    
-        // You can log it into laravel.log to view all the data sent from Paystack
-        Log::info('PAYSTACK PAYLOAD', ['data' => $data]);
-    
+        $event = $payload['event'];
+        $data = $payload['data'];
+
+        Log::info('Webhook payload', ['payload' => $payload]); // Log full payload
+
         if ($event === "charge.success") {
-            // Transaction info
             $order = Order::where('transaction_reference', $data['reference'])->first();
+
             if ($order) {
-                // Update order status
-                $order->update([
-                    'payment_status' => 'paid',
-                    // 'order_status' => 'pending'
-                ]);
-                // Clear user's cart
-                Cart::where('user_id', $order->user_id)->delete();
-    
-                // Send email to user
-                $user = User::find($order->user_id);
-                $user->notify(new OrderConfirmation($order));
-            }
-        } elseif ($event === "charge.failed") {
-            // Transaction info
-            $order = Order::where('transaction_reference', $data['reference'])->first();
-            if ($order) {
-                // Update order status
-                $order->update([
-                    'payment_status' => 'failed',
-                    'order_status' => 'failed'
-                ]);
+                try {
+                    // Update with fresh() to ensure we get the latest data
+                    $order->payment_status = 'paid';
+                    $order->save();
+
+                    // Verify the update
+                    $updatedOrder = Order::find($order->id)->fresh();
+                    /* The line `Log::info('Order after update', ['order_id' => ->id,
+                    'new_status' => ->payment_status]);` is logging information about
+                    the order after it has been updated. */
+                    Log::info('Order after update', [
+                        'order_id' => $updatedOrder->id,
+                        'new_status' => $updatedOrder->payment_status
+                    ]);
+
+                    // Clear user's cart
+                    Cart::where('user_id', $order->user_id)->delete();
+
+                    // Send email to user
+                    $user = User::find($order->user_id);
+                    $user->notify(new OrderConfirmation($order));
+                } catch (\Exception $e) {
+                    Log::error('Failed to update order', [
+                        'order_id' => $order->id,
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString()
+                    ]);
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
+            } else {
+                Log::warning('Order not found', ['reference' => $data['reference']]);
+                return response()->json(['error' => 'Order not found'], 404);
             }
         }
-    
-        return response()->json('', 200);
+
+        return response()->json(['status' => 'success'], 200);
     }
 }

@@ -11,7 +11,10 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <!-- Place favicon.ico in the root directory -->
       <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo/favicon.png">
-
+      <meta name="og:image" content="https://text.dexnovate.com/assets/img/logo/logo.png">
+      <meta name="robots" content="index, follow">
+      <meta name="googlebot" content="index, follow">
+      <meta name="bingbot" content="index, follow">
       <!-- CSS here -->
       <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
       <link rel="stylesheet" href="/assets/css/animate.css">
@@ -55,7 +58,7 @@
         @yield('content')
 
          <!-- feature-area-start -->
-         <section class="feature-area mainfeature__bg pt-50 pb-40">
+         <section class="feature-area mainfeature__bg grey-bg pt-50 pb-40"  data-background="/assets/img/shape/footer-shape-1.png">
             <div class="container">
                <div class="mainfeature__border pb-15">
                   <div class="row row-cols-lg-5 row-cols-md-3 row-cols-2">

@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Http\Controllers\Controller;
-use App\Mail\MailContact;
-use App\Models\Category;
+use App\Models\Faq;
+use App\Models\Post;
+use App\Models\Banner;
+use App\Models\Slider;
 use App\Models\Contact;
 use App\Models\Product;
-use App\Models\ProductImage;
+use App\Models\Category;
+use App\Mail\MailContact;
 use App\Models\DealOfDay;
-use App\Models\ProductPromotion;
+use App\Models\ProductImage;
 use App\Models\ReviewRating;
-use App\Models\Slider;
-use App\Models\Banner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\ProductPromotion;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class FrontController extends Controller
@@ -35,6 +37,8 @@ class FrontController extends Controller
         $vegetableCategory = Category::where('title', 'Vegetables')->first();
         $snackCategory = Category::where('title', 'Fresh Fruits')->first();
 
+        $post = Post::orderBy('id', 'DESC')->get();
+
         $meatProducts = $meatCategory ? $meatCategory->products : collect();
         $vegetableProducts = $vegetableCategory ? $vegetableCategory->products : collect();
         $snackProducts = $snackCategory ? $snackCategory->products : collect();
@@ -51,6 +55,7 @@ class FrontController extends Controller
             'vegetableProducts'=>$vegetableProducts,
             'snackProducts'=>$snackProducts,
             'pro'=>$Product,
+            'posts'=>$post,
         ]);
     }
     public function about(){
@@ -61,16 +66,24 @@ class FrontController extends Controller
         return view('frontend.contact');
     }
 
-    public function services(){
-        return view('frontend.services');
+    public function faq(){
+        $faq = Faq::orderBy('id','desc')->get();
+        return view('frontend.faq',[
+            'faqs'=>$faq
+        ]);
     }
 
     public function blog(){
-        return view('frontend.blog');
+        $post = Post::orderBy('id', 'desc')->paginate(9);
+        return view('frontend.blog',[
+            'posts'=>$post
+        ]);
     }
 
-    public function blog_details(){
-        return view('frontend.blog_details');
+    public function blog_details(Post $post){
+        return view('frontend.blog_details',[
+            'post' => $post,
+        ]);
     }
 
     public function shop(){
@@ -109,7 +122,7 @@ class FrontController extends Controller
             $contact = Contact::create($request->all());
             // dd($contact);
             if ($contact) {
-                Mail::to('destinyerieme47@mail.com')->send(new MailContact($contact));
+                Mail::to('destinyerieme47@gmail.com')->send(new MailContact($contact));
                 return back()->with('success', 'Your Message Have Been Sent Successful');
             }
             return back()->with('error', 'Oops something went wrong');

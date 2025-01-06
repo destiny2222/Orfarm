@@ -35,10 +35,14 @@ class Product extends Model
     {
         return Str::slug($this->title);
     }
-    // public function getDiscountPriceAttribute(): float
-    // {
-    //     return $this->price - ($this->price * $this->discount / 100);
-    // }
+   
+    public function averageRating()
+
+    {
+
+        return $this->reviews->avg('rating');
+
+    }
 
     public static function calculateDiscount($price, $discount)
     {

@@ -101,7 +101,8 @@
                                     </div>
                                     <div class="col-12 col-lg-4">
                                         <div class="mb-3">
-                                            <img src="{{ asset('upload/promotion/'.$promotion->image)   }}" class="img-fluid" alt="" style="width: 50%; height: auto;object-fit: cover;">
+                                            <img src="{{ $dealOfDays && $dealOfDays->image ? asset('upload/deal/'.$dealOfDays->image) : asset('default-image-path.jpg') }}" class="img-fluid" alt="" style="width: 50%; height: auto; object-fit: cover;">
+
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +161,8 @@
                                 <div class="mb-3">
                                     <label for="">Offer time</label>
                                     <input type="date" name="offer_end_time" class="form-control" 
-                                           value="{{ $dealOfDays->offer_end_time ? $dealOfDays->offer_end_time->format('Y-m-d') : '' }}">
+       value="{{ $dealOfDays?->offer_end_time?->format('Y-m-d') ?? '' }}">
+
                                 </div>
                             </div>                            
                             <div class="col-lg-12">
@@ -173,7 +175,8 @@
                                     </div>
                                     <div class="col-12 col-lg-4">
                                         <div class="mb-3">
-                                            <img src="{{ asset('upload/deal/'.$dealOfDays->image)   }}" class="img-fluid" alt="" style="width: 50%; height: auto;object-fit: cover;">
+                                            <img src="{{ $dealOfDays && $dealOfDays->image ? asset('upload/deal/'.$dealOfDays->image) : asset('default-image-path.jpg') }}" class="img-fluid" alt="" style="width: 50%; height: auto; object-fit: cover;">
+
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +201,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum accusamus, quo iste eaque corrupti velit molestiae vel recusandae incidunt aliquid perspiciatis deserunt id consectetur. Quas quos facere distinctio est architecto.
                 </div>
             </div>
         </div>

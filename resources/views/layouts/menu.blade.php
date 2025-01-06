@@ -108,6 +108,12 @@
                          <li class="sub-nav-item">
                               <a class="sub-nav-link" href="{{ route('admin.shipping.index') }}">Shipping</a>
                          </li>
+                         <li class="sub-nav-item">
+                              <a class="sub-nav-link" href="{{ route('admin.faq.index') }}">FAQ</a>
+                         </li>
+                         <li class="sub-nav-item">
+                              <a class="sub-nav-link" href="{{ route('admin.post.index') }}">Post</a>
+                         </li>
                     </ul>
                </div>
           </li>

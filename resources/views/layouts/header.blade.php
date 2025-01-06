@@ -16,7 +16,7 @@
              <div class="col-lg-6 col-md-12">
                 <div class="header__top-right d-flex align-items-center">
                    <div class="header__top-link">
-                      <a href="/shop">FAQ</a>
+                      <a href="/faq">FAQ</a>
                       <a href="/contact">Contact</a>
                       <a href="/about">About</a>
                    </div>
@@ -44,6 +44,9 @@
                             <li><a href="/about">About Us</a></li>
                             <li class="">
                               <a href="/product">Product</a>
+                            </li>
+                            <li class="">
+                              <a href="/blog">Blog</a>
                             </li>
                             <li><a href="/contact">Contact Us</a></li>
                          </ul>

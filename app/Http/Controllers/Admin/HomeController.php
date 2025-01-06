@@ -23,52 +23,53 @@ class HomeController extends Controller
         $order = Order::orderBy('id', 'desc')->first();
         // product model
         $product = Product::orderBy('id', 'desc')->first();
+
         $totalOrder = Order::where('payment_status', 'paid')->count();
         $PendingOrder = Order::where('payment_status', 'processing')->count();
         $totalDeliveredOrder = Order::where('order_status', 'delivered')->count();
         $CancelOrder = Order::where('order_status', 'cancelled')->count();
 
-        $totalProductSale = OrderItem::where('product_id', $product->id)->count();
+        $totalProductSale = $product ? OrderItem::where('product_id', $product->id)->count() : 0;
 
         // Today's Product Orders
-        $todayProductOrders = OrderItem::where('product_id', $product->id)
+        $todayProductOrders = $product ? OrderItem::where('product_id', $product->id)
             ->whereDate('created_at', Carbon::today())
-            ->count();
+            ->count() : 0;
 
         // This Month's Product Sales
-        $thisMonthProductSales = OrderItem::where('product_id', $product->id)
+        $thisMonthProductSales = $product ? OrderItem::where('product_id', $product->id)
             ->whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', Carbon::now()->month)
-            ->count();
+            ->count() : 0;
 
         // This Year's Product Sales
-        $thisYearProductSales = OrderItem::where('product_id', $product->id)
+        $thisYearProductSales = $product ? OrderItem::where('product_id', $product->id)
             ->whereYear('created_at', Carbon::now()->year)
-            ->count();
+            ->count() : 0;
 
         // Total Earnings for the Product
-        $totalEarnings = OrderItem::where('product_id', $product->id)
-            ->sum('price');
+        $totalEarnings = $product ? OrderItem::where('product_id', $product->id)
+            ->sum('price') : 0;
 
         // This Month's Earnings
-        $thisMonthEarnings = OrderItem::where('product_id', $product->id)
+        $thisMonthEarnings = $product ? OrderItem::where('product_id', $product->id)
             ->whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', Carbon::now()->month)
-            ->sum('price');
+            ->sum('price') : 0;
 
         // This Year's Earnings
-        $thisYearEarnings = OrderItem::where('product_id', $product->id)
+        $thisYearEarnings = $product ? OrderItem::where('product_id', $product->id)
             ->whereYear('created_at', Carbon::now()->year)
-            ->sum('price');
+            ->sum('price') : 0;
 
         // pending earnings
         $pendingStatus = 'unpaid';
-        $todayPendingEarnings = OrderItem::where('product_id', $product->id)
+        $todayPendingEarnings = $product ? OrderItem::where('product_id', $product->id)
             ->whereHas('order', function ($query) use ($pendingStatus) {
                 $query->where('payment_status', $pendingStatus);
             })
             ->whereDate('created_at', Carbon::today())
-            ->sum('price');
+            ->sum('price') : 0;
 
         return view("admin.index", [
             'totalOrder' => $totalOrder,

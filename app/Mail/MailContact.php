@@ -40,6 +40,12 @@ class MailContact extends Mailable
     {
         return new Content(
             markdown: 'mail.mail-contact',
+            with:[
+                'name'=>$this->contact->name,
+                'email'=>$this->contact->email,
+                'subject'=>$this->contact->subject,
+                'message'=>$this->contact->message,
+             ],
         );
     }
 

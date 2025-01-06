@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\SiteManagementController;
 use App\Http\Controllers\Admin\UserManagementController;
+
 
 
 
@@ -86,6 +89,23 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
         // user management
         Route::get('/customer/list', [UserManagementController::class,'index'])->name('customer.index');
+
+        // Post Controller
+        Route::get('/post/list', [PostController::class, 'index'])->name('post.index');
+        Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+        Route::post('/post/store', [PostController::class,'store'])->name('post.store');
+        Route::get('/post/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
+        Route::put('/post/{id}/update', [PostController::class, 'update'])->name('post.update');
+        Route::delete('/post/{id}/delete', [PostController::class, 'destroy'])->name('post.delete');
+
+
+        // Faq controller
+        Route::get('/faq/list', [FaqController::class, 'index'])->name('faq.index');
+        Route::get('/faq/create', [FaqController::class, 'create'])->name('faq.create');
+        Route::get('/faq/{id}/edit', [FaqController::class, 'edit'])->name('faq.edit');
+        Route::post('/faq/store', [FaqController::class, 'store'])->name('faq.store');
+        Route::put('/faq/{id}/update', [FaqController::class, 'update'])->name('faq.update');
+        Route::delete('/faq/{id}/delete', [FaqController::class, 'destroy'])->name('faq.delete');
         
         
         // plugin

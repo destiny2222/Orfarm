@@ -32,16 +32,18 @@
                             <ul class="tpdetails__brand">
                                 <li> Brands: <a href="#">{{ config('app.name') }}</a> </li>
                                 <li>
-                                    <i class="icon-star_outline1"></i>
-                                    <i class="icon-star_outline1"></i>
-                                    <i class="icon-star_outline1"></i>
-                                    <i class="icon-star_outline1"></i>
-                                    <i class="icon-star_outline1"></i>
-                                    <b>02 Reviews</b>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $product->average_rating)
+                                            <i class="icon-star_outline1" style="color: #ffc107;"></i> <!-- Filled Star -->
+                                        @else
+                                            <i class="icon-star_outline1" style="color: #ddd;"></i> <!-- Empty Star -->
+                                        @endif
+                                    @endfor
+                                    <b>{{ $product->reviews->count() }} Reviews</b>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     SKU: <span>ORFARMVE005</span>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                         <div class="tpdetails__box">
@@ -77,12 +79,12 @@
                                 <div class="col-lg-6">
                                     <div class="product__details">
                                         <div class="product__details-price-box">
-                                            <h5 class="product__details-price">${{ number_format($product->price, 2) }}</h5>
-                                            <ul class="product__details-info-list">
-                                                <li>Delicious non - dairy cheese sauce</li>
-                                                <li>Vegan & Allergy friendly</li>
-                                                <li>Smooth, velvety dairy free cheese sauce</li>
-                                            </ul>
+                                            <h5 class="product__details-price">&#8358;{{ number_format($product->price, 2) }}</h5>
+                                            <!--<ul class="product__details-info-list">-->
+                                            <!--    <li>Delicious non - dairy cheese sauce</li>-->
+                                            <!--    <li>Vegan & Allergy friendly</li>-->
+                                            <!--    <li>Smooth, velvety dairy free cheese sauce</li>-->
+                                            <!--</ul>-->
                                         </div>
                                         <div class="product__details-cart">
                                             <form action="{{ route('cart.add') }}" method="post">
@@ -131,7 +133,7 @@
                             <nav>
                                 <div class="nav nav-tabs" role="tablist">
                                     <button class="nav-link active" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true">Product Description</button>
-                                    <button class="nav-link" id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-information" type="button" role="tab" aria-controls="nav-information" aria-selected="false">ADDITIONAL INFORMATION</button>
+                                    <!--<button class="nav-link" id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-information" type="button" role="tab" aria-controls="nav-information" aria-selected="false">ADDITIONAL INFORMATION</button>-->
                                     <button class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Reviews ({{ count($reviews) }})</button>
                                 </div>
                             </nav>
@@ -139,69 +141,34 @@
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab" tabindex="0">
                                 <div class="tpdescription__content">
-                                    <p>Designed by Puik in 1949 as one of the first models created especially for Carl Hansen & Son, and produced since 1950. The last of a series of chairs wegner designed based on inspiration from antique chinese armchairs. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia eserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, aque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
-                                </div>
-                                <div class="tpdescription__product-wrapper mt-30 mb-30 d-flex justify-content-between align-items-center">
-                                    <div class="tpdescription__product-info">
-                                        <h5 class="tpdescription__product-title">PRODUCT DETAILS</h5>
-                                        <ul class="tpdescription__product-info">
-                                            <li>Material: Plastic, Wood</li>
-                                            <li>Legs: Lacquered oak and black painted oak</li>
-                                            <li>Dimensions and Weight: Height: 80 cm, Weight: 5.3 kg</li>
-                                            <li>Length: 48cm</li>
-                                            <li>Depth: 52 cm</li>
-                                        </ul>
-                                        <p>Lemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut <br> fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem <br> sequi nesciunt.</p>
-                                    </div>
-                                    <div class="tpdescription__product-thumb">
-                                        <img src="assets/img/product/product-single-1.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="tpdescription__video">
-                                    <h5 class="tpdescription__product-title">PRODUCT DETAILS</h5>
-                                    <p>Form is an armless modern chair with a minimalistic expression. With a simple and contemporary design Form Chair has a soft and welcoming ilhouette and a distinctly residential look. The legs appear almost as if they are growing out of the shell. This gives the design flexibility and makes it possible to vary the frame. Unika is a mouth blown series of small, glass pendant lamps, originally designed for the Restaurant Gronbech. Est eum itaque maiores qui blanditiis architecto. Eligendi saepe rem ut. Cumque quia earum eligendi. </p>
-                                    <div class="tpdescription__video-wrapper p-relative mt-30 mb-35 w-img">
-                                        <img src="assets/img/product/product-video1.jpg" alt="">
-                                        <div class="tpvideo__video-btn">
-                                            <a class="tpvideo__video-icon popup-video" href="https://www.youtube.com/watch?v=rLrV5Tel7zw">
-                                                <i>
-                                                    <svg width="20" height="22" viewbox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M15.6499 6.58886L15.651 6.58953C17.8499 7.85553 18.7829 9.42511 18.7829 10.8432C18.7829 12.2613 17.8499 13.8308 15.651 15.0968L15.6499 15.0975L12.0218 17.195L8.3948 19.2919C8.3946 19.292 8.3944 19.2921 8.3942 19.2922C6.19546 20.558 4.36817 20.5794 3.13833 19.8697C1.9087 19.1602 1.01562 17.5694 1.01562 15.0382V10.8432V6.64818C1.01562 4.10132 1.90954 2.51221 3.13721 1.80666C4.36609 1.1004 6.1936 1.12735 8.3942 2.39416C8.3944 2.39428 8.3946 2.3944 8.3948 2.39451L12.0218 4.49135L15.6499 6.58886Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <h5 class="tpdescription__product-title">Product supreme quality</h5>
-                                    <p>Form is an armless modern chair with a minimalistic expression. With a simple and contemporary design Form Chair has a soft and welcoming ilhouette and a distinctly residential look. The legs appear almost as if they are growing out of the shell. This gives the design flexibility and makes it possible to vary the frame. Unika is a mouth blown series of small, glass pendant lamps, originally designed for the Restaurant Gronbech. Est eum itaque maiores qui blanditiis architecto. Eligendi saepe rem ut. Cumque quia earum eligendi. </p>
-                                    <p>Duis semper erat mauris, sed egestas purus commodo. Cras imperdiet est in nunc tristique lacinia. Nullam aliquam mauris eu accumsan tincidunt. Suspendisse velit ex, aliquet vel ornare vel, dignissim a tortor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+                                     {!! $product->description !!}
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-information" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">
-                                <div class="tpdescription__content">
-                                    <p>Designed by Puik in 1949 as one of the first models created especially for Carl Hansen & Son, and produced since 1950. The last of a series of chairs wegner designed based on inspiration from antique chinese armchairs. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia eserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, aque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
-                                </div>
-                                <div class="tpdescription__product-wrapper mt-30 mb-30 d-flex justify-content-between align-items-center">
-                                    <div class="tpdescription__product-info">
-                                        <h5 class="tpdescription__product-title">PRODUCT DETAILS</h5>
-                                        <ul class="tpdescription__product-info">
-                                            <li>Material: Plastic, Wood</li>
-                                            <li>Legs: Lacquered oak and black painted oak</li>
-                                            <li>Dimensions and Weight: Height: 80 cm, Weight: 5.3 kg</li>
-                                            <li>Length: 48cm</li>
-                                            <li>Depth: 52 cm</li>
-                                        </ul>
-                                        <p>Lemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut <br> fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem <br> sequi nesciunt.</p>
-                                    </div>
-                                    <div class="tpdescription__product-thumb">
-                                        <img src="assets/img/product/product-single-1.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="tpdescription__video">
-                                    <h5 class="tpdescription__product-title">PRODUCT DETAILS</h5>
-                                    <p>Form is an armless modern chair with a minimalistic expression. With a simple and contemporary design Form Chair has a soft and welcoming ilhouette and a distinctly residential look. The legs appear almost as if they are growing out of the shell. This gives the design flexibility and makes it possible to vary the frame. Unika is a mouth blown series of small, glass pendant lamps, originally designed for the Restaurant Gronbech. Est eum itaque maiores qui blanditiis architecto. Eligendi saepe rem ut. Cumque quia earum eligendi. </p>
-                                </div>
-                            </div>
+                            <!--<div class="tab-pane fade" id="nav-information" role="tabpanel" aria-labelledby="nav-info-tab" tabindex="0">-->
+                            <!--    <div class="tpdescription__content">-->
+                            <!--        <p>Designed by Puik in 1949 as one of the first models created especially for Carl Hansen & Son, and produced since 1950. The last of a series of chairs wegner designed based on inspiration from antique chinese armchairs. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia eserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, aque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>-->
+                            <!--    </div>-->
+                            <!--    <div class="tpdescription__product-wrapper mt-30 mb-30 d-flex justify-content-between align-items-center">-->
+                            <!--        <div class="tpdescription__product-info">-->
+                            <!--            <h5 class="tpdescription__product-title">PRODUCT DETAILS</h5>-->
+                            <!--            <ul class="tpdescription__product-info">-->
+                            <!--                <li>Material: Plastic, Wood</li>-->
+                            <!--                <li>Legs: Lacquered oak and black painted oak</li>-->
+                            <!--                <li>Dimensions and Weight: Height: 80 cm, Weight: 5.3 kg</li>-->
+                            <!--                <li>Length: 48cm</li>-->
+                            <!--                <li>Depth: 52 cm</li>-->
+                            <!--            </ul>-->
+                            <!--            <p>Lemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut <br> fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem <br> sequi nesciunt.</p>-->
+                            <!--        </div>-->
+                            <!--        <div class="tpdescription__product-thumb">-->
+                            <!--            <img src="assets/img/product/product-single-1.png" alt="">-->
+                            <!--        </div>-->
+                            <!--    </div>-->
+                            <!--    <div class="tpdescription__video">-->
+                            <!--        <h5 class="tpdescription__product-title">PRODUCT DETAILS</h5>-->
+                            <!--        <p>Form is an armless modern chair with a minimalistic expression. With a simple and contemporary design Form Chair has a soft and welcoming ilhouette and a distinctly residential look. The legs appear almost as if they are growing out of the shell. This gives the design flexibility and makes it possible to vary the frame. Unika is a mouth blown series of small, glass pendant lamps, originally designed for the Restaurant Gronbech. Est eum itaque maiores qui blanditiis architecto. Eligendi saepe rem ut. Cumque quia earum eligendi. </p>-->
+                            <!--    </div>-->
+                            <!--</div>-->
 
 
 

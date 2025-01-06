@@ -12,8 +12,11 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
      <!-- App favicon -->
-     <link rel="shortcut icon" href="/admin_style/assets/images/favicon.ico">
-
+     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo/favicon.png">
+     <meta name="og:image" content="https://text.dexnovate.com/assets/img/logo/logo.png">
+     <meta name="robots" content="index, follow">
+     <meta name="googlebot" content="index, follow">
+     <meta name="bingbot" content="index, follow">
      <!-- Vendor css (Require in all Page) -->
      <link href="/admin_style/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
 

@@ -65,7 +65,7 @@ class FortifyServiceProvider extends ServiceProvider
                 }
 
                 // Default to dashboard if no intended URL
-                return redirect()->route('dashboard');
+                return redirect(RouteServiceProvider::HOME);
             }
         });
         

@@ -5321,7 +5321,7 @@ input::placeholder {
   animation: animation-plus 1s infinite linear alternate;
 }
 .mainfeature__bg {
-  background-color: #187E4A;
+  background-size: cover;
   background-repeat: repeat-x;
 }
 .mainfeature__icon {
